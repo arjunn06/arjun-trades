@@ -3,6 +3,16 @@ import { ArrowRight, Youtube, Users, BookOpen, Mail, ChevronRight } from "lucide
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+
+const youtubeVideos = [
+  { id: "dQw4w9WgXcQ", title: "ICT Concepts Breakdown — Smart Money 101" },
+  { id: "dQw4w9WgXcQ", title: "Live Trading Session — Order Flow Analysis" },
+  { id: "dQw4w9WgXcQ", title: "How I Find Setups — Daily Routine" },
+  { id: "dQw4w9WgXcQ", title: "Market Recap — Key Levels & Liquidity" },
+  { id: "dQw4w9WgXcQ", title: "Risk Management — Position Sizing Guide" },
+  { id: "dQw4w9WgXcQ", title: "Reading Price Action Like a Pro" },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -163,9 +173,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* YouTube Embed Section */}
+      {/* YouTube Carousel Section */}
       <section className="py-24 px-6 border-t border-border">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -175,28 +185,36 @@ const Index = () => {
               variants={fadeUp}
               custom={0}
               className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center">
-              
               Latest from YouTube
             </motion.h2>
             <motion.p
               variants={fadeUp}
               custom={1}
-              className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">Free trading education — daily livestreams on YouTube
-
-
+              className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">
+              Free trading education — daily livestreams on YouTube
             </motion.p>
-            <motion.div
-              variants={fadeUp}
-              custom={2}
-              className="aspect-video rounded-2xl overflow-hidden border border-border bg-card">
-              
-              <iframe
-                src="https://www.youtube.com/embed?listType=user_uploads&list=arjun_ifvg"
-                title="Arjun Trades YouTube"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen />
-              
+            <motion.div variants={fadeUp} custom={2}>
+              <Carousel opts={{ align: "start", loop: true }} className="w-full">
+                <CarouselContent className="-ml-4">
+                  {youtubeVideos.map((video, i) => (
+                    <CarouselItem key={i} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                      <div className="aspect-video rounded-2xl overflow-hidden border border-border bg-card">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.id}`}
+                          title={video.title}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          loading="lazy"
+                        />
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{video.title}</p>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:flex -left-12 bg-card border-border text-foreground hover:bg-muted" />
+                <CarouselNext className="hidden md:flex -right-12 bg-card border-border text-foreground hover:bg-muted" />
+              </Carousel>
             </motion.div>
             <motion.div variants={fadeUp} custom={3} className="text-center mt-8">
               <a
@@ -204,7 +222,6 @@ const Index = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all duration-300">
-                
                 View all videos on YouTube
                 <ArrowRight className="w-4 h-4" />
               </a>
