@@ -6,12 +6,12 @@ import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 
 const youtubeVideos = [
-  { id: "dQw4w9WgXcQ", title: "ICT Concepts Breakdown — Smart Money 101" },
-  { id: "dQw4w9WgXcQ", title: "Live Trading Session — Order Flow Analysis" },
-  { id: "dQw4w9WgXcQ", title: "How I Find Setups — Daily Routine" },
-  { id: "dQw4w9WgXcQ", title: "Market Recap — Key Levels & Liquidity" },
-  { id: "dQw4w9WgXcQ", title: "Risk Management — Position Sizing Guide" },
-  { id: "dQw4w9WgXcQ", title: "Reading Price Action Like a Pro" },
+  { id: "6DWzpfwnKoE", title: "The Reality of Trading Patterns EXPOSED | Why Chart Patterns Fail (Tamil)" },
+  { id: "ApRidgKGCr0", title: "How To Identify Daily Bias & Market Narrative | Top Down Analysis Trading Strategy in Tamil" },
+  { id: "lswnGDvPxuQ", title: "Forex to Futures Trading: Complete Beginner Guide + Prop Firm Rules In Tamil" },
+  { id: "mk0xTQ0EGBw", title: "Why Support & Resistance Trading Always Fails | Brutal Truth for Beginners (Tamil)" },
+  { id: "ZQp2rq3KEKk", title: "Introduction to SMC and Liquidity" },
+  { id: "uJY02oI3LOI", title: "This Simple iFVG Trading Strategy Will Make You Rich In 2026 - For Beginners (Tamil)" },
 ];
 
 const fadeUp = {
@@ -65,8 +65,7 @@ const Index = () => {
             custom={2}
             className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
             
-            Master the markets with precision. Join a community of disciplined traders
-            learning ICT concepts, smart money, and institutional order flow.
+            We don't chase dopamine, we chase patience. Join a community of disciplined traders who are learning to trade with patience.
           </motion.p>
 
           <motion.div
@@ -77,22 +76,22 @@ const Index = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center">
             
             <a
-              href="https://discord.gg/SCHeKKCa6c"
+              href="https://youtube.com/@arjun_ifvg"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base">
               
-              <Users className="w-5 h-5" />
-              Join the Community
+              <Youtube className="w-5 h-5" />
+              Subscribe on YouTube
             </a>
             <a
-              href="https://youtube.com/@arjun_ifvg"
+              href="https://discord.gg/SCHeKKCa6c"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-base">
               
-              <Youtube className="w-5 h-5" />
-              Watch on YouTube
+              <Users className="w-5 h-5" />
+              Join the Community
             </a>
           </motion.div>
         </div>
