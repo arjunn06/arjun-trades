@@ -1,55 +1,185 @@
 import { motion } from "framer-motion";
-import { BookOpen, ArrowLeft } from "lucide-react";
+import { BookOpen, Clock, Calendar, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 
-const Mentorship = () => {
+const Workshop = () => {
+  const workshop = {
+    title: "Arjun Trades iFVG Workshop",
+    subtitle: "A deep-dive, practical workshop for serious traders.",
+    coverImage:
+      "https://images.pexels.com/photos/5439427/pexels-photo-5439427.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    date: "Saturday, 29 March 2026",
+    time: "7:00 PM – 10:00 PM IST",
+    duration: "3 hours · Live on Zoom",
+    price: "₹4,999",
+    seats: "25 total seats",
+    agenda: [
+      "Market structure and liquidity traps in live charts",
+      "iFVG framework – entries, confirmations, invalidations",
+      "Risk management and position sizing for prop firms",
+      "Live chart walkthroughs + Q&A",
+    ],
+    schedule: [
+      { time: "7:00 – 7:20 PM", label: "Welcome, workshop overview, expectations" },
+      { time: "7:20 – 8:00 PM", label: "Core concepts: iFVG, liquidity, narrative" },
+      { time: "8:00 – 9:00 PM", label: "Live chart examples & trade planning" },
+      { time: "9:00 – 9:30 PM", label: "Risk, journaling, and common mistakes" },
+      { time: "9:30 – 10:00 PM", label: "Open Q&A (time-permitting)" },
+    ],
+    description: [
+      "This workshop is designed for traders who already understand the basics and want a clear, rule-based framework to approach iFVG and narrative-driven trading.",
+      "We will focus on real market conditions, decision-making, and the exact details I look for before committing risk. You will leave with a structured checklist you can apply immediately to your own charts.",
+    ],
+    note: "Seats are intentionally limited so I can give proper attention to everyone. Recordings will not be publicly available.",
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="min-h-[80vh] flex items-center justify-center px-6">
-        <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] rounded-full bg-secondary/5 blur-[120px] pointer-events-none" />
-
+      <section className="py-16 md:py-20 px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl mx-auto text-center relative z-10"
+          className="max-w-5xl mx-auto"
         >
-          <div className="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-8">
-            <BookOpen className="w-8 h-8" />
+          {/* Back link */}
+          <Link
+            to="/"
+            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-6"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back home
+          </Link>
+
+          {/* Header */}
+          <div className="flex items-start gap-3 mb-8">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+              <BookOpen className="w-7 h-7" />
+            </div>
+            <div>
+              <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-2">
+                Workshop
+              </h1>
+              <p className="text-muted-foreground text-sm md:text-base">
+                {workshop.subtitle}
+              </p>
+            </div>
           </div>
 
-          <h1 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-6">
-            Mentorship
-          </h1>
+          {/* Main content grid */}
+          <div className="grid gap-10 md:gap-12 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start">
+            {/* Left: cover + description + agenda */}
+            <div className="space-y-10">
+              {/* Cover image */}
+              <div className="overflow-hidden rounded-3xl border border-border bg-card aspect-[16/9]">
+                <img
+                  src={workshop.coverImage}
+                  alt={workshop.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-          <div className="inline-block px-4 py-1.5 rounded-full border border-accent/30 text-accent text-sm font-medium tracking-wide uppercase mb-8">
-            Coming Soon
-          </div>
+              {/* Description */}
+              <div className="space-y-4">
+                <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground">
+                  About this workshop
+                </h2>
+                {workshop.description.map((para, idx) => (
+                  <p key={idx} className="text-muted-foreground leading-relaxed">
+                    {para}
+                  </p>
+                ))}
+                <p className="text-sm text-muted-foreground/80">{workshop.note}</p>
+              </div>
 
-          <p className="text-muted-foreground text-lg leading-relaxed mb-12">
-            Personalised 1-on-1 mentorship to fast-track your trading.
-            Spots will be limited — join the Discord to be the first to know when booking opens.
-          </p>
+              {/* Agenda */}
+              <div className="space-y-4">
+                <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground">
+                  What you&apos;ll learn
+                </h2>
+                <ul className="space-y-2 text-muted-foreground text-sm md:text-base">
+                  {workshop.agenda.map((item, idx) => (
+                    <li key={idx} className="flex gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary/70 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://discord.gg/SCHeKKCa6c"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300"
-            >
-              Join Discord for Updates
-            </a>
-            <Link
-              to="/"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back Home
-            </Link>
+            {/* Right: details + CTA */}
+            <aside className="space-y-6 md:space-y-8">
+              <div className="rounded-3xl border border-border bg-card p-6 md:p-7 space-y-5">
+                {/* Date & time */}
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-amber-400">
+                    Seats are full
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-foreground">
+                    <Calendar className="w-4 h-4 text-muted-foreground" />
+                    <span>{workshop.date}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-foreground">
+                    <Clock className="w-4 h-4 text-muted-foreground" />
+                    <span>{workshop.time}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">{workshop.duration}</p>
+                </div>
+
+                {/* Price & seats */}
+                <div className="border-t border-border/60 pt-4 mt-2 space-y-1">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground font-medium">
+                    Investment
+                  </p>
+                  <p className="font-display text-2xl font-semibold text-foreground">
+                    {workshop.price}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{workshop.seats}</p>
+                </div>
+
+                {/* CTA buttons */}
+                <div className="space-y-3 pt-2">
+                  <button
+                    disabled
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold border border-border bg-muted text-muted-foreground cursor-not-allowed opacity-70"
+                  >
+                    Seats are full
+                  </button>
+                  <a
+                    href="https://discord.gg/SCHeKKCa6c"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Join Discord to get notified about the next workshop
+                  </a>
+                </div>
+              </div>
+
+              {/* Schedule */}
+              <div className="rounded-3xl border border-border bg-card/60 p-6 md:p-7 space-y-4">
+                <h2 className="font-display text-lg md:text-xl font-semibold text-foreground">
+                  Session schedule
+                </h2>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  {workshop.schedule.map((item, idx) => (
+                    <li
+                      key={idx}
+                      className="flex flex-col gap-0.5 rounded-xl border border-border/60 bg-background/40 px-3 py-2.5"
+                    >
+                      <span className="text-[0.75rem] font-medium text-primary/90 uppercase tracking-wide">
+                        {item.time}
+                      </span>
+                      <span>{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </aside>
           </div>
         </motion.div>
       </section>
@@ -57,4 +187,4 @@ const Mentorship = () => {
   );
 };
 
-export default Mentorship;
+export default Workshop;
