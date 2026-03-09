@@ -3,6 +3,16 @@ import { ArrowRight, Youtube, Users, BookOpen, Mail, ChevronRight } from "lucide
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+
+const youtubeVideos = [
+  { id: "dQw4w9WgXcQ", title: "ICT Concepts Breakdown — Smart Money 101" },
+  { id: "dQw4w9WgXcQ", title: "Live Trading Session — Order Flow Analysis" },
+  { id: "dQw4w9WgXcQ", title: "How I Find Setups — Daily Routine" },
+  { id: "dQw4w9WgXcQ", title: "Market Recap — Key Levels & Liquidity" },
+  { id: "dQw4w9WgXcQ", title: "Risk Management — Position Sizing Guide" },
+  { id: "dQw4w9WgXcQ", title: "Reading Price Action Like a Pro" },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
