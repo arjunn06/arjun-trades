@@ -8,7 +8,7 @@ const Workshop = () => {
     title: "Arjun Trades: Free Beginner Trading Workshop",
     subtitle: "A deep-dive, practical workshop for serious traders.",
     coverImage:
-      "https://images.pexels.com/photos/5439427/pexels-photo-5439427.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "Thumbnail.png",
     date: "Sunday, 15 March 2026",
     time: "11:00 AM – 2:00 PM IST (Approximately)",
     duration: "3-4 hours · Live on Google Meet & YouTube",
