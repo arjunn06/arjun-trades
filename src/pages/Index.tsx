@@ -117,7 +117,7 @@ const Index = () => {
             },
             {
               icon: <BookOpen className="w-7 h-7" />,
-               title: "Live Workshop",
+              title: "Live Workshop",
               desc: "Deep-dive, structured iFVG workshop with live examples and Q&A.",
               link: "/workshop",
               linkText: "View Workshop",
@@ -147,25 +147,29 @@ const Index = () => {
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                   {item.desc}
                 </p>
-                {item.external ?
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300">
-                
+                {item.external ? (
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300"
+                  >
                     {item.linkText}
                     <ArrowRight className="w-4 h-4" />
-                  </a> :
-
-              <Link
-                to={item.link}
-                className="inline-flex items-center gap-1.5 text-muted-foreground text-sm font-medium">
-                
+                  </a>
+                ) : (
+                  <Link
+                    to={item.link}
+                    className={`inline-flex items-center gap-1.5 text-sm font-medium ${
+                      item.title === "Live Workshop"
+                        ? "text-primary group-hover:gap-3 transition-all duration-300"
+                        : "text-muted-foreground"
+                    }`}
+                  >
                     {item.linkText}
                     <ChevronRight className="w-4 h-4" />
                   </Link>
-              }
+                )}
               </motion.div>
             )}
           </motion.div>
@@ -287,8 +291,8 @@ const Index = () => {
               
               Discord
             </a>
-            <Link to="/mentorship" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-              Mentorship
+            <Link to="/workshop" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              Workshop
             </Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
               Contact
