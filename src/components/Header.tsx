@@ -16,9 +16,13 @@ const Header = () => {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link
           to="/"
-          className="font-display text-xl font-bold text-foreground"
+          className="flex items-center"
         >
-          Arjun Trades
+          <img
+            src="src/assets/logo.svg"
+            alt="Arjun Trades logo"
+            className="h-7 w-auto"
+          />
         </Link>
 
         {/* Desktop Navigation */}
