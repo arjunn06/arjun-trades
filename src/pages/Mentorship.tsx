@@ -2,12 +2,13 @@ import { motion } from "framer-motion";
 import { BookOpen, Clock, Calendar, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import workshopThumbnail from "@/assets/Thumbnail.png";
 
 const Workshop = () => {
   const workshop = {
     title: "Arjun Trades: Free Beginner Trading Workshop",
     subtitle: "A deep-dive, practical workshop for serious traders.",
-    coverImage: "src/assets/Thumbnail.png", 
+    coverImage: workshopThumbnail, 
     date: "Sunday, 15 March 2026",
     time: "11:00 AM – 2:00 PM IST (Approximately)",
     duration: "3-4 hours · Live on Google Meet & YouTube",
