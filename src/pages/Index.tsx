@@ -9,8 +9,8 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const },
-  }),
+    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const }
+  })
 };
 
 const Index = () => {
@@ -30,8 +30,8 @@ const Index = () => {
             animate="visible"
             variants={fadeUp}
             custom={0}
-            className="mb-6"
-          >
+            className="mb-6">
+            
             <span className="inline-block px-4 py-1.5 rounded-full border border-primary/30 text-primary text-sm font-medium tracking-wide uppercase">
               Trading Community
             </span>
@@ -42,8 +42,8 @@ const Index = () => {
             animate="visible"
             variants={fadeUp}
             custom={1}
-            className="font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-8"
-          >
+            className="font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-8">
+            
             <span className="text-foreground">Arjun</span>{" "}
             <span className="neon-text text-primary">Trades</span>
           </motion.h1>
@@ -53,8 +53,8 @@ const Index = () => {
             animate="visible"
             variants={fadeUp}
             custom={2}
-            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
+            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+            
             Master the markets with precision. Join a community of disciplined traders
             learning ICT concepts, smart money, and institutional order flow.
           </motion.p>
@@ -64,14 +64,14 @@ const Index = () => {
             animate="visible"
             variants={fadeUp}
             custom={3}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
+            className="flex flex-col sm:flex-row gap-4 justify-center">
+            
             <a
               href="https://discord.gg/SCHeKKCa6c"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
-            >
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base">
+              
               <Users className="w-5 h-5" />
               Join the Community
             </a>
@@ -79,8 +79,8 @@ const Index = () => {
               href="https://youtube.com/@arjun_ifvg"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-base"
-            >
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-base">
+              
               <Youtube className="w-5 h-5" />
               Watch on YouTube
             </a>
@@ -95,40 +95,40 @@ const Index = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="grid md:grid-cols-3 gap-6"
-          >
+            className="grid md:grid-cols-3 gap-6">
+            
             {[
-              {
-                icon: <Youtube className="w-7 h-7" />,
-                title: "YouTube Content",
-                desc: "Free trading education — breakdowns, recaps, and ICT concepts explained clearly.",
-                link: "https://youtube.com/@arjun_ifvg",
-                linkText: "Watch Now",
-                external: true,
-              },
-              {
-                icon: <BookOpen className="w-7 h-7" />,
-                title: "1-on-1 Mentorship",
-                desc: "Personalised guidance to accelerate your trading journey. Limited spots available.",
-                link: "/mentorship",
-                linkText: "Coming Soon",
-                external: false,
-              },
-              {
-                icon: <Users className="w-7 h-7" />,
-                title: "Discord Community",
-                desc: "Connect with like-minded traders. Daily analysis, alerts, and live discussion.",
-                link: "https://discord.gg/SCHeKKCa6c",
-                linkText: "Join Discord",
-                external: true,
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                custom={i}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-500"
-              >
+            {
+              icon: <Youtube className="w-7 h-7" />,
+              title: "YouTube Content",
+              desc: "Free trading education — breakdowns, recaps, and ICT concepts explained clearly.",
+              link: "https://youtube.com/@arjun_ifvg",
+              linkText: "Watch Now",
+              external: true
+            },
+            {
+              icon: <BookOpen className="w-7 h-7" />,
+              title: "1-on-1 Mentorship",
+              desc: "Personalised guidance to accelerate your trading journey. Limited spots available.",
+              link: "/mentorship",
+              linkText: "Coming Soon",
+              external: false
+            },
+            {
+              icon: <Users className="w-7 h-7" />,
+              title: "Discord Community",
+              desc: "Connect with like-minded traders. Daily analysis, alerts, and live discussion.",
+              link: "https://discord.gg/SCHeKKCa6c",
+              linkText: "Join Discord",
+              external: true
+            }].
+            map((item, i) =>
+            <motion.div
+              key={i}
+              variants={fadeUp}
+              custom={i}
+              className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-500">
+              
                 <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
                   {item.icon}
                 </div>
@@ -138,27 +138,27 @@ const Index = () => {
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                   {item.desc}
                 </p>
-                {item.external ? (
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300"
-                  >
+                {item.external ?
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300">
+                
                     {item.linkText}
                     <ArrowRight className="w-4 h-4" />
-                  </a>
-                ) : (
-                  <Link
-                    to={item.link}
-                    className="inline-flex items-center gap-1.5 text-muted-foreground text-sm font-medium"
-                  >
+                  </a> :
+
+              <Link
+                to={item.link}
+                className="inline-flex items-center gap-1.5 text-muted-foreground text-sm font-medium">
+                
                     {item.linkText}
                     <ChevronRight className="w-4 h-4" />
                   </Link>
-                )}
+              }
               </motion.div>
-            ))}
+            )}
           </motion.div>
         </div>
       </section>
@@ -169,42 +169,42 @@ const Index = () => {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
+            viewport={{ once: true, amount: 0.3 }}>
+            
             <motion.h2
               variants={fadeUp}
               custom={0}
-              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center"
-            >
+              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center">
+              
               Latest from YouTube
             </motion.h2>
             <motion.p
               variants={fadeUp}
               custom={1}
-              className="text-muted-foreground text-center mb-12 max-w-xl mx-auto"
-            >
-              Free trading education — new videos every week.
+              className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">Free trading education — daily livestreams on YouTube
+
+
             </motion.p>
             <motion.div
               variants={fadeUp}
               custom={2}
-              className="aspect-video rounded-2xl overflow-hidden border border-border bg-card"
-            >
+              className="aspect-video rounded-2xl overflow-hidden border border-border bg-card">
+              
               <iframe
                 src="https://www.youtube.com/embed?listType=user_uploads&list=arjun_ifvg"
                 title="Arjun Trades YouTube"
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+                allowFullScreen />
+              
             </motion.div>
             <motion.div variants={fadeUp} custom={3} className="text-center mt-8">
               <a
                 href="https://youtube.com/@arjun_ifvg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all duration-300"
-              >
+                className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all duration-300">
+                
                 View all videos on YouTube
                 <ArrowRight className="w-4 h-4" />
               </a>
@@ -219,23 +219,23 @@ const Index = () => {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
+            viewport={{ once: true, amount: 0.3 }}>
+            
             <motion.div variants={fadeUp} custom={0}>
               <Mail className="w-10 h-10 text-primary mx-auto mb-6" />
             </motion.div>
             <motion.h2
               variants={fadeUp}
               custom={1}
-              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4"
-            >
+              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4">
+              
               Stay in the Loop
             </motion.h2>
             <motion.p
               variants={fadeUp}
               custom={2}
-              className="text-muted-foreground mb-8 max-w-lg mx-auto"
-            >
+              className="text-muted-foreground mb-8 max-w-lg mx-auto">
+              
               Get weekly trade recaps, market insights, and exclusive content delivered to your inbox.
             </motion.p>
             <motion.div variants={fadeUp} custom={3}>
@@ -259,16 +259,16 @@ const Index = () => {
               href="https://youtube.com/@arjun_ifvg"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-            >
+              className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              
               YouTube
             </a>
             <a
               href="https://discord.gg/SCHeKKCa6c"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-            >
+              className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              
               Discord
             </a>
             <Link to="/mentorship" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
@@ -281,8 +281,8 @@ const Index = () => {
           <p className="text-muted-foreground text-sm">© 2025 Arjun Trades</p>
         </div>
       </footer>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
