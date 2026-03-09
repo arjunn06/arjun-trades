@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 
 const Workshop = () => {
   const workshop = {
-    title: "Arjun Trades iFVG Workshop",
+    title: "Arjun Trades: Free Beginner Trading Workshop",
     subtitle: "A deep-dive, practical workshop for serious traders.",
     coverImage:
       "https://images.pexels.com/photos/5439427/pexels-photo-5439427.jpeg?auto=compress&cs=tinysrgb&w=1600",
