@@ -19,8 +19,8 @@ const Header = () => {
           className="flex items-center"
         >
           <svg
-            width="500"
-            height="500"
+            width="192"
+            height="192"
             viewBox="0 0 192 192"
             xmlns="http://www.w3.org/2000/svg"
             className="h-12 w-auto"
@@ -43,10 +43,10 @@ const Header = () => {
             YouTube
           </a>
           <Link
-            to="/mentorship"
+            to="/workshop"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
-            Mentorship
+            Workshop
           </Link>
           <a
             href="https://discord.gg/SCHeKKCa6c"
@@ -93,8 +93,8 @@ const Header = () => {
               >
                 YouTube
               </a>
-              <Link to="/mentorship" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
-                Mentorship
+              <Link to="/workshop" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
+                Workshop
               </Link>
               <a
                 href="https://discord.gg/SCHeKKCa6c"
