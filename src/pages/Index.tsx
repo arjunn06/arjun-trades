@@ -117,10 +117,10 @@ const Index = () => {
             },
             {
               icon: <BookOpen className="w-7 h-7" />,
-              title: "1-on-1 Mentorship",
-              desc: "Personalised guidance to accelerate your trading journey. Limited spots available.",
-              link: "/mentorship",
-              linkText: "Coming Soon",
+               title: "Live Workshop",
+              desc: "Deep-dive, structured iFVG workshop with live examples and Q&A.",
+              link: "/workshop",
+              linkText: "View Workshop",
               external: false
             },
             {
