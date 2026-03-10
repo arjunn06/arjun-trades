@@ -7,6 +7,11 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Workshop from "./pages/Mentorship";
 import Contact from "./pages/Contact";
+import Blogs from "./pages/Blogs";
+import BlogPost from "./pages/BlogPost";
+import AdminLogin from "./pages/AdminLogin";
+import AdminBlogs from "./pages/AdminBlogs";
+import AdminBlogEditor from "./pages/AdminBlogEditor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
