@@ -129,7 +129,7 @@ const Index = () => {
               desc: "Trading insights, market analysis, and lessons from the journey.",
               link: "/blogs",
               linkText: "Read Blogs",
-              external: false
+              external: true
             },
             {
               icon: <Users className="w-7 h-7" />,
