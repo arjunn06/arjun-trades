@@ -6,7 +6,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import NewsletterSheet from "@/components/NewsletterSheet";
+
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
