@@ -106,11 +106,9 @@ const Header = () => {
               >
                 Discord
               </a>
-              <NewsletterSheet>
-                <button onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground text-left">
-                  Newsletter
-                </button>
-              </NewsletterSheet>
+              <Link to="/blogs" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
+                Blogs
+              </Link>
               <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
                 Contact
               </Link>
