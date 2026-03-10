@@ -6,7 +6,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import NewsletterSheet from "@/components/NewsletterSheet";
+
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,11 +56,12 @@ const Header = () => {
           >
             Discord
           </a>
-          <NewsletterSheet>
-            <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Newsletter
-            </button>
-          </NewsletterSheet>
+          <Link
+            to="/blogs"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Blogs
+          </Link>
           <Link
             to="/contact"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -105,11 +106,9 @@ const Header = () => {
               >
                 Discord
               </a>
-              <NewsletterSheet>
-                <button onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground text-left">
-                  Newsletter
-                </button>
-              </NewsletterSheet>
+              <Link to="/blogs" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
+                Blogs
+              </Link>
               <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
                 Contact
               </Link>
