@@ -56,11 +56,12 @@ const Header = () => {
           >
             Discord
           </a>
-          <NewsletterSheet>
-            <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Newsletter
-            </button>
-          </NewsletterSheet>
+          <Link
+            to="/blogs"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Blogs
+          </Link>
           <Link
             to="/contact"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
