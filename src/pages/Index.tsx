@@ -104,7 +104,7 @@ const Index = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="grid md:grid-cols-3 gap-6">
+            className="grid md:grid-cols-4 gap-6">
             
             {[
             {
@@ -121,6 +121,14 @@ const Index = () => {
               desc: "Deep-dive, structured iFVG workshop with live examples and Q&A.",
               link: "/workshop",
               linkText: "View Workshop",
+              external: false
+            },
+            {
+              icon: <BookOpen className="w-7 h-7" />,
+              title: "Blogs",
+              desc: "Trading insights, market analysis, and lessons from the journey.",
+              link: "/blogs",
+              linkText: "Read Blogs",
               external: false
             },
             {
