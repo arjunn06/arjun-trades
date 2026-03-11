@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_sessions: {
+        Row: {
+          blog_id: string
+          created_at: string
+          duration_seconds: number | null
+          id: string
+          session_start: string
+        }
+        Insert: {
+          blog_id: string
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          session_start?: string
+        }
+        Update: {
+          blog_id?: string
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          session_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_sessions_blog_id_fkey"
+            columns: ["blog_id"]
+            isOneToOne: false
+            referencedRelation: "blogs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_views: {
         Row: {
           blog_id: string

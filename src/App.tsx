@@ -12,6 +12,7 @@ import BlogPost from "./pages/BlogPost";
 import AdminLogin from "./pages/AdminLogin";
 import AdminBlogs from "./pages/AdminBlogs";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
+import AdminBlogMetrics from "./pages/AdminBlogMetrics";
 import AdminContacts from "./pages/AdminContacts";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/admin/blogs" element={<AdminBlogs />} />
           <Route path="/admin/blogs/new" element={<AdminBlogEditor />} />
           <Route path="/admin/blogs/edit/:id" element={<AdminBlogEditor />} />
+          <Route path="/admin/blogs/metrics/:id" element={<AdminBlogMetrics />} />
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
