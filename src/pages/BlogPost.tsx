@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,6 +17,8 @@ const BlogPost = () => {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
   const [viewCount, setViewCount] = useState(0);
+  const sessionIdRef = useRef<string | null>(null);
+  const startTimeRef = useRef<number>(Date.now());
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -34,6 +36,15 @@ const BlogPost = () => {
         // Record view
         await supabase.from("blog_views").insert({ blog_id: data.id });
 
+        // Start session tracking
+        startTimeRef.current = Date.now();
+        const { data: session } = await supabase
+          .from("blog_sessions")
+          .insert({ blog_id: data.id })
+          .select("id")
+          .single();
+        if (session) sessionIdRef.current = session.id;
+
         // Get view count
         const { count } = await supabase
           .from("blog_views")
@@ -43,6 +54,32 @@ const BlogPost = () => {
       }
     };
     fetchBlog();
+
+    // Update session duration on unmount / tab close
+    const updateDuration = () => {
+      if (!sessionIdRef.current) return;
+      const seconds = Math.round((Date.now() - startTimeRef.current) / 1000);
+      navigator.sendBeacon(
+        `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/blog_sessions?id=eq.${sessionIdRef.current}`,
+        new Blob(
+          [JSON.stringify({ duration_seconds: seconds })],
+          { type: "application/json" }
+        )
+      );
+    };
+
+    const handleVisChange = () => {
+      if (document.visibilityState === "hidden") updateDuration();
+    };
+
+    window.addEventListener("beforeunload", updateDuration);
+    document.addEventListener("visibilitychange", handleVisChange);
+
+    return () => {
+      updateDuration();
+      window.removeEventListener("beforeunload", updateDuration);
+      document.removeEventListener("visibilitychange", handleVisChange);
+    };
   }, [id]);
 
   if (loading) {
