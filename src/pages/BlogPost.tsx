@@ -56,29 +56,36 @@ const BlogPost = () => {
     fetchBlog();
 
     // Update session duration on unmount / tab close
-    const updateDuration = () => {
+    const updateDuration = async () => {
       if (!sessionIdRef.current) return;
       const seconds = Math.round((Date.now() - startTimeRef.current) / 1000);
-      navigator.sendBeacon(
-        `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/blog_sessions?id=eq.${sessionIdRef.current}`,
-        new Blob(
-          [JSON.stringify({ duration_seconds: seconds })],
-          { type: "application/json" }
-        )
-      );
+      if (seconds < 1) return;
+      await supabase
+        .from("blog_sessions")
+        .update({ duration_seconds: seconds })
+        .eq("id", sessionIdRef.current);
+      sessionIdRef.current = null; // prevent double-update
     };
 
-    const handleVisChange = () => {
-      if (document.visibilityState === "hidden") updateDuration();
+    const handleBeforeUnload = () => {
+      if (!sessionIdRef.current) return;
+      const seconds = Math.round((Date.now() - startTimeRef.current) / 1000);
+      // Use sendBeacon as last resort for page close
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/blog_sessions?id=eq.${sessionIdRef.current}`;
+      const headers = {
+        apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      };
+      fetch(url, { method: "PATCH", headers, body: JSON.stringify({ duration_seconds: seconds }), keepalive: true }).catch(() => {});
     };
 
-    window.addEventListener("beforeunload", updateDuration);
-    document.addEventListener("visibilitychange", handleVisChange);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       updateDuration();
-      window.removeEventListener("beforeunload", updateDuration);
-      document.removeEventListener("visibilitychange", handleVisChange);
     };
   }, [id]);
 
