@@ -12,6 +12,7 @@ import BlogPost from "./pages/BlogPost";
 import AdminLogin from "./pages/AdminLogin";
 import AdminBlogs from "./pages/AdminBlogs";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
+import AdminBlogMetrics from "./pages/AdminBlogMetrics";
 import AdminContacts from "./pages/AdminContacts";
 import NotFound from "./pages/NotFound";
 
