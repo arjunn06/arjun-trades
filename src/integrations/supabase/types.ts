@@ -14,6 +14,35 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_views: {
+        Row: {
+          blog_id: string
+          created_at: string
+          id: string
+          viewer_ip: string | null
+        }
+        Insert: {
+          blog_id: string
+          created_at?: string
+          id?: string
+          viewer_ip?: string | null
+        }
+        Update: {
+          blog_id?: string
+          created_at?: string
+          id?: string
+          viewer_ip?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_views_blog_id_fkey"
+            columns: ["blog_id"]
+            isOneToOne: false
+            referencedRelation: "blogs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blogs: {
         Row: {
           author_id: string
@@ -44,6 +73,36 @@ export type Database = {
           published?: boolean
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          read: boolean
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          read?: boolean
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          read?: boolean
+          subject?: string
         }
         Relationships: []
       }
