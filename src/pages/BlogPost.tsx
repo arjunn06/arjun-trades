@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 
@@ -16,6 +16,7 @@ const BlogPost = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
+  const [viewCount, setViewCount] = useState(0);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -28,6 +29,18 @@ const BlogPost = () => {
 
       setBlog(data);
       setLoading(false);
+
+      if (data) {
+        // Record view
+        await supabase.from("blog_views").insert({ blog_id: data.id });
+
+        // Get view count
+        const { count } = await supabase
+          .from("blog_views")
+          .select("*", { count: "exact", head: true })
+          .eq("blog_id", data.id);
+        setViewCount(count || 0);
+      }
     };
     fetchBlog();
   }, [id]);
@@ -68,16 +81,15 @@ const BlogPost = () => {
         <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 leading-tight">
           {blog.title}
         </h1>
-        <p className="text-muted-foreground mb-8">
-          {new Date(blog.created_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-        </p>
+        <div className="flex items-center gap-4 text-muted-foreground mb-8">
+          <span>{new Date(blog.created_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
+          <span className="inline-flex items-center gap-1">
+            <Eye className="w-4 h-4" /> {viewCount} {viewCount === 1 ? "view" : "views"}
+          </span>
+        </div>
 
         {blog.cover_image_url && (
-          <img
-            src={blog.cover_image_url}
-            alt={blog.title}
-            className="w-full rounded-2xl mb-10 object-cover max-h-[500px]"
-          />
+          <img src={blog.cover_image_url} alt={blog.title} className="w-full rounded-2xl mb-10 object-cover max-h-[500px]" />
         )}
 
         <div
