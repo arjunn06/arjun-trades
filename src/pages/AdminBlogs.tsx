@@ -169,6 +169,9 @@ const AdminBlogs = () => {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
+                  <button onClick={() => navigate(`/admin/blogs/metrics/${blog.id}`)} className="p-2 text-muted-foreground hover:text-foreground transition-colors" title="Metrics">
+                    <BarChart3 className="w-4 h-4" />
+                  </button>
                   <button onClick={() => togglePublish(blog.id, blog.published)} className="p-2 text-muted-foreground hover:text-foreground transition-colors" title={blog.published ? "Unpublish" : "Publish"}>
                     {blog.published ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                   </button>
