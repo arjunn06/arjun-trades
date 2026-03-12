@@ -241,6 +241,76 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Featured Playlists Section */}
+      <section className="py-24 px-6 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}>
+            
+            <motion.h2
+              variants={fadeUp}
+              custom={0}
+              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center">
+              Featured Playlists
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              custom={1}
+              className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">
+              Structured courses to take you from beginner to confident trader
+            </motion.p>
+
+            <motion.div variants={fadeUp} custom={2} className="grid md:grid-cols-2 gap-8">
+              {[
+                {
+                  title: "Bootcamp: Basics to Trading",
+                  description: "Start your trading journey from scratch — learn the fundamentals, chart reading, and core concepts step by step.",
+                  url: "https://www.youtube.com/playlist?list=PL6eNJ1hMC0iaity1hyA8V59IMEk_6nldG",
+                  embedId: "videoseries?list=PL6eNJ1hMC0iaity1hyA8V59IMEk_6nldG",
+                },
+                {
+                  title: "iFVG Free Course",
+                  description: "Master the iFVG trading strategy with this comprehensive free course — from theory to live market application.",
+                  url: "https://www.youtube.com/playlist?list=PL6eNJ1hMC0ibTLpZZPrDqk5abwsqZ5hV8",
+                  embedId: "videoseries?list=PL6eNJ1hMC0ibTLpZZPrDqk5abwsqZ5hV8",
+                },
+              ].map((playlist, i) => (
+                <a
+                  key={i}
+                  href={playlist.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-500">
+                  <div className="aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${playlist.embedId}`}
+                      title={playlist.title}
+                      className="w-full h-full pointer-events-none"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-display font-semibold text-xl text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {playlist.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                      {playlist.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300">
+                      Watch Playlist <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Newsletter Section */}
       <section className="py-24 px-6 border-t border-border">
         <div className="max-w-3xl mx-auto text-center">
