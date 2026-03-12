@@ -138,7 +138,7 @@ const BlogPost = () => {
 
         <div
           className="prose prose-invert prose-lg max-w-none text-foreground [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_h2]:text-foreground [&_h2]:font-display [&_h2]:font-semibold [&_h3]:text-foreground"
-          dangerouslySetInnerHTML={{ __html: blog.content }}
+          dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }}
         />
       </article>
     </div>
