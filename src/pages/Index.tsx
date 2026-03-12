@@ -375,12 +375,13 @@ const Index = () => {
 
             {/* Photo */}
             <motion.div variants={fadeUp} custom={2} className="flex justify-center md:justify-end">
-              <div className="relative w-full max-w-md torn-paper">
+              <div className="relative w-full max-w-md">
                 <img
                   src={arjunPhoto}
                   alt="Arjun S"
-                  className="w-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="w-full rounded-2xl object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
               </div>
             </motion.div>
           </motion.div>
