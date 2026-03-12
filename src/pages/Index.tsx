@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Youtube, Users, BookOpen, Mail, ChevronRight } from "lucide-react";
+import { ArrowRight, Youtube, Users, BookOpen, Mail, ChevronRight, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import arjunPhoto from "@/assets/arjun-mugshot.png";
 
 const youtubeVideos = [
   { id: "6DWzpfwnKoE", title: "The Reality of Trading Patterns EXPOSED | Why Chart Patterns Fail (Tamil)" },
@@ -311,38 +312,77 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+      {/* About Me Section */}
       <section className="py-24 px-6 border-t border-border">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}>
-            
-            <motion.div variants={fadeUp} custom={0}>
-              <Mail className="w-10 h-10 text-primary mx-auto mb-6" />
-            </motion.div>
-            <motion.h2
-              variants={fadeUp}
-              custom={1}
-              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4">
-              
-              Stay in the Loop
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              custom={2}
-              className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              
-              Get weekly trade recaps, market insights, and exclusive content delivered to your inbox.
-            </motion.p>
-            <motion.div variants={fadeUp} custom={3}>
-              <NewsletterSheet>
-                <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base">
-                  Subscribe to Newsletter
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </NewsletterSheet>
+            viewport={{ once: true, amount: 0.2 }}
+            className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+
+            {/* Details */}
+            <div>
+              <motion.h2
+                variants={fadeUp}
+                custom={0}
+                className="font-display font-bold text-4xl md:text-6xl text-foreground mb-12 tracking-tight">
+                about
+              </motion.h2>
+
+              <div className="space-y-8">
+                {[
+                  { label: "FULL NAME", value: "Arjun S" },
+                  { label: "ROLE", value: "Trader, Content Creator, Designer" },
+                  { label: "EDUCATION", value: "nevermind." },
+                  { label: "BORN", value: "June 6, 2003" },
+                ].map((item, i) => (
+                  <motion.div key={i} variants={fadeUp} custom={i + 1}>
+                    <span className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground">
+                      {item.label}
+                    </span>
+                    <p className="text-foreground font-display font-bold text-xl md:text-2xl mt-1">
+                      {item.value}
+                    </p>
+                  </motion.div>
+                ))}
+
+                <motion.div variants={fadeUp} custom={5}>
+                  <span className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground">
+                    REACH ME
+                  </span>
+                  <div className="flex items-center gap-4 mt-3">
+                    <a
+                      href="https://instagram.com/s.arjunn"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-11 h-11 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="mailto:arjun@ifvg.in"
+                      className="w-11 h-11 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
+                      aria-label="Email"
+                    >
+                      <Mail className="w-5 h-5" />
+                    </a>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Photo */}
+            <motion.div variants={fadeUp} custom={2} className="flex justify-center md:justify-end">
+              <div className="relative w-full max-w-md">
+                <img
+                  src={arjunPhoto}
+                  alt="Arjun S"
+                  className="w-full rounded-2xl object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+              </div>
             </motion.div>
           </motion.div>
         </div>
