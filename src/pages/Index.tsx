@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Youtube, Users, BookOpen, Mail, ChevronRight } from "lucide-react";
+import { ArrowRight, Youtube, Users, BookOpen, Mail, ChevronRight, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import arjunPhoto from "@/assets/arjun-mugshot.png";
 
 const youtubeVideos = [
   { id: "6DWzpfwnKoE", title: "The Reality of Trading Patterns EXPOSED | Why Chart Patterns Fail (Tamil)" },
