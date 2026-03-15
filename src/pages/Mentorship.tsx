@@ -202,6 +202,83 @@ const Workshop = () => {
   );
 };
 
+const TestimonialCarousel = () => {
+  const [testimonials, setTestimonials] = useState<{ name: string; rating: number; feedback: string; created_at: string }[]>([]);
+  const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await supabase
+        .from("workshop_feedback")
+        .select("name, rating, feedback, created_at")
+        .order("created_at", { ascending: false });
+      if (data) setTestimonials(data);
+      setLoading(false);
+    };
+    fetch();
+  }, []);
+
+  if (loading || testimonials.length === 0) return null;
+
+  const prev = () => setCurrent((c) => (c === 0 ? testimonials.length - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === testimonials.length - 1 ? 0 : c + 1));
+  const t = testimonials[current];
+
+  return (
+    <div className="mt-16">
+      <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-6">
+        What attendees say
+      </h2>
+      <div className="relative rounded-3xl border border-border bg-card p-6 md:p-8">
+        <Quote className="w-8 h-8 text-primary/20 mb-4" />
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p className="text-foreground leading-relaxed text-base md:text-lg mb-4">
+            "{t.feedback}"
+          </p>
+          <div className="flex items-center gap-3">
+            <div className="flex gap-0.5">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star
+                  key={s}
+                  className={`w-4 h-4 ${s <= t.rating ? "text-primary fill-primary" : "text-muted-foreground/20"}`}
+                />
+              ))}
+            </div>
+            <span className="text-sm font-medium text-foreground">{t.name}</span>
+          </div>
+        </motion.div>
+
+        {testimonials.length > 1 && (
+          <div className="flex items-center gap-2 mt-6">
+            <button
+              onClick={prev}
+              className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="text-xs text-muted-foreground">
+              {current + 1} / {testimonials.length}
+            </span>
+            <button
+              onClick={next}
+              className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const FeedbackForm = () => {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
