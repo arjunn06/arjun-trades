@@ -156,6 +156,30 @@ export type Database = {
         }
         Relationships: []
       }
+      workshop_feedback: {
+        Row: {
+          created_at: string
+          feedback: string
+          id: string
+          name: string
+          rating: number
+        }
+        Insert: {
+          created_at?: string
+          feedback: string
+          id?: string
+          name: string
+          rating: number
+        }
+        Update: {
+          created_at?: string
+          feedback?: string
+          id?: string
+          name?: string
+          rating?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
