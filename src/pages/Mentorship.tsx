@@ -152,12 +152,14 @@ const Workshop = () => {
 
                 {/* CTA buttons */}
                 <div className="space-y-3 pt-2">
-                  <button
-                    disabled
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold border border-border bg-muted text-muted-foreground cursor-not-allowed opacity-70"
+                  <a
+                    href="https://youtu.be/YifBHSrJhqc"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 transition-all"
                   >
-                    Seats are full
-                  </button>
+                    Watch on YouTube
+                  </a>
                   <a
                     href="https://discord.gg/SCHeKKCa6c"
                     target="_blank"
