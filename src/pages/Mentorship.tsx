@@ -14,7 +14,7 @@ const Workshop = () => {
     coverImage: workshopThumbnail, 
     date: "Sunday, 15 March 2026",
     time: "11:00 AM – 2:00 PM IST (Approximately)",
-    duration: "3-4 hours · Live on Google Meet & YouTube",
+    duration: "3:27 hrs · Live on Google Meet & YouTube",
     price: "₹0",
     seats: "100 total seats",
     agenda: [
