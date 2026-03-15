@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, Clock, Calendar, ArrowLeft, Star, Send } from "lucide-react";
+import { BookOpen, Clock, Calendar, ArrowLeft, Star, Send, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
