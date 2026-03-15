@@ -125,7 +125,7 @@ const Workshop = () => {
               <div className="rounded-3xl border border-border bg-card p-6 md:p-7 space-y-5">
                 {/* Date & time */}
                 <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-amber-400">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-emerald-400">
                     Workshop is completed.
                   </div>
                   <div className="flex items-center gap-3 text-sm text-foreground">
