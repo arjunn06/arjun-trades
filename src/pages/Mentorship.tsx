@@ -190,8 +190,116 @@ const Workshop = () => {
               </div>
             </aside>
           </div>
+
+          {/* Feedback Form */}
+          <FeedbackForm />
         </motion.div>
       </section>
+    </div>
+  );
+};
+
+const FeedbackForm = () => {
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || rating === 0 || !feedback.trim()) {
+      toast({ title: "Please fill all fields and select a rating", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("workshop_feedback").insert({
+      name: name.trim(),
+      rating,
+      feedback: feedback.trim(),
+    } as any);
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Something went wrong", variant: "destructive" });
+      return;
+    }
+    setSubmitted(true);
+    toast({ title: "Thank you for your feedback!" });
+  };
+
+  if (submitted) {
+    return (
+      <div className="mt-12 rounded-3xl border border-border bg-card p-8 text-center">
+        <Star className="w-8 h-8 text-primary fill-primary mx-auto mb-3" />
+        <h3 className="font-display text-xl font-semibold text-foreground mb-1">Thanks for your feedback!</h3>
+        <p className="text-sm text-muted-foreground">Your response has been recorded.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-12 rounded-3xl border border-border bg-card p-6 md:p-8">
+      <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-1">
+        Workshop Feedback
+      </h2>
+      <p className="text-sm text-muted-foreground mb-6">
+        Attended the workshop? We'd love to hear your thoughts.
+      </p>
+      <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
+        <div>
+          <label className="text-sm font-medium text-foreground mb-1.5 block">Name</label>
+          <input
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder="Your name"
+            maxLength={100}
+            className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium text-foreground mb-1.5 block">Rating</label>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map(star => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => setRating(star)}
+                onMouseEnter={() => setHoveredRating(star)}
+                onMouseLeave={() => setHoveredRating(0)}
+                className="p-1 transition-transform hover:scale-110"
+              >
+                <Star
+                  className={`w-6 h-6 transition-colors ${
+                    star <= (hoveredRating || rating)
+                      ? "text-primary fill-primary"
+                      : "text-muted-foreground/30"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-foreground mb-1.5 block">Feedback</label>
+          <textarea
+            value={feedback}
+            onChange={e => setFeedback(e.target.value)}
+            placeholder="What did you think of the workshop?"
+            maxLength={1000}
+            rows={4}
+            className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={submitting}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all disabled:opacity-50"
+        >
+          <Send className="w-4 h-4" />
+          {submitting ? "Submitting…" : "Submit Feedback"}
+        </button>
+      </form>
     </div>
   );
 };

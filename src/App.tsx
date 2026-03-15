@@ -38,6 +38,7 @@ const App = () => (
           <Route path="/admin/blogs/edit/:id" element={<AdminBlogEditor />} />
           <Route path="/admin/blogs/metrics/:id" element={<AdminBlogMetrics />} />
           <Route path="/admin/contacts" element={<AdminContacts />} />
+          <Route path="/admin/feedback" element={<AdminFeedback />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
