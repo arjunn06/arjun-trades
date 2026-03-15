@@ -223,9 +223,6 @@ const TestimonialCarousel = () => {
 
   if (loading || testimonials.length === 0) return null;
 
-  const prev = () => setCurrent((c) => (c === 0 ? testimonials.length - 1 : c - 1));
-  const next = () => setCurrent((c) => (c === testimonials.length - 1 ? 0 : c + 1));
-  const t = testimonials[current];
 
   const perPage = 3;
   const totalPages = Math.ceil(testimonials.length / perPage);
