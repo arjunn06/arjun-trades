@@ -191,6 +191,9 @@ const Workshop = () => {
             </aside>
           </div>
 
+          {/* Testimonials */}
+          <TestimonialCarousel />
+
           {/* Feedback Form */}
           <FeedbackForm />
         </motion.div>
