@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, Clock, Calendar, ArrowLeft } from "lucide-react";
+import { BookOpen, Clock, Calendar, ArrowLeft, Star, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import workshopThumbnail from "@/assets/Thumbnail.png";
 
 const Workshop = () => {
