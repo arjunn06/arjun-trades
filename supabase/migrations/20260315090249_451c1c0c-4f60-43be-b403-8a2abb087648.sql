@@ -1,0 +1,1 @@
+CREATE POLICY "Anyone can read feedback" ON public.workshop_feedback FOR SELECT TO public USING (true);
