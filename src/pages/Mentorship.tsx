@@ -227,56 +227,69 @@ const TestimonialCarousel = () => {
   const next = () => setCurrent((c) => (c === testimonials.length - 1 ? 0 : c + 1));
   const t = testimonials[current];
 
+  const perPage = 3;
+  const totalPages = Math.ceil(testimonials.length / perPage);
+  const page = current % totalPages;
+  const visible = testimonials.slice(page * perPage, page * perPage + perPage);
+
+  const prev = () => setCurrent((c) => (c === 0 ? totalPages - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === totalPages - 1 ? 0 : c + 1));
+
   return (
     <div className="mt-16">
       <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-6">
         What attendees say
       </h2>
-      <div className="relative rounded-3xl border border-border bg-card p-6 md:p-8">
-        <Quote className="w-8 h-8 text-primary/20 mb-4" />
-        <motion.div
-          key={current}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          <p className="text-foreground leading-relaxed text-base md:text-lg mb-4">
-            "{t.feedback}"
-          </p>
-          <div className="flex items-center gap-3">
-            <div className="flex gap-0.5">
-              {[1, 2, 3, 4, 5].map((s) => (
-                <Star
-                  key={s}
-                  className={`w-4 h-4 ${s <= t.rating ? "text-primary fill-primary" : "text-muted-foreground/20"}`}
-                />
-              ))}
+      <motion.div
+        key={page}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3 }}
+        className="grid gap-4 md:grid-cols-3"
+      >
+        {visible.map((t, idx) => (
+          <div
+            key={idx}
+            className="rounded-2xl border border-border bg-card p-5 space-y-3"
+          >
+            <Quote className="w-6 h-6 text-primary/20" />
+            <p className="text-foreground leading-relaxed text-sm line-clamp-4">
+              "{t.feedback}"
+            </p>
+            <div className="flex items-center gap-2 pt-1">
+              <div className="flex gap-0.5">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Star
+                    key={s}
+                    className={`w-3.5 h-3.5 ${s <= t.rating ? "text-primary fill-primary" : "text-muted-foreground/20"}`}
+                  />
+                ))}
+              </div>
+              <span className="text-xs font-medium text-foreground">{t.name}</span>
             </div>
-            <span className="text-sm font-medium text-foreground">{t.name}</span>
           </div>
-        </motion.div>
+        ))}
+      </motion.div>
 
-        {testimonials.length > 1 && (
-          <div className="flex items-center gap-2 mt-6">
-            <button
-              onClick={prev}
-              className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <span className="text-xs text-muted-foreground">
-              {current + 1} / {testimonials.length}
-            </span>
-            <button
-              onClick={next}
-              className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-      </div>
+      {totalPages > 1 && (
+        <div className="flex items-center gap-2 mt-6">
+          <button
+            onClick={prev}
+            className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <span className="text-xs text-muted-foreground">
+            {page + 1} / {totalPages}
+          </span>
+          <button
+            onClick={next}
+            className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
