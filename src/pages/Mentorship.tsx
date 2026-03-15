@@ -83,14 +83,16 @@ const Workshop = () => {
             {/* Left: cover + description + agenda */}
             <div className="space-y-10">
               {/* Cover image */}
-              <div className="overflow-hidden rounded-3xl border border-border bg-card aspect-[16/9]">
-                <img
-                  src={workshop.coverImage}
-                  alt={workshop.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
+             {/* Workshop video */}
+<div className="overflow-hidden rounded-3xl border border-border bg-card aspect-[16/9]">
+  <iframe
+    className="w-full h-full"
+    src="https://www.youtube.com/embed/YifBHSrJhqc"
+    title="Arjun Trades Free Beginner Trading Workshop"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+  />
+</div>
               {/* Description */}
               <div className="space-y-4">
                 <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground">
