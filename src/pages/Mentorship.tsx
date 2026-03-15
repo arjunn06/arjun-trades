@@ -126,7 +126,7 @@ const Workshop = () => {
                 {/* Date & time */}
                 <div className="space-y-3">
                   <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-amber-400">
-                    Seats are full
+                    Workshop is completed.
                   </div>
                   <div className="flex items-center gap-3 text-sm text-foreground">
                     <Calendar className="w-4 h-4 text-muted-foreground" />
