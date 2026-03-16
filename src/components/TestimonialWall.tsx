@@ -71,7 +71,7 @@ const ScrollColumn = ({
               key={idx}
               className="rounded-2xl border border-border bg-card p-5 flex flex-col"
             >
-            <p className="text-foreground text-sm leading-relaxed line-clamp-4">
+            <p className="text-foreground text-sm leading-relaxed">
               "{t.feedback}"
             </p>
 
