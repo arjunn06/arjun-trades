@@ -345,7 +345,7 @@ const Index = () => {
               Contact
             </Link>
           </div>
-          <p className="text-muted-foreground text-sm">© 2025 Arjun Trades</p>
+          <p className="text-muted-foreground text-sm">© 2026 Arjun Trades</p>
         </div>
       </footer>
     </div>);
