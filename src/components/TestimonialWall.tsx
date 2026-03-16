@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -18,83 +18,62 @@ const fadeUp = {
   }),
 };
 
-const SCROLL_SPEED = 60; // seconds per loop cycle
+const SCROLL_SPEED = 50;
 
 const ScrollColumn = ({
   testimonials,
   direction,
-  columnRef,
 }: {
   testimonials: Testimonial[];
   direction: "up" | "down";
-  columnRef?: React.RefObject<HTMLDivElement>;
 }) => {
-  direction: "up" | "down";
-}) => {
-  // Duplicate items for seamless loop
   const items = [...testimonials, ...testimonials];
+  const measureRef = useRef<HTMLDivElement>(null);
   const [totalHeight, setTotalHeight] = useState(0);
-  const innerRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (innerRef.current) {
-      // Measure the height of the first set of items
-      const children = Array.from(innerRef.current.children).slice(0, testimonials.length);
-      const height = children.reduce((sum, el) => sum + (el as HTMLElement).offsetHeight + 16, 0);
-      setTotalHeight(height);
+    if (measureRef.current) {
+      setTotalHeight(measureRef.current.scrollHeight / 2);
     }
   }, [testimonials]);
 
   return (
     <div className="relative h-[540px] overflow-hidden">
-      {/* Fade masks */}
       <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
 
-      {totalHeight > 0 && (
-        <motion.div
-          ref={innerRef}
-          className="flex flex-col gap-4"
-          animate={{
-            y: direction === "up" ? [0, -totalHeight] : [-totalHeight, 0],
-          }}
-          transition={{
-            y: {
-              duration: SCROLL_SPEED,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-        >
-          {items.map((t, idx) => (
-            <div
-              key={idx}
-              className="rounded-2xl border border-border bg-card p-5 flex flex-col"
-            >
+      <motion.div
+        ref={measureRef}
+        className="flex flex-col gap-4"
+        animate={
+          totalHeight > 0
+            ? { y: direction === "up" ? [0, -totalHeight] : [-totalHeight, 0] }
+            : undefined
+        }
+        transition={{
+          y: { duration: SCROLL_SPEED, repeat: Infinity, ease: "linear" },
+        }}
+      >
+        {items.map((t, idx) => (
+          <div
+            key={idx}
+            className="rounded-2xl border border-border bg-card p-5 flex flex-col"
+          >
             <p className="text-foreground text-sm leading-relaxed">
               "{t.feedback}"
             </p>
-
             <div className="flex items-center gap-3 pt-3 mt-auto">
               <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold uppercase shrink-0">
-                {t.name
-                  .split(" ")
-                  .map((w) => w[0])
-                  .join("")
-                  .slice(0, 2)}
+                {t.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
               </div>
               <div>
-                <span className="text-xs font-medium text-foreground block">
-                  {t.name}
-                </span>
+                <span className="text-xs font-medium text-foreground block">{t.name}</span>
                 <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star
                       key={s}
                       className={`w-3 h-3 ${
-                        s <= t.rating
-                          ? "text-primary fill-primary"
-                          : "text-muted-foreground/20"
+                        s <= t.rating ? "text-primary fill-primary" : "text-muted-foreground/20"
                       }`}
                     />
                   ))}
@@ -103,8 +82,7 @@ const ScrollColumn = ({
             </div>
           </div>
         ))}
-        </motion.div>
-      )}
+      </motion.div>
     </div>
   );
 };
@@ -123,7 +101,6 @@ const TestimonialWall = () => {
       });
   }, []);
 
-  // Split into 3 columns
   const columns = useMemo(() => {
     const cols: Testimonial[][] = [[], [], []];
     testimonials.forEach((t, i) => cols[i % 3].push(t));
@@ -135,11 +112,7 @@ const TestimonialWall = () => {
   return (
     <section className="py-24 px-6 border-t border-border">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
           <motion.h2
             variants={fadeUp}
             custom={0}
@@ -158,11 +131,7 @@ const TestimonialWall = () => {
           <motion.div variants={fadeUp} custom={2} className="grid md:grid-cols-3 gap-4">
             {columns.map((col, i) =>
               col.length > 0 ? (
-                <ScrollColumn
-                  key={i}
-                  testimonials={col}
-                  direction={i % 2 === 0 ? "up" : "down"}
-                />
+                <ScrollColumn key={i} testimonials={col} direction={i % 2 === 0 ? "up" : "down"} />
               ) : null
             )}
           </motion.div>
