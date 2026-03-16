@@ -18,8 +18,7 @@ const fadeUp = {
   }),
 };
 
-const CARD_HEIGHT = 180; // px per card including gap
-const SCROLL_SPEED = 25; // seconds per loop cycle
+const SCROLL_SPEED = 60; // seconds per loop cycle
 
 const ScrollColumn = ({
   testimonials,
