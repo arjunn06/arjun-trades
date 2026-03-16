@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import arjunPhoto from "@/assets/arjun-mugshot.png";
+import TestimonialWall from "@/components/TestimonialWall";
 
 const youtubeVideos = [
   { id: "6DWzpfwnKoE", title: "The Reality of Trading Patterns EXPOSED | Why Chart Patterns Fail (Tamil)" },
@@ -387,6 +388,9 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <TestimonialWall />
 
       {/* Footer */}
       <footer className="border-t border-border py-12 px-6">
