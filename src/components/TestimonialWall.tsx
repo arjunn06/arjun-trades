@@ -64,17 +64,15 @@ const TestimonialWall = () => {
           <motion.div
             variants={fadeUp}
             custom={2}
-            className="grid md:grid-cols-3 gap-4"
+            className="columns-1 md:columns-2 lg:columns-3 gap-4 [column-fill:balance]"
           >
-            {columns.map((col, colIdx) => (
-              <div key={colIdx} className="flex flex-col gap-4">
-                {col.map((t, idx) => (
-                  <motion.div
-                    key={idx}
-                    variants={fadeUp}
-                    custom={colIdx + idx * 3}
-                    className="rounded-2xl border border-border bg-card p-5 space-y-3"
-                  >
+            {testimonials.map((t, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeUp}
+                custom={idx}
+                className="break-inside-avoid mb-4 rounded-2xl border border-border bg-card p-5 space-y-3"
+              >
                     <p className="text-foreground text-sm leading-relaxed">
                       "{t.feedback}"
                     </p>
