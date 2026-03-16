@@ -33,7 +33,17 @@ const ScrollColumn = ({
 }) => {
   // Duplicate items for seamless loop
   const items = [...testimonials, ...testimonials];
-  const totalHeight = testimonials.length * CARD_HEIGHT;
+  const [totalHeight, setTotalHeight] = useState(0);
+  const innerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (innerRef.current) {
+      // Measure the height of the first set of items
+      const children = Array.from(innerRef.current.children).slice(0, testimonials.length);
+      const height = children.reduce((sum, el) => sum + (el as HTMLElement).offsetHeight + 16, 0);
+      setTotalHeight(height);
+    }
+  }, [testimonials]);
 
   return (
     <div className="relative h-[540px] overflow-hidden">
@@ -41,25 +51,26 @@ const ScrollColumn = ({
       <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
 
-      <motion.div
-        className="flex flex-col gap-4"
-        animate={{
-          y: direction === "up" ? [0, -totalHeight] : [-totalHeight, 0],
-        }}
-        transition={{
-          y: {
-            duration: SCROLL_SPEED,
-            repeat: Infinity,
-            ease: "linear",
-          },
-        }}
-      >
-        {items.map((t, idx) => (
-          <div
-            key={idx}
-            className="rounded-2xl border border-border bg-card p-5 flex flex-col justify-between"
-            style={{ minHeight: CARD_HEIGHT - 16 }}
-          >
+      {totalHeight > 0 && (
+        <motion.div
+          ref={innerRef}
+          className="flex flex-col gap-4"
+          animate={{
+            y: direction === "up" ? [0, -totalHeight] : [-totalHeight, 0],
+          }}
+          transition={{
+            y: {
+              duration: SCROLL_SPEED,
+              repeat: Infinity,
+              ease: "linear",
+            },
+          }}
+        >
+          {items.map((t, idx) => (
+            <div
+              key={idx}
+              className="rounded-2xl border border-border bg-card p-5 flex flex-col"
+            >
             <p className="text-foreground text-sm leading-relaxed line-clamp-4">
               "{t.feedback}"
             </p>
