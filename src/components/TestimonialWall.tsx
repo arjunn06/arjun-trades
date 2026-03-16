@@ -23,8 +23,12 @@ const SCROLL_SPEED = 60; // seconds per loop cycle
 const ScrollColumn = ({
   testimonials,
   direction,
+  columnRef,
 }: {
   testimonials: Testimonial[];
+  direction: "up" | "down";
+  columnRef?: React.RefObject<HTMLDivElement>;
+}) => {
   direction: "up" | "down";
 }) => {
   // Duplicate items for seamless loop
