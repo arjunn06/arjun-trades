@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Youtube, Users, BookOpen, Mail, ChevronRight, Instagram } from "lucide-react";
+import { ArrowRight, Youtube, Users, BookOpen, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
