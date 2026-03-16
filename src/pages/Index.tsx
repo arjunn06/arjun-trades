@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import arjunPhoto from "@/assets/arjun-mugshot.png";
 import TestimonialWall from "@/components/TestimonialWall";
 
 const youtubeVideos = [
