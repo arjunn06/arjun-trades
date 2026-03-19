@@ -56,7 +56,7 @@ const Index = () => {
             className="font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-8">
             
             <span className="text-foreground">Arjun</span>{" "}
-            <span className="neon-text text-primary">Trades</span>
+            <span className="neon-text text-primary">IFVG</span>
           </motion.h1>
 
           <motion.p
