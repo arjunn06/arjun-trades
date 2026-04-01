@@ -15,6 +15,7 @@ import AdminBlogEditor from "./pages/AdminBlogEditor";
 import AdminBlogMetrics from "./pages/AdminBlogMetrics";
 import AdminContacts from "./pages/AdminContacts";
 import AdminFeedback from "./pages/AdminFeedback";
+import RedPill from "./pages/RedPill";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/workshop" element={<Workshop />} />
+          <Route path="/red-pill" element={<RedPill />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:id" element={<BlogPost />} />
