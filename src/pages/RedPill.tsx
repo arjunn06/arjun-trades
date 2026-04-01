@@ -41,7 +41,7 @@ const pillars = [
 const features = [
   { icon: <MessageCircle className="w-6 h-6" />, title: "Private one-on-one calls", desc: "Special personalised trading training based on your skills." },
   { icon: <Zap className="w-6 h-6" />, title: "Live Sessions", desc: "Weekly live trading and Q&A sessions." },
-  { icon: <Users className="w-6 h-6" />, title: "Private Community", desc: "Exclusive Discord with 500+ traders." },
+  { icon: <Users className="w-6 h-6" />, title: "Private Community", desc: "Exclusive access to private Discord." },
   { icon: <Clock className="w-6 h-6" />, title: "Lifetime Access", desc: "One-time payment, access forever." },
   { icon: <Target className="w-6 h-6" />, title: "Trade Setups", desc: "Daily trade ideas and market analysis." },
   { icon: <BookOpen className="w-6 h-6" />, title: "Flexible Learning", desc: "Learn at your own pace, on your schedule." },
@@ -334,8 +334,8 @@ const RedPill = () => {
 
               <div className="text-center mb-8">
                 <div className="flex items-baseline justify-center gap-3 mb-2">
-                  <span className="font-display font-bold text-5xl text-foreground">$49</span>
-                  <span className="text-xl text-muted-foreground line-through">$99</span>
+                  <span className="font-display font-bold text-5xl text-foreground">₹4,999</span>
+                  <span className="text-xl text-muted-foreground line-through">₹9,999</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
                   One-time payment • Lifetime access • No recurring fees
@@ -387,7 +387,7 @@ const RedPill = () => {
               custom={1}
               className="text-muted-foreground mb-8 max-w-xl mx-auto"
             >
-              Join 500+ traders who chose reality over illusion. The journey to consistent profitability starts here.
+              Join x+ traders who chose reality over illusion. The journey to consistent profitability starts here.
             </motion.p>
             <motion.div variants={fadeUp} custom={2}>
               <button
