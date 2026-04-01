@@ -43,6 +43,12 @@ const Header = () => {
             YouTube
           </a>
           <Link
+            to="/red-pill"
+            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            The Red Pill
+          </Link>
+          <Link
             to="/workshop"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
