@@ -390,13 +390,13 @@ const RedPill = () => {
               Join 500+ traders who chose reality over illusion. The journey to consistent profitability starts here.
             </motion.p>
             <motion.div variants={fadeUp} custom={2}>
-              <a
-                href="#pricing"
+              <button
+                onClick={() => setShowBooking(true)}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
-                Take The Red Pill
-                <ArrowRight className="w-5 h-5" />
-              </a>
+                <Phone className="w-5 h-5" />
+                Book a Call
+              </button>
             </motion.div>
           </motion.div>
         </div>
