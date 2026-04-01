@@ -351,15 +351,13 @@ const RedPill = () => {
                 ))}
               </ul>
 
-              <a
-                href="https://discord.gg/SCHeKKCa6c"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setShowBooking(true)}
                 className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
-                Enroll in The Red Pill
-                <ArrowRight className="w-5 h-5" />
-              </a>
+                <Phone className="w-5 h-5" />
+                Book a Call
+              </button>
 
               <p className="text-center text-xs text-muted-foreground mt-4">
                 30-day money-back guarantee • Secure payment
