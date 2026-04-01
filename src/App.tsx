@@ -42,6 +42,7 @@ const App = () => (
           <Route path="/admin/blogs/metrics/:id" element={<AdminBlogMetrics />} />
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/admin/feedback" element={<AdminFeedback />} />
+          <Route path="/admin/bookings" element={<AdminBookings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
