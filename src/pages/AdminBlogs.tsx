@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Mail, BarChart3, ChartBar, Star } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Mail, BarChart3, ChartBar, Star, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
