@@ -43,12 +43,6 @@ const Header = () => {
             YouTube
           </a>
           <Link
-            to="/red-pill"
-            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-          >
-            The Red Pill
-          </Link>
-          <Link
             to="/workshop"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
@@ -73,6 +67,12 @@ const Header = () => {
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Contact
+          </Link>
+          <Link
+            to="/red-pill"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 hover:drop-shadow-[0_10px_30px_rgba(239,68,68,0.28)] hover:scale-[1.03] hover:ring-2 hover:ring-primary/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-transform duration-200 text-sm"
+          >
+            Take The Red Pill
           </Link>
         </nav>
 
@@ -100,9 +100,6 @@ const Header = () => {
               >
                 YouTube
               </a>
-              <Link to="/red-pill" onClick={() => setIsOpen(false)} className="text-lg font-medium text-primary">
-                The Red Pill
-              </Link>
               <Link to="/workshop" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
                 Workshop
               </Link>
@@ -120,6 +117,9 @@ const Header = () => {
               </Link>
               <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
                 Contact
+              </Link>
+              <Link to="/red-pill" onClick={() => setIsOpen(false)} className="mt-4 inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:drop-shadow-[0_10px_30px_rgba(239,68,68,0.28)] hover:scale-[1.03] hover:ring-2 hover:ring-primary/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-transform duration-200">
+                Take The Red Pill
               </Link>
             </nav>
           </SheetContent>
