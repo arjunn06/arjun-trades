@@ -68,7 +68,7 @@ const modules = [
   {
     num: 4,
     title: "Money Management",
-    topics: ["Multi-timeframe analysis", "Session-based trading", "News trading strategies", "Portfolio management", "Scaling and compounding"],
+    topics: ["Money management rules", "Risk - Reward planning", "Handling losing streaks", "Profit management", "Scaling and compounding"],
   },
   {
     num: 5,
@@ -85,10 +85,10 @@ const modules = [
 const pricingFeatures = [
   "Complete 6-module trading curriculum",
   "Personalised trading training",
-  "Weekly live trading sessions",
+  "Exclusive trade ideas",
   "Private Discord community access",
-  "Daily trade setups and analysis",
-  "Custom trading tools & indicators",
+  "Daily liquidity levels and market analysis",
+  "Exclusive access to trading journal",
   "1-on-1 private call with me",
   "Trader-first approach and curated trading plan based on your skillsets.",
   "Priority access to all updates",
