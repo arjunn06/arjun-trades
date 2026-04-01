@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2, Phone, CalendarIcon, X } from "lucide-react";
+import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Gift, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2, Phone, CalendarIcon, X } from "lucide-react";
 import Header from "@/components/Header";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +47,7 @@ const features = [
   { icon: <BookOpen className="w-6 h-6" />, title: "Flexible Learning", desc: "Learn at your own pace, on your schedule." },
   { icon: <BarChart3 className="w-6 h-6" />, title: "Customised game plan", desc: "A trading roadmap built from scratch only for you." },
   { icon: <Award className="w-6 h-6" />, title: "Priority access forever", desc: "Get priority access to all of our premium contents." },
+  { icon: <Gift className="w-6 h-6" />, title: "Premium Trading Journal", desc: "Deep insights into your trading patterns with advanced metrics, win rates, drawdown analysis, calendar performance, multi-account management, detailed trade logging, etc." },
 ];
 
 const modules = [
@@ -121,7 +122,7 @@ const RedPill = () => {
             className="font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-8"
           >
             <span className="text-foreground">Take </span>
-            <span className="text-primary">The Red Pill</span>
+            <span className="text-primary drop-shadow-[0_20px_40px_rgba(239,68,68,0.12)]">The Red Pill</span>
           </motion.h1>
 
           <motion.p
@@ -131,7 +132,7 @@ const RedPill = () => {
             custom={2}
             className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Wake up to the new reality of making money. A comprehensive training program designed to transform beginners into consistently profitable traders.
+            Wake up to the new reality of making money. A comprehensive training program designed to transform beginners into consistently profitable traders at the cost of a single funded account
           </motion.p>
 
           <motion.div
@@ -181,7 +182,7 @@ const RedPill = () => {
               A structured, no-nonsense training program that reveals the truth about trading — beyond the Instagram lifestyle and get-rich-quick schemes.
             </motion.p>
 
-            <motion.div variants={fadeUp} custom={2} className="grid md:grid-cols-3 gap-6">
+            <motion.div variants={fadeUp} custom={2} className="grid md:grid-cols-4 gap-6">
               {pillars.map((p, i) => (
                 <div
                   key={i}
@@ -198,6 +199,15 @@ const RedPill = () => {
                   </p>
                 </div>
               ))}
+
+              {/* Bonus card inserted as the 4th card to match layout */}
+              <div className="rounded-2xl border border-border bg-card p-8 space-y-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                  <Gift className="w-6 h-6" />
+                </div>
+                <h3 className="font-display font-semibold text-xl text-foreground">Premium Trading Journal</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">Complimentary access on enrolment — advanced analytics, calendar performance, multi-account support, etc.</p>
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -439,7 +449,7 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !contact.trim() || !experience || !date || !time) {
       toast({ title: "Please fill all fields", variant: "destructive" });
@@ -491,9 +501,12 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
             </div>
             <h3 className="font-display font-semibold text-lg text-foreground">Thank you, {name}!</h3>
             <p className="text-sm text-muted-foreground">
-              We'll reach out to you at <span className="text-foreground">{contact}</span> to confirm your call on{" "}
-              <span className="text-foreground">{date && format(date, "MMM d, yyyy")}</span> at{" "}
+              We'll reach out to you at <span className="text-foreground">{contact}</span> to confirm your call on{' '}
+              <span className="text-foreground">{date && format(date, "MMM d, yyyy")}</span> at{' '}
               <span className="text-foreground">{time}</span>.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              As a bonus for enrolling, you'll receive complimentary access to our <span className="text-foreground">Premium Trading Journal</span> — featuring advanced analytics, automated trade tagging, P&L breakdowns, and secure cloud backups. Access details will be sent to the contact you provided once your enrolment is confirmed.
             </p>
             <button
               onClick={handleClose}
