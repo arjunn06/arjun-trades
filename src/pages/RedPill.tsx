@@ -141,13 +141,13 @@ const RedPill = () => {
             custom={3}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <a
-              href="#pricing"
+            <button
+              onClick={() => setShowBooking(true)}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
             >
-              Enroll Now
-              <ArrowRight className="w-5 h-5" />
-            </a>
+              <Phone className="w-5 h-5" />
+              Book a Call
+            </button>
             <a
               href="#about"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-base"
