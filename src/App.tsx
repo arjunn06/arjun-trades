@@ -15,6 +15,7 @@ import AdminBlogEditor from "./pages/AdminBlogEditor";
 import AdminBlogMetrics from "./pages/AdminBlogMetrics";
 import AdminContacts from "./pages/AdminContacts";
 import AdminFeedback from "./pages/AdminFeedback";
+import RedPill from "./pages/RedPill";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
