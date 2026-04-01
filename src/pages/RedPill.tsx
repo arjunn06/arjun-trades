@@ -79,7 +79,7 @@ const modules = [
   {
     num: 6,
     title: "Live Trading",
-    topics: ["Live market analysis sessions", "Real-time trade execution", "Weekly market reviews", "Q&A and mentorship", "Community support access"],
+    topics: ["Live market analysis sessions", "Real-time trade execution", "Weekly market reviews", "Q&A and personal training", "Community support access"],
   },
 ];
 
@@ -370,7 +370,7 @@ const RedPill = () => {
               </button>
 
               <p className="text-center text-xs text-muted-foreground mt-4">
-                30-day money-back guarantee • Secure payment
+                You won't be charged for booking a call.
               </p>
             </motion.div>
           </motion.div>
