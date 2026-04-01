@@ -138,6 +138,39 @@ export type Database = {
         }
         Relationships: []
       }
+      red_pill_bookings: {
+        Row: {
+          contact: string
+          created_at: string
+          id: string
+          name: string
+          preferred_date: string
+          preferred_time: string
+          read: boolean
+          trading_experience: string
+        }
+        Insert: {
+          contact: string
+          created_at?: string
+          id?: string
+          name: string
+          preferred_date: string
+          preferred_time: string
+          read?: boolean
+          trading_experience: string
+        }
+        Update: {
+          contact?: string
+          created_at?: string
+          id?: string
+          name?: string
+          preferred_date?: string
+          preferred_time?: string
+          read?: boolean
+          trading_experience?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string

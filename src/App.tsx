@@ -16,6 +16,7 @@ import AdminBlogMetrics from "./pages/AdminBlogMetrics";
 import AdminContacts from "./pages/AdminContacts";
 import AdminFeedback from "./pages/AdminFeedback";
 import RedPill from "./pages/RedPill";
+import AdminBookings from "./pages/AdminBookings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/admin/blogs/metrics/:id" element={<AdminBlogMetrics />} />
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/admin/feedback" element={<AdminFeedback />} />
+          <Route path="/admin/bookings" element={<AdminBookings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
