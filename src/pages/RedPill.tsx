@@ -397,7 +397,7 @@ const RedPill = () => {
               custom={1}
               className="text-muted-foreground mb-8 max-w-xl mx-auto"
             >
-              Join x+ traders who chose reality over illusion. The journey to consistent profitability starts here.
+              Join the inner circle of traders who chose reality over illusion. The journey to consistent profitability starts here.
             </motion.p>
             <motion.div variants={fadeUp} custom={2}>
               <button
