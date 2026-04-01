@@ -100,6 +100,9 @@ const Header = () => {
               >
                 YouTube
               </a>
+              <Link to="/red-pill" onClick={() => setIsOpen(false)} className="text-lg font-medium text-primary">
+                The Red Pill
+              </Link>
               <Link to="/workshop" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
                 Workshop
               </Link>
