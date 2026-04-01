@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2, Phone, CalendarIcon, X } from "lucide-react";
 import Header from "@/components/Header";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
