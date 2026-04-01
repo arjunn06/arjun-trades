@@ -418,4 +418,180 @@ const RedPill = () => {
   );
 };
 
+const timeSlots = [
+  "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM",
+  "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM",
+];
+
+const experienceLevels = [
+  "Complete beginner — never traded before",
+  "Beginner — traded for less than 6 months",
+  "Intermediate — 6 months to 2 years of experience",
+  "Advanced — 2+ years but struggling with consistency",
+];
+
+const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) => {
+  const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
+  const [experience, setExperience] = useState("");
+  const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !contact.trim() || !experience || !date || !time) {
+      toast({ title: "Please fill all fields", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("red_pill_bookings").insert({
+      name: name.trim(),
+      contact: contact.trim(),
+      trading_experience: experience,
+      preferred_date: format(date, "yyyy-MM-dd"),
+      preferred_time: time,
+    } as any);
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
+      return;
+    }
+    setSubmitted(true);
+  };
+
+  const handleClose = () => {
+    onOpenChange(false);
+    if (submitted) {
+      setTimeout(() => {
+        setSubmitted(false);
+        setName("");
+        setContact("");
+        setExperience("");
+        setDate(undefined);
+        setTime("");
+      }, 300);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-lg bg-card border-border">
+        <DialogHeader>
+          <DialogTitle className="font-display text-xl text-foreground">
+            {submitted ? "Booking Confirmed!" : "Book a Call"}
+          </DialogTitle>
+        </DialogHeader>
+
+        {submitted ? (
+          <div className="text-center py-6 space-y-3">
+            <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
+            <h3 className="font-display font-semibold text-lg text-foreground">Thank you, {name}!</h3>
+            <p className="text-sm text-muted-foreground">
+              We'll reach out to you at <span className="text-foreground">{contact}</span> to confirm your call on{" "}
+              <span className="text-foreground">{date && format(date, "MMM d, yyyy")}</span> at{" "}
+              <span className="text-foreground">{time}</span>.
+            </p>
+            <button
+              onClick={handleClose}
+              className="mt-4 px-6 py-2.5 bg-primary text-primary-foreground font-semibold rounded-lg text-sm hover:brightness-110 transition-all"
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-foreground mb-1.5 block">Name</label>
+              <input
+                value={name}
+                onChange={e => setName(e.target.value)}
+                placeholder="Your full name"
+                maxLength={100}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground mb-1.5 block">Contact (Phone / Instagram / Email)</label>
+              <input
+                value={contact}
+                onChange={e => setContact(e.target.value)}
+                placeholder="How should we reach you?"
+                maxLength={255}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground mb-1.5 block">Trading Experience</label>
+              <select
+                value={experience}
+                onChange={e => setExperience(e.target.value)}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="" disabled>Select your experience level</option>
+                {experienceLevels.map(lvl => (
+                  <option key={lvl} value={lvl}>{lvl}</option>
+                ))}
+              </select>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium text-foreground mb-1.5 block">Preferred Date</label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      className={cn(
+                        "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-left focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="w-4 h-4" />
+                      {date ? format(date, "MMM d, yyyy") : "Pick a date"}
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      disabled={(d) => d < new Date()}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-foreground mb-1.5 block">Preferred Time</label>
+                <select
+                  value={time}
+                  onChange={e => setTime(e.target.value)}
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                >
+                  <option value="" disabled>Select time</option>
+                  {timeSlots.map(t => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all disabled:opacity-50 text-sm"
+            >
+              <Phone className="w-4 h-4" />
+              {submitting ? "Submitting…" : "Confirm Booking"}
+            </button>
+          </form>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 export default RedPill;
