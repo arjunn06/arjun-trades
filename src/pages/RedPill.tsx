@@ -95,9 +95,12 @@ const pricingFeatures = [
 ];
 
 const RedPill = () => {
+  const [showBooking, setShowBooking] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <BookingFormDialog open={showBooking} onOpenChange={setShowBooking} />
 
       {/* Hero */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden px-6">
