@@ -528,7 +528,7 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">Contact (Phone / Instagram / Email)</label>
+              <label className="text-sm font-medium text-foreground mb-1.5 block">Contact Number</label>
               <input
                 value={contact}
                 onChange={e => setContact(e.target.value)}
