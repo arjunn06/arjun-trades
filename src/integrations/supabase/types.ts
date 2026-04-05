@@ -171,6 +171,39 @@ export type Database = {
         }
         Relationships: []
       }
+      red_pill_info: {
+        Row: {
+          class_time: string
+          created_at: string
+          email: string
+          id: string
+          learning_preferences: string[]
+          name: string
+          read: boolean
+          trading_experience: string
+        }
+        Insert: {
+          class_time: string
+          created_at?: string
+          email: string
+          id?: string
+          learning_preferences?: string[]
+          name: string
+          read?: boolean
+          trading_experience: string
+        }
+        Update: {
+          class_time?: string
+          created_at?: string
+          email?: string
+          id?: string
+          learning_preferences?: string[]
+          name?: string
+          read?: boolean
+          trading_experience?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string

@@ -17,6 +17,8 @@ import AdminContacts from "./pages/AdminContacts";
 import AdminFeedback from "./pages/AdminFeedback";
 import RedPill from "./pages/RedPill";
 import AdminBookings from "./pages/AdminBookings";
+import RedPillInfo from "./pages/RedPillInfo";
+import AdminRedPillInfo from "./pages/AdminRedPillInfo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +45,8 @@ const App = () => (
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/admin/feedback" element={<AdminFeedback />} />
           <Route path="/admin/bookings" element={<AdminBookings />} />
+          <Route path="/red-pill/info" element={<RedPillInfo />} />
+          <Route path="/admin/red-pill-info" element={<AdminRedPillInfo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
