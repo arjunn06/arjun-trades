@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Gift, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2, Phone, CalendarIcon, X } from "lucide-react";
+import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Gift, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2, Phone, CalendarIcon, X, ClipboardList } from "lucide-react";
 import Header from "@/components/Header";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -110,7 +110,7 @@ const RedPill = () => {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-8">
             <span className="inline-block px-5 py-1.5 rounded-full border border-primary/30 text-primary text-sm font-medium tracking-wide uppercase">
-              Elite Trading Program
+              Batch 1 — Slots Filled 🔒
             </span>
           </motion.div>
 
@@ -146,8 +146,8 @@ const RedPill = () => {
               onClick={() => setShowBooking(true)}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
             >
-              <Phone className="w-5 h-5" />
-              Book a Call
+              <ClipboardList className="w-5 h-5" />
+              Join Waitlist
             </button>
             <a
               href="#about"
@@ -338,7 +338,7 @@ const RedPill = () => {
             >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="inline-block px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wide">
-                  Limited Time Offer
+                  Batch 1 Sold Out — Join Waitlist for Batch 2
                 </span>
               </div>
 
@@ -365,12 +365,12 @@ const RedPill = () => {
                 onClick={() => setShowBooking(true)}
                 className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
-                <Phone className="w-5 h-5" />
-                Book a Call
+                <ClipboardList className="w-5 h-5" />
+                Join Waitlist
               </button>
 
               <p className="text-center text-xs text-muted-foreground mt-4">
-                You won't be charged for booking a call.
+                All slots for the current batch have been filled. Join the waitlist to be notified when the next batch opens.
               </p>
             </motion.div>
           </motion.div>
@@ -404,8 +404,8 @@ const RedPill = () => {
                 onClick={() => setShowBooking(true)}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
-                <Phone className="w-5 h-5" />
-                Book a Call
+                <ClipboardList className="w-5 h-5" />
+                Join Waitlist
               </button>
             </motion.div>
           </motion.div>
