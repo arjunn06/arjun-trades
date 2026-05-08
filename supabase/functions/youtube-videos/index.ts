@@ -46,6 +46,22 @@ function parseFeed(xml: string): Video[] {
   }).filter((v) => v.id);
 }
 
+// Returns { isShort, isLive } by inspecting the watch page metadata.
+async function classify(id: string): Promise<{ isShort: boolean; isLive: boolean }> {
+  try {
+    const res = await fetch(`https://www.youtube.com/watch?v=${id}`, {
+      headers: { "User-Agent": "Mozilla/5.0", "Accept-Language": "en-US,en;q=0.9" },
+    });
+    const html = await res.text();
+    const len = parseInt(html.match(/"lengthSeconds":"(\d+)"/)?.[1] ?? "0", 10);
+    const isLive = /"isLiveContent":true/.test(html) || /"isLive":true/.test(html);
+    const isShort = len > 0 && len <= 60;
+    return { isShort, isLive };
+  } catch {
+    return { isShort: false, isLive: false };
+  }
+}
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
