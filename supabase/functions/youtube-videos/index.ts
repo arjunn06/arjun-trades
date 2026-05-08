@@ -46,6 +46,45 @@ function parseFeed(xml: string): Video[] {
   }).filter((v) => v.id);
 }
 
+// Returns { isShort, isLive }. Two probes:
+//  - /shorts/{id} stays on /shorts/ for shorts; redirects to /watch for normal videos.
+//  - /watch?v={id} HTML inspected for live flags. CONSENT cookie bypasses EU consent wall.
+async function classify(id: string): Promise<{ isShort: boolean; isLive: boolean }> {
+  const headers = {
+    "User-Agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    Cookie: "CONSENT=YES+1; SOCS=CAI",
+  };
+
+  let isShort = false;
+  try {
+    const r = await fetch(`https://www.youtube.com/shorts/${id}`, {
+      method: "HEAD",
+      redirect: "manual",
+      headers,
+    });
+    // 200 = stayed on /shorts (it's a short). 3xx = redirected to /watch (not a short).
+    isShort = r.status === 200;
+  } catch { /* ignore */ }
+
+  let isLive = false;
+  try {
+    const r = await fetch(`https://www.youtube.com/watch?v=${id}`, { headers });
+    const html = await r.text();
+    isLive =
+      /"isLiveContent"\s*:\s*true/.test(html) ||
+      /"isLive"\s*:\s*true/.test(html) ||
+      /"liveBroadcastDetails"/.test(html);
+    if (!isShort) {
+      const len = parseInt(html.match(/"lengthSeconds"\s*:\s*"(\d+)"/)?.[1] ?? "0", 10);
+      if (len > 0 && len <= 60) isShort = true;
+    }
+  } catch { /* ignore */ }
+
+  return { isShort, isLive };
+}
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -72,7 +111,13 @@ Deno.serve(async (req) => {
       );
       if (!feedRes.ok) throw new Error(`Feed fetch failed: ${feedRes.status}`);
       const xml = await feedRes.text();
-      videos = parseFeed(xml);
+      const all = parseFeed(xml);
+      // Filter out shorts and livestreams in parallel
+      const flags = await Promise.all(all.map((v) => classify(v.id)));
+      const liveTitle = /^\s*🔴|\blive\b|\bpremiere\b/i;
+      videos = all.filter(
+        (v, i) => !flags[i].isShort && !flags[i].isLive && !liveTitle.test(v.title)
+      );
       cache = { at: Date.now(), videos };
     }
 
