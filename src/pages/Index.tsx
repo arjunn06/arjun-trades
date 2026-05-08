@@ -33,6 +33,22 @@ const fadeUp = {
 };
 
 const Index = () => {
+  const [videos, setVideos] = useState<YTVideo[]>(fallbackVideos);
+
+  useEffect(() => {
+    let cancelled = false;
+    supabase.functions
+      .invoke("youtube-videos", { method: "GET" })
+      .then(({ data, error }) => {
+        if (cancelled || error || !data?.videos?.length) return;
+        setVideos(data.videos as YTVideo[]);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
