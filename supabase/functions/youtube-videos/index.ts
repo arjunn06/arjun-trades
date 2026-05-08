@@ -88,7 +88,10 @@ Deno.serve(async (req) => {
       );
       if (!feedRes.ok) throw new Error(`Feed fetch failed: ${feedRes.status}`);
       const xml = await feedRes.text();
-      videos = parseFeed(xml);
+      const all = parseFeed(xml);
+      // Filter out shorts and livestreams in parallel
+      const flags = await Promise.all(all.map((v) => classify(v.id)));
+      videos = all.filter((_, i) => !flags[i].isShort && !flags[i].isLive);
       cache = { at: Date.now(), videos };
     }
 
