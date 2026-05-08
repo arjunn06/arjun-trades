@@ -114,7 +114,10 @@ Deno.serve(async (req) => {
       const all = parseFeed(xml);
       // Filter out shorts and livestreams in parallel
       const flags = await Promise.all(all.map((v) => classify(v.id)));
-      videos = all.filter((_, i) => !flags[i].isShort && !flags[i].isLive);
+      const liveTitle = /^\s*🔴|\blive\b|\bpremiere\b/i;
+      videos = all.filter(
+        (v, i) => !flags[i].isShort && !flags[i].isLive && !liveTitle.test(v.title)
+      );
       cache = { at: Date.now(), videos };
     }
 
