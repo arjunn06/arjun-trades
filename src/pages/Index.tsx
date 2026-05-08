@@ -1,12 +1,20 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { ArrowRight, Youtube, Users, BookOpen, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import TestimonialWall from "@/components/TestimonialWall";
+import { supabase } from "@/integrations/supabase/client";
 
-const youtubeVideos = [
+interface YTVideo {
+  id: string;
+  title: string;
+  thumbnail?: string;
+}
+
+const fallbackVideos: YTVideo[] = [
   { id: "6DWzpfwnKoE", title: "The Reality of Trading Patterns EXPOSED | Why Chart Patterns Fail (Tamil)" },
   { id: "ApRidgKGCr0", title: "How To Identify Daily Bias & Market Narrative | Top Down Analysis Trading Strategy in Tamil" },
   { id: "lswnGDvPxuQ", title: "Forex to Futures Trading: Complete Beginner Guide + Prop Firm Rules In Tamil" },
