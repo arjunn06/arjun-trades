@@ -1,12 +1,20 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { ArrowRight, Youtube, Users, BookOpen, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import TestimonialWall from "@/components/TestimonialWall";
+import { supabase } from "@/integrations/supabase/client";
 
-const youtubeVideos = [
+interface YTVideo {
+  id: string;
+  title: string;
+  thumbnail?: string;
+}
+
+const fallbackVideos: YTVideo[] = [
   { id: "6DWzpfwnKoE", title: "The Reality of Trading Patterns EXPOSED | Why Chart Patterns Fail (Tamil)" },
   { id: "ApRidgKGCr0", title: "How To Identify Daily Bias & Market Narrative | Top Down Analysis Trading Strategy in Tamil" },
   { id: "lswnGDvPxuQ", title: "Forex to Futures Trading: Complete Beginner Guide + Prop Firm Rules In Tamil" },
@@ -25,6 +33,22 @@ const fadeUp = {
 };
 
 const Index = () => {
+  const [videos, setVideos] = useState<YTVideo[]>(fallbackVideos);
+
+  useEffect(() => {
+    let cancelled = false;
+    supabase.functions
+      .invoke("youtube-videos", { method: "GET" })
+      .then(({ data, error }) => {
+        if (cancelled || error || !data?.videos?.length) return;
+        setVideos(data.videos as YTVideo[]);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -99,7 +123,7 @@ const Index = () => {
             <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent blur-2xl rounded-3xl pointer-events-none" />
             <Carousel opts={{ align: "start", loop: true }} className="w-full relative">
               <CarouselContent>
-                {youtubeVideos.map((video, i) => (
+                {videos.map((video, i) => (
                   <CarouselItem key={i} className="basis-full">
                     <div className="rounded-2xl overflow-hidden border border-border bg-card shadow-2xl">
                       <div className="aspect-video">
@@ -240,7 +264,7 @@ const Index = () => {
             <motion.div variants={fadeUp} custom={2}>
               <Carousel opts={{ align: "start", loop: true }} className="w-full">
                 <CarouselContent className="-ml-4">
-                  {youtubeVideos.map((video, i) => (
+                  {videos.map((video, i) => (
                     <CarouselItem key={i} className="pl-4 md:basis-1/2 lg:basis-1/3">
                       <div className="aspect-video rounded-2xl overflow-hidden border border-border bg-card">
                         <iframe
