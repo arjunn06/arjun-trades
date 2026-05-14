@@ -48,6 +48,12 @@ const Header = () => {
           >
             Workshop
           </Link>
+          <Link
+            to="/free-workshop"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Free Workshop
+          </Link>
           <a
             href="https://discord.gg/SCHeKKCa6c"
             target="_blank"
