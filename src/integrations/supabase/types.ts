@@ -246,6 +246,33 @@ export type Database = {
         }
         Relationships: []
       }
+      workshop_interest: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          promo_consent: boolean
+          read: boolean
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          promo_consent?: boolean
+          read?: boolean
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          promo_consent?: boolean
+          read?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
