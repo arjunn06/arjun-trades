@@ -109,6 +109,9 @@ const Header = () => {
               <Link to="/workshop" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
                 Workshop
               </Link>
+              <Link to="/free-workshop" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
+                Free Workshop
+              </Link>
               <a
                 href="https://discord.gg/SCHeKKCa6c"
                 target="_blank"
