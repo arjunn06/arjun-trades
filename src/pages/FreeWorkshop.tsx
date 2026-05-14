@@ -42,7 +42,11 @@ const FreeWorkshop = () => {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase.from("workshop_interest").insert(parsed.data);
+    const { error } = await supabase.from("workshop_interest").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      promo_consent: parsed.data.promo_consent,
+    });
     setSubmitting(false);
     if (error) {
       toast({ title: "Something went wrong", description: error.message, variant: "destructive" });
