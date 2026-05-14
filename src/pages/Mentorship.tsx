@@ -1,46 +1,68 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, Clock, Calendar, ArrowLeft, Star, Send, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Star, Send, ChevronLeft, ChevronRight, Quote, CheckCircle2, Clock, PlayCircle, Sparkles } from "lucide-react";
 import Header from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import workshopThumbnail from "@/assets/Thumbnail.png";
 
+const interestSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100),
+  email: z.string().trim().email("Invalid email").max(255),
+  promo_consent: z.boolean(),
+});
+
 const Workshop = () => {
-  const workshop = {
-    title: "Arjun Trades: Free Beginner Trading Workshop",
-    subtitle: "A deep-dive, practical workshop for serious traders.",
-    coverImage: workshopThumbnail, 
-    date: "Sunday, 15 March 2026",
-    time: "11:00 AM – 2:00 PM IST (Approximately)",
-    duration: "3:27 hrs · Live on Google Meet & YouTube",
-    price: "₹0",
-    seats: "100 total seats",
-    agenda: [
-      "Introduction",
-      "Candlestick Anatomy",
-      "Long Trades vs Short Trades",
-      "Stop Loss & Take Profits",
-      "Liquidity Basics",
-      "Smart Money Concepts",
-    ],
-    schedule: [
-      { time: "11:00 – 11:30 AM", label: "Welcome, workshop overview, expectations" },
-      { time: "11:30 – 12:00 PM", label: "Navigating through TradingView and Candlestick Anatomy" },
-      { time: "12:00 – 12:15 PM", label: "Long Trades vs Short Trades" },
-      { time: "12:15 – 12:30 PM", label: "Stop Loss & Take Profits" },
-      { time: "12:30 – 01:00 PM", label: "Liquidity Basics" },
-      { time: "01:00 – 01:30 PM", label: "Smart Money Concepts" },
-      { time: "01:30 – 02:00 PM", label: "Interactive QnA Sessions" },
-    ],
-    description: [
-      "Who is this workshop for?",
-      "• Complete beginners who have no idea what trading is but want to understand how markets actually work.",
-      "• Traders using basic support & resistance who want to refine their understanding of price movement.",
-      "• Trading enthusiasts who are struggling to find a structured trading model that makes sense.",
-    ],
-    note: "Seats are intentionally limited so I can give proper attention to everyone. Recordings will be publicly available on YouTube.",
+  const [open, setOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", promo_consent: false });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsed = interestSchema.safeParse(form);
+    if (!parsed.success) {
+      toast({
+        title: "Check your details",
+        description: parsed.error.issues[0].message,
+        variant: "destructive",
+      });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("workshop_interest").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      promo_consent: parsed.data.promo_consent,
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Something went wrong", description: error.message, variant: "destructive" });
+      return;
+    }
+    setSubmitted(true);
+    toast({ title: "You're on the list!", description: "We'll email you as soon as the workshop is live." });
+  };
+
+  const reset = () => {
+    setOpen(false);
+    setTimeout(() => {
+      setSubmitted(false);
+      setForm({ name: "", email: "", promo_consent: false });
+    }, 200);
   };
 
   return (
@@ -52,147 +74,90 @@ const Workshop = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
-          {/* Back link */}
-          <Link
-            to="/"
-            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-6"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back home
-          </Link>
-
-          {/* Header */}
-          <div className="flex items-start gap-3 mb-8">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-              <BookOpen className="w-7 h-7" />
-            </div>
-            <div>
-              <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-2">
-                Workshop
-              </h1>
-              <p className="text-muted-foreground text-sm md:text-base">
-                {workshop.subtitle}
-              </p>
-            </div>
+          {/* Heading */}
+          <div className="mb-12 md:mb-16 text-center">
+            <h1 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-4">
+              Workshops
+            </h1>
+            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
+              Free, no-fluff sessions to help you understand how markets really work.
+            </p>
           </div>
 
-          {/* Main content grid */}
-          <div className="grid gap-10 md:gap-12 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start">
-            {/* Left: cover + description + agenda */}
-            <div className="space-y-10">
-              {/* Cover image */}
-             {/* Workshop video */}
-<div className="overflow-hidden rounded-3xl border border-border bg-card aspect-[16/9]">
-  <iframe
-    className="w-full h-full"
-    src="https://www.youtube.com/embed/YifBHSrJhqc"
-    title="Arjun Trades Free Beginner Trading Workshop"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-  />
-</div>
-              {/* Description */}
-              <div className="space-y-4">
-                <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground">
-                  About this workshop
-                </h2>
-                {workshop.description.map((para, idx) => (
-                  <p key={idx} className="text-muted-foreground leading-relaxed">
-                    {para}
-                  </p>
-                ))}
-                <p className="text-sm text-muted-foreground/80">{workshop.note}</p>
+          {/* Workshop thumbnails */}
+          <div className="grid gap-6 md:gap-8 md:grid-cols-2">
+            {/* Completed — Beginner to Advanced */}
+            <a
+              href="https://youtu.be/YifBHSrJhqc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-3xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-300 flex flex-col"
+            >
+              <div className="relative aspect-video overflow-hidden bg-muted">
+                <img
+                  src={workshopThumbnail}
+                  alt="Beginner to Advanced Free Workshop"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/0 to-background/0" />
+                <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 backdrop-blur px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-emerald-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Completed
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-2xl" />
+                </div>
               </div>
-
-              {/* Agenda */}
-              <div className="space-y-4">
-                <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground">
-                  What you&apos;ll learn
+              <div className="p-6 flex-1 flex flex-col">
+                <h2 className="font-display font-semibold text-xl md:text-2xl text-foreground mb-2 group-hover:text-primary transition-colors">
+                  Beginner to Advanced — Free Workshop
                 </h2>
-                <ul className="space-y-2 text-muted-foreground text-sm md:text-base">
-                  {workshop.agenda.map((item, idx) => (
-                    <li key={idx} className="flex gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary/70 shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm text-muted-foreground mb-6 flex-1">
+                  Candlestick anatomy, smart money concepts, liquidity, and a structured trading model.
+                  Watch the full replay anytime.
+                </p>
+                <span className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold bg-primary text-primary-foreground group-hover:brightness-110 transition-all self-start">
+                  <PlayCircle className="w-4 h-4" />
+                  Watch Now
+                </span>
+              </div>
+            </a>
+
+            {/* Coming Soon — IFVG Masterclass */}
+            <div className="group rounded-3xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-300 flex flex-col">
+              <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-primary/30 via-primary/10 to-background">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center px-6">
+                    <Sparkles className="w-10 h-10 text-primary mx-auto mb-3" />
+                    <p className="font-display font-bold text-2xl md:text-3xl text-foreground leading-tight">
+                      IFVG <span className="text-primary">Masterclass</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/15 backdrop-blur px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-primary">
+                  <Clock className="w-3.5 h-3.5" />
+                  Coming Soon
+                </div>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <h2 className="font-display font-semibold text-xl md:text-2xl text-foreground mb-2">
+                  IFVG Masterclass — Free Workshop
+                </h2>
+                <p className="text-sm text-muted-foreground mb-6 flex-1">
+                  A deep-dive into the IFVG model, market structure, and the exact playbook I use weekly.
+                  Be the first to know when seats open.
+                </p>
+                <button
+                  onClick={() => setOpen(true)}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 hover:drop-shadow-[0_10px_30px_rgba(239,68,68,0.35)] transition-all self-start"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  I'm Interested
+                </button>
               </div>
             </div>
-
-            {/* Right: details + CTA */}
-            <aside className="space-y-6 md:space-y-8">
-              <div className="rounded-3xl border border-border bg-card p-6 md:p-7 space-y-5">
-                {/* Date & time */}
-                <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-emerald-400">
-                    Workshop is completed.
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span>{workshop.date}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span>{workshop.time}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{workshop.duration}</p>
-                </div>
-
-                {/* Price & seats */}
-                <div className="border-t border-border/60 pt-4 mt-2 space-y-1">
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground font-medium">
-                    Investment
-                  </p>
-                  <p className="font-display text-2xl font-semibold text-foreground">
-                    {workshop.price}
-                  </p>
-                  <p className="text-xs text-muted-foreground">{workshop.seats}</p>
-                </div>
-
-                {/* CTA buttons */}
-                <div className="space-y-3 pt-2">
-                  <a
-                    href="https://youtu.be/YifBHSrJhqc"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 transition-all"
-                  >
-                    Watch on YouTube
-                  </a>
-                  <a
-                    href="https://discord.gg/SCHeKKCa6c"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Join Discord to get notified about the next workshop
-                  </a>
-                </div>
-              </div>
-
-              {/* Schedule */}
-              <div className="rounded-3xl border border-border bg-card/60 p-6 md:p-7 space-y-4">
-                <h2 className="font-display text-lg md:text-xl font-semibold text-foreground">
-                  Session schedule
-                </h2>
-                <ul className="space-y-3 text-sm text-muted-foreground">
-                  {workshop.schedule.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="flex flex-col gap-0.5 rounded-xl border border-border/60 bg-background/40 px-3 py-2.5"
-                    >
-                      <span className="text-[0.75rem] font-medium text-primary/90 uppercase tracking-wide">
-                        {item.time}
-                      </span>
-                      <span>{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </aside>
           </div>
 
           {/* Testimonials */}
@@ -202,6 +167,75 @@ const Workshop = () => {
           <FeedbackForm />
         </motion.div>
       </section>
+
+      {/* Interest Dialog */}
+      <Dialog open={open} onOpenChange={(v) => (v ? setOpen(true) : reset())}>
+        <DialogContent className="sm:max-w-md">
+          {submitted ? (
+            <div className="text-center py-6">
+              <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 className="w-7 h-7" />
+              </div>
+              <DialogTitle className="font-display text-2xl mb-2">You're on the list</DialogTitle>
+              <DialogDescription className="mb-6">
+                We'll send the workshop details to your inbox the moment it's announced.
+              </DialogDescription>
+              <Button onClick={reset} className="w-full">Done</Button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <DialogHeader>
+                <DialogTitle className="font-display text-2xl">Save my spot</DialogTitle>
+                <DialogDescription>
+                  Drop your details and we'll let you know the moment seats open.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    id="name"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="Your full name"
+                    maxLength={100}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="you@example.com"
+                    maxLength={255}
+                    required
+                  />
+                </div>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <Checkbox
+                    checked={form.promo_consent}
+                    onCheckedChange={(v) => setForm({ ...form, promo_consent: v === true })}
+                    className="mt-0.5"
+                  />
+                  <span className="text-sm text-muted-foreground leading-snug">
+                    I agree to receive promotional mail from Arjun IFVG.
+                  </span>
+                </label>
+              </div>
+
+              <DialogFooter>
+                <Button type="submit" disabled={submitting} className="w-full">
+                  {submitting ? "Submitting..." : "Notify me"}
+                </Button>
+              </DialogFooter>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
@@ -234,20 +268,14 @@ const TestimonialCarousel = () => {
   const totalPages = Math.ceil(testimonials.length / perPage);
   const page = current % totalPages;
 
-  const visible = testimonials.slice(
-    page * perPage,
-    page * perPage + perPage
-  );
+  const visible = testimonials.slice(page * perPage, page * perPage + perPage);
 
-  const prev = () =>
-    setCurrent((c) => (c === 0 ? totalPages - 1 : c - 1));
-
-  const next = () =>
-    setCurrent((c) => (c === totalPages - 1 ? 0 : c + 1));
+  const prev = () => setCurrent((c) => (c === 0 ? totalPages - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === totalPages - 1 ? 0 : c + 1));
 
   return (
-    <div className="mt-16">
-      <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-6">
+    <div className="mt-20">
+      <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6">
         What attendees say
       </h2>
 
@@ -279,9 +307,7 @@ const TestimonialCarousel = () => {
 
               {t.feedback.length > 180 && (
                 <button
-                  onClick={() =>
-                    setExpanded(isExpanded ? null : id)
-                  }
+                  onClick={() => setExpanded(isExpanded ? null : id)}
                   className="text-xs text-primary font-medium hover:underline self-start"
                 >
                   {isExpanded ? "Read less" : "Read more"}
@@ -302,9 +328,7 @@ const TestimonialCarousel = () => {
                   ))}
                 </div>
 
-                <span className="text-xs font-medium text-foreground">
-                  {t.name}
-                </span>
+                <span className="text-xs font-medium text-foreground">{t.name}</span>
               </div>
             </div>
           );
@@ -335,6 +359,7 @@ const TestimonialCarousel = () => {
     </div>
   );
 };
+
 const FeedbackForm = () => {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
@@ -380,7 +405,7 @@ const FeedbackForm = () => {
         Workshop Feedback
       </h2>
       <p className="text-sm text-muted-foreground mb-6">
-        Attended the workshop? We'd love to hear your thoughts.
+        Attended a workshop? We'd love to hear your thoughts.
       </p>
       <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
         <div>
