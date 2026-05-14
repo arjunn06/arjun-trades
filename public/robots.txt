@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://gleam-blog-pad.lovable.app/sitemap.xml
