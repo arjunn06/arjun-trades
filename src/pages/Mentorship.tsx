@@ -89,46 +89,40 @@ const Workshop = () => {
           {/* Workshop thumbnails */}
           <div className="grid gap-6 md:gap-8 md:grid-cols-2">
             {/* Completed — Beginner to Advanced */}
-            <a
-              href="https://youtu.be/YifBHSrJhqc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-3xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-300 flex flex-col"
-            >
-              <div className="relative aspect-video overflow-hidden bg-muted">
-                <img
-                  src={workshopThumbnail}
-                  alt="Beginner to Advanced Free Workshop"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/0 to-background/0" />
-                <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 backdrop-blur px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-emerald-400">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  Completed
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <PlayCircle className="w-16 h-16 text-white drop-shadow-2xl" />
-                </div>
-              </div>
-              <div className="p-6 flex-1 flex flex-col">
-                <h2 className="font-display font-semibold text-xl md:text-2xl text-foreground mb-2 group-hover:text-primary transition-colors">
-                  Beginner to Advanced — Free Workshop
-                </h2>
-                <p className="text-sm text-muted-foreground mb-6 flex-1">
-                  Candlestick anatomy, smart money concepts, liquidity, and a structured trading model.
-                  Watch the full replay anytime.
-                </p>
-                <span className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold bg-primary text-primary-foreground group-hover:brightness-110 transition-all self-start">
-                  <PlayCircle className="w-4 h-4" />
-                  Watch Now
-                </span>
-              </div>
-            </a>
+            <WorkshopCard
+              title="Beginner to Advanced — Free Workshop"
+              description="Candlestick anatomy, smart money concepts, liquidity, and a structured trading model. Watch the full replay anytime."
+              badge={{ label: "Completed", icon: CheckCircle2, tone: "completed" }}
+              cta={{ label: "Watch Now", icon: PlayCircle }}
+              shareUrl="https://youtu.be/YifBHSrJhqc"
+              shareTitle="Beginner to Advanced — Free Workshop by Arjun IFVG"
+              onActivate={() => window.open("https://youtu.be/YifBHSrJhqc", "_blank", "noopener,noreferrer")}
+              thumbnail={
+                <>
+                  <img
+                    src={workshopThumbnail}
+                    alt="Beginner to Advanced Free Workshop"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/0 to-background/0" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <PlayCircle className="w-16 h-16 text-white drop-shadow-2xl" />
+                  </div>
+                </>
+              }
+            />
 
             {/* Coming Soon — IFVG Masterclass */}
-            <div className="group rounded-3xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-300 flex flex-col">
-              <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-primary/30 via-primary/10 to-background">
-                <div className="absolute inset-0 flex items-center justify-center">
+            <WorkshopCard
+              title="IFVG Masterclass — Free Workshop"
+              description="A deep-dive into the IFVG model, market structure, and the exact playbook I use weekly. Be the first to know when seats open."
+              badge={{ label: "Coming Soon", icon: Clock, tone: "coming" }}
+              cta={{ label: "I'm Interested", icon: Sparkles }}
+              shareUrl={typeof window !== "undefined" ? window.location.href : "/workshop"}
+              shareTitle="IFVG Masterclass — Free Workshop by Arjun IFVG"
+              onActivate={() => setOpen(true)}
+              thumbnail={
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/10 to-background flex items-center justify-center">
                   <div className="text-center px-6">
                     <Sparkles className="w-10 h-10 text-primary mx-auto mb-3" />
                     <p className="font-display font-bold text-2xl md:text-3xl text-foreground leading-tight">
@@ -136,28 +130,8 @@ const Workshop = () => {
                     </p>
                   </div>
                 </div>
-                <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/15 backdrop-blur px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-primary">
-                  <Clock className="w-3.5 h-3.5" />
-                  Coming Soon
-                </div>
-              </div>
-              <div className="p-6 flex-1 flex flex-col">
-                <h2 className="font-display font-semibold text-xl md:text-2xl text-foreground mb-2">
-                  IFVG Masterclass — Free Workshop
-                </h2>
-                <p className="text-sm text-muted-foreground mb-6 flex-1">
-                  A deep-dive into the IFVG model, market structure, and the exact playbook I use weekly.
-                  Be the first to know when seats open.
-                </p>
-                <button
-                  onClick={() => setOpen(true)}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 hover:drop-shadow-[0_10px_30px_rgba(239,68,68,0.35)] transition-all self-start"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  I'm Interested
-                </button>
-              </div>
-            </div>
+              }
+            />
           </div>
 
           {/* Testimonials */}
