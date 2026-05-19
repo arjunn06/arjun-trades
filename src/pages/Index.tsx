@@ -65,7 +65,7 @@ const Index = () => {
             <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-6">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 text-primary text-sm font-medium tracking-wide uppercase">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                Live on YouTube
+                Tamil Trading Community
               </span>
             </motion.div>
 
