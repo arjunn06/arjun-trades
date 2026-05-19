@@ -127,6 +127,18 @@ const AdminBlogs = () => {
               <Star className="w-5 h-5" />
             </button>
             <button
+              onClick={() => navigate("/admin/workshop-interest")}
+              className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
+              title="Workshop Interest"
+            >
+              <Sparkles className="w-5 h-5" />
+              {unreadInterest > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {unreadInterest}
+                </span>
+              )}
+            </button>
+            <button
               onClick={() => navigate("/admin/contacts")}
               className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
               title="Messages"
