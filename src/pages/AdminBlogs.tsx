@@ -20,6 +20,7 @@ const AdminBlogs = () => {
   const [metrics, setMetrics] = useState<BlogMetrics>({});
   const [loading, setLoading] = useState(true);
   const [unreadMessages, setUnreadMessages] = useState(0);
+  const [unreadInterest, setUnreadInterest] = useState(0);
   const navigate = useNavigate();
 
   const checkAdmin = async () => {
