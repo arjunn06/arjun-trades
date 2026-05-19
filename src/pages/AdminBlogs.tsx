@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Mail, BarChart3, ChartBar, Star, Phone, ClipboardList } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Mail, BarChart3, ChartBar, Star, Phone, ClipboardList, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -20,6 +20,7 @@ const AdminBlogs = () => {
   const [metrics, setMetrics] = useState<BlogMetrics>({});
   const [loading, setLoading] = useState(true);
   const [unreadMessages, setUnreadMessages] = useState(0);
+  const [unreadInterest, setUnreadInterest] = useState(0);
   const navigate = useNavigate();
 
   const checkAdmin = async () => {
@@ -65,6 +66,13 @@ const AdminBlogs = () => {
       .select("*", { count: "exact", head: true })
       .eq("read", false);
     setUnreadMessages(count || 0);
+
+    const { count: interestCount } = await supabase
+      .from("workshop_interest")
+      .select("*", { count: "exact", head: true })
+      .eq("read", false);
+    setUnreadInterest(interestCount || 0);
+
 
     setLoading(false);
   };
@@ -117,6 +125,18 @@ const AdminBlogs = () => {
               title="Feedback"
             >
               <Star className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => navigate("/admin/workshop-interest")}
+              className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
+              title="Workshop Interest"
+            >
+              <Sparkles className="w-5 h-5" />
+              {unreadInterest > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {unreadInterest}
+                </span>
+              )}
             </button>
             <button
               onClick={() => navigate("/admin/contacts")}

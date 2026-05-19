@@ -17,6 +17,7 @@ import AdminContacts from "./pages/AdminContacts";
 import AdminFeedback from "./pages/AdminFeedback";
 import RedPill from "./pages/RedPill";
 import AdminBookings from "./pages/AdminBookings";
+import AdminWorkshopInterest from "./pages/AdminWorkshopInterest";
 import RedPillInfo from "./pages/RedPillInfo";
 import AdminRedPillInfo from "./pages/AdminRedPillInfo";
 import ResetPassword from "./pages/ResetPassword";
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/admin/feedback" element={<AdminFeedback />} />
           <Route path="/admin/bookings" element={<AdminBookings />} />
+          <Route path="/admin/workshop-interest" element={<AdminWorkshopInterest />} />
           <Route path="/red-pill/info" element={<RedPillInfo />} />
           <Route path="/admin/red-pill-info" element={<AdminRedPillInfo />} />
           <Route path="/reset-password" element={<ResetPassword />} />
