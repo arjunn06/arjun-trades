@@ -17,6 +17,7 @@ import AdminContacts from "./pages/AdminContacts";
 import AdminFeedback from "./pages/AdminFeedback";
 import RedPill from "./pages/RedPill";
 import AdminBookings from "./pages/AdminBookings";
+import AdminWorkshopInterest from "./pages/AdminWorkshopInterest";
 import RedPillInfo from "./pages/RedPillInfo";
 import AdminRedPillInfo from "./pages/AdminRedPillInfo";
 import ResetPassword from "./pages/ResetPassword";
