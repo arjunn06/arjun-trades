@@ -48,6 +48,7 @@ const App = () => (
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/admin/feedback" element={<AdminFeedback />} />
           <Route path="/admin/bookings" element={<AdminBookings />} />
+          <Route path="/admin/workshop-interest" element={<AdminWorkshopInterest />} />
           <Route path="/red-pill/info" element={<RedPillInfo />} />
           <Route path="/admin/red-pill-info" element={<AdminRedPillInfo />} />
           <Route path="/reset-password" element={<ResetPassword />} />
