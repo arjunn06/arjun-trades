@@ -439,4 +439,84 @@ const FeedbackForm = () => {
   );
 };
 
+type WorkshopCardProps = {
+  title: string;
+  description: string;
+  badge: { label: string; icon: React.ComponentType<{ className?: string }>; tone: "completed" | "coming" };
+  cta: { label: string; icon: React.ComponentType<{ className?: string }> };
+  shareUrl: string;
+  shareTitle: string;
+  thumbnail: React.ReactNode;
+  onActivate: () => void;
+};
+
+const WorkshopCard = ({ title, description, badge, cta, shareUrl, shareTitle, thumbnail, onActivate }: WorkshopCardProps) => {
+  const BadgeIcon = badge.icon;
+  const CtaIcon = cta.icon;
+  const badgeClasses =
+    badge.tone === "completed"
+      ? "border-emerald-500/30 bg-emerald-500/15 text-emerald-400"
+      : "border-primary/40 bg-primary/15 text-primary";
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const shareData = { title: shareTitle, url: shareUrl };
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+    } catch {
+      // user cancelled or share failed; fall through to copy
+    }
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({ title: "Link copied", description: "Workshop link is ready to share." });
+    } catch {
+      toast({ title: "Couldn't share", description: shareUrl });
+    }
+  };
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onActivate}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onActivate();
+        }
+      }}
+      className="group rounded-3xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-300 flex flex-col text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40"
+    >
+      <div className="relative aspect-video overflow-hidden bg-muted">
+        {thumbnail}
+        <div className={`absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border backdrop-blur px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider ${badgeClasses}`}>
+          <BadgeIcon className="w-3.5 h-3.5" />
+          {badge.label}
+        </div>
+        <button
+          type="button"
+          onClick={handleShare}
+          aria-label="Share workshop"
+          className="absolute top-4 right-4 inline-flex items-center justify-center w-9 h-9 rounded-full border border-border bg-background/70 backdrop-blur text-foreground hover:bg-background hover:border-primary/40 transition-colors"
+        >
+          <Share2 className="w-4 h-4" />
+        </button>
+      </div>
+      <div className="p-6 flex-1 flex flex-col">
+        <h2 className="font-display font-semibold text-xl md:text-2xl text-foreground mb-2 group-hover:text-primary transition-colors">
+          {title}
+        </h2>
+        <p className="text-sm text-muted-foreground mb-6 flex-1">{description}</p>
+        <span className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold bg-primary text-primary-foreground group-hover:brightness-110 transition-all self-start">
+          <CtaIcon className="w-4 h-4" />
+          {cta.label}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export default Workshop;
