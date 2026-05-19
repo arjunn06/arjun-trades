@@ -67,6 +67,13 @@ const AdminBlogs = () => {
       .eq("read", false);
     setUnreadMessages(count || 0);
 
+    const { count: interestCount } = await supabase
+      .from("workshop_interest")
+      .select("*", { count: "exact", head: true })
+      .eq("read", false);
+    setUnreadInterest(interestCount || 0);
+
+
     setLoading(false);
   };
 
