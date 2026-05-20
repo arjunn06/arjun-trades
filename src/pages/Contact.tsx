@@ -112,59 +112,11 @@ const Contact = () => {
               </div>
             </div>
           </form>
-
-          {/* FAQ Section */}
-          <div>
-            <h2 className="font-display text-2xl md:text-3xl font-semibold mb-6">
-              Frequently Asked Questions
-            </h2>
-
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="font-display text-lg md:text-xl font-semibold text-left">
-                  For Project Inquiries
-                </AccordionTrigger>
-                <AccordionContent className="text-base leading-relaxed">
-                  <p className="text-muted-foreground">
-                    I'm always excited to discuss new projects, collaborations, and creative opportunities.
-                    Use the form above to get in touch and I'll respond as soon as possible.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="font-display text-lg md:text-xl font-semibold text-left">
-                  Booking Information
-                </AccordionTrigger>
-                <AccordionContent className="text-base leading-relaxed">
-                  <p className="text-muted-foreground mb-4">When reaching out, please include:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
-                    <li>Project details and creative vision</li>
-                    <li>Desired timeline</li>
-                    <li>Budget range</li>
-                    <li>Any reference images or mood boards</li>
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-3">
-                <AccordionTrigger className="font-display text-lg md:text-xl font-semibold text-left">
-                  Response Time
-                </AccordionTrigger>
-                <AccordionContent className="text-base leading-relaxed">
-                  <p className="text-muted-foreground">
-                    I typically respond within 24-48 hours. For urgent inquiries, please mention it in the subject line.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-        </div>
-      </main>
+     </main>
 
       <footer className="border-t border-border">
         <div className="max-w-3xl mx-auto px-6 py-8 text-center text-sm text-muted-foreground">
-          <p>© 2024 All rights reserved.</p>
+          <p>© 2026 All rights reserved.</p>
         </div>
       </footer>
     </div>
