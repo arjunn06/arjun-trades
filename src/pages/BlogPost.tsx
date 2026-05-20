@@ -117,71 +117,62 @@ const BlogPost = () => {
 
   return (
     <>
-  <Helmet>
-    <title>{post.title} | Arjun IFVG</title>
+ <Helmet>
+  <title>{blog.title} | Arjun IFVG</title>
 
-    <meta
-      name="description"
-      content={post.excerpt || post.title}
-    />
+  <meta
+    name="description"
+    content={blog.content.replace(/<[^>]*>/g, "").slice(0, 160)}
+  />
 
-    <link
-      rel="canonical"
-      href={`https://ifvg.in/blog/${post.slug}`}
-    />
+  <link
+    rel="canonical"
+    href={`https://ifvg.in/blog/${blog.id}`}
+  />
 
-    {/* Open Graph */}
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content={post.title} />
-    <meta
-      property="og:description"
-      content={post.excerpt || post.title}
-    />
-    <meta
-      property="og:url"
-      content={`https://ifvg.in/blog/${post.slug}`}
-    />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={blog.title} />
 
-    {/* Featured Image */}
-    {post.cover_image && (
-      <meta property="og:image" content={post.cover_image} />
-    )}
+  <meta
+    property="og:description"
+    content={blog.content.replace(/<[^>]*>/g, "").slice(0, 160)}
+  />
 
-    {/* Twitter */}
-    <meta
-      name="twitter:card"
-      content="summary_large_image"
-    />
+  <meta
+    property="og:url"
+    content={`https://ifvg.in/blog/${blog.id}`}
+  />
 
-    {/* Article Schema */}
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: post.title,
-        description: post.excerpt || post.title,
-        image: post.cover_image,
-        author: {
-          "@type": "Person",
-          name: "Arjun S"
-        },
-        publisher: {
-          "@type": "Organization",
-          name: "IFVG",
-          logo: {
-            "@type": "ImageObject",
-            url: "https://ifvg.in/logo.png"
-          }
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `https://ifvg.in/blog/${post.slug}`
-        },
-        datePublished: post.created_at,
-        dateModified: post.updated_at || post.created_at
-      })}
-    </script>
-  </Helmet>
+  {blog.cover_image_url && (
+    <meta property="og:image" content={blog.cover_image_url} />
+  )}
+
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  />
+
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: blog.title,
+      description: blog.content
+        .replace(/<[^>]*>/g, "")
+        .slice(0, 160),
+      image: blog.cover_image_url,
+      author: {
+        "@type": "Person",
+        name: "Arjun S"
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "IFVG"
+      },
+      datePublished: blog.created_at
+    })}
+  </script>
+</Helmet>
     <div className="min-h-screen bg-background">
       <Header />
       <article className="max-w-3xl mx-auto px-6 py-16">
