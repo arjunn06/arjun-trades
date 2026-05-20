@@ -2,7 +2,7 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
-const BASE_URL = "https://gleam-blog-pad.lovable.app";
+const BASE_URL = "https://ifvg.in";
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || "https://nfruhexbfxtxqvcvjbmm.supabase.co";
 const SUPABASE_KEY =
   process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
