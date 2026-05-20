@@ -1,136 +1,109 @@
-// Public edge function: fetches latest videos from a YouTube channel via RSS.
-// No API key required. Returns up to 15 latest uploads, optionally shuffled.
+// Public edge function: fetches most popular long-form videos from the channel
+// using the YouTube Data API v3. Falls back to RSS feed if API key missing.
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const HANDLE = "arjun_ifvg";
-
-// Known channel ID for @arjun_ifvg — used as primary to avoid HTML scraping failures.
-const FALLBACK_CHANNEL_ID = "UC6GxCECop3P-z6WQisVVqxQ";
-let cachedChannelId: string | null = FALLBACK_CHANNEL_ID;
+const CHANNEL_ID = "UC6GxCECop3P-z6WQisVVqxQ";
+const CACHE_MS = 30 * 60 * 1000; // 30 minutes
 let cache: { at: number; videos: Video[] } | null = null;
-const CACHE_MS = 10 * 60 * 1000; // 10 minutes
 
 interface Video {
   id: string;
   title: string;
-  publishedAt: string;
-  thumbnail: string;
+  publishedAt?: string;
+  thumbnail?: string;
+  viewCount?: number;
 }
 
-async function resolveChannelId(): Promise<string> {
-  if (cachedChannelId) return cachedChannelId;
-  const res = await fetch(`https://www.youtube.com/@${HANDLE}`, {
-    headers: { "User-Agent": "Mozilla/5.0" },
-  });
-  const html = await res.text();
-  const match =
-    html.match(/"channelId":"(UC[\w-]{20,})"/) ||
-    html.match(/<link rel="canonical" href="https:\/\/www\.youtube\.com\/channel\/(UC[\w-]+)"/);
-  if (!match) throw new Error("Could not resolve channel ID");
-  cachedChannelId = match[1];
-  return cachedChannelId;
+function isoDurationToSeconds(d: string): number {
+  const m = d.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return 0;
+  const [, h, mn, s] = m;
+  return (parseInt(h ?? "0") * 3600) + (parseInt(mn ?? "0") * 60) + parseInt(s ?? "0");
 }
 
-function parseFeed(xml: string): Video[] {
-  const entries = xml.split("<entry>").slice(1);
-  return entries.map((entry) => {
-    const id = entry.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1] ?? "";
-    const title = entry.match(/<title>([^<]+)<\/title>/)?.[1] ?? "";
-    const publishedAt = entry.match(/<published>([^<]+)<\/published>/)?.[1] ?? "";
-    const thumbnail =
-      entry.match(/<media:thumbnail url="([^"]+)"/)?.[1] ??
-      `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-    return { id, title, publishedAt, thumbnail };
-  }).filter((v) => v.id);
-}
+async function fetchPopularViaApi(apiKey: string): Promise<Video[]> {
+  // search.list ordered by viewCount, then videos.list to get duration + stats so we can filter shorts/lives
+  const searchUrl = new URL("https://www.googleapis.com/youtube/v3/search");
+  searchUrl.searchParams.set("key", apiKey);
+  searchUrl.searchParams.set("channelId", CHANNEL_ID);
+  searchUrl.searchParams.set("part", "id");
+  searchUrl.searchParams.set("order", "viewCount");
+  searchUrl.searchParams.set("type", "video");
+  searchUrl.searchParams.set("maxResults", "25");
 
-// Returns { isShort, isLive }. Two probes:
-//  - /shorts/{id} stays on /shorts/ for shorts; redirects to /watch for normal videos.
-//  - /watch?v={id} HTML inspected for live flags. CONSENT cookie bypasses EU consent wall.
-async function classify(id: string): Promise<{ isShort: boolean; isLive: boolean }> {
-  const headers = {
-    "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
-    Cookie: "CONSENT=YES+1; SOCS=CAI",
-  };
+  const sRes = await fetch(searchUrl);
+  if (!sRes.ok) throw new Error(`search.list failed: ${sRes.status} ${await sRes.text()}`);
+  const sJson = await sRes.json();
+  const ids: string[] = (sJson.items ?? []).map((i: { id: { videoId: string } }) => i.id.videoId).filter(Boolean);
+  if (!ids.length) return [];
 
-  let isShort = false;
-  try {
-    const r = await fetch(`https://www.youtube.com/shorts/${id}`, {
-      method: "HEAD",
-      redirect: "manual",
-      headers,
+  const vUrl = new URL("https://www.googleapis.com/youtube/v3/videos");
+  vUrl.searchParams.set("key", apiKey);
+  vUrl.searchParams.set("id", ids.join(","));
+  vUrl.searchParams.set("part", "snippet,contentDetails,statistics,liveStreamingDetails");
+
+  const vRes = await fetch(vUrl);
+  if (!vRes.ok) throw new Error(`videos.list failed: ${vRes.status} ${await vRes.text()}`);
+  const vJson = await vRes.json();
+
+  const videos: Video[] = [];
+  for (const item of vJson.items ?? []) {
+    const seconds = isoDurationToSeconds(item.contentDetails?.duration ?? "PT0S");
+    const isShort = seconds > 0 && seconds <= 65;
+    const isLive = !!item.liveStreamingDetails || item.snippet?.liveBroadcastContent === "live";
+    if (isShort || isLive) continue;
+    videos.push({
+      id: item.id,
+      title: item.snippet?.title ?? "",
+      publishedAt: item.snippet?.publishedAt,
+      thumbnail:
+        item.snippet?.thumbnails?.maxres?.url ??
+        item.snippet?.thumbnails?.high?.url ??
+        `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
+      viewCount: parseInt(item.statistics?.viewCount ?? "0", 10),
     });
-    // 200 = stayed on /shorts (it's a short). 3xx = redirected to /watch (not a short).
-    isShort = r.status === 200;
-  } catch { /* ignore */ }
-
-  let isLive = false;
-  try {
-    const r = await fetch(`https://www.youtube.com/watch?v=${id}`, { headers });
-    const html = await r.text();
-    isLive =
-      /"isLiveContent"\s*:\s*true/.test(html) ||
-      /"isLive"\s*:\s*true/.test(html) ||
-      /"liveBroadcastDetails"/.test(html);
-    if (!isShort) {
-      const len = parseInt(html.match(/"lengthSeconds"\s*:\s*"(\d+)"/)?.[1] ?? "0", 10);
-      if (len > 0 && len <= 60) isShort = true;
-    }
-  } catch { /* ignore */ }
-
-  return { isShort, isLive };
+  }
+  // Sort by views desc (search.list ordering is approximate)
+  videos.sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0));
+  return videos;
 }
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
+async function fetchViaRss(): Promise<Video[]> {
+  const res = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`);
+  if (!res.ok) throw new Error(`Feed fetch failed: ${res.status}`);
+  const xml = await res.text();
+  const entries = xml.split("<entry>").slice(1);
+  return entries.map((e) => {
+    const id = e.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1] ?? "";
+    const title = e.match(/<title>([^<]+)<\/title>/)?.[1] ?? "";
+    return { id, title, thumbnail: `https://i.ytimg.com/vi/${id}/hqdefault.jpg` };
+  }).filter((v) => v.id);
 }
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const url = new URL(req.url);
-    const random = url.searchParams.get("random") !== "false";
-
     let videos: Video[];
     if (cache && Date.now() - cache.at < CACHE_MS) {
       videos = cache.videos;
     } else {
-      const channelId = await resolveChannelId();
-      const feedRes = await fetch(
-        `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`
-      );
-      if (!feedRes.ok) throw new Error(`Feed fetch failed: ${feedRes.status}`);
-      const xml = await feedRes.text();
-      const all = parseFeed(xml);
-      // Filter out shorts and livestreams in parallel
-      const flags = await Promise.all(all.map((v) => classify(v.id)));
-      const liveTitle = /^\s*🔴|\blive\b|\bpremiere\b/i;
-      videos = all.filter(
-        (v, i) => !flags[i].isShort && !flags[i].isLive && !liveTitle.test(v.title)
-      );
+      const apiKey = Deno.env.get("YOUTUBE_API_KEY");
+      try {
+        videos = apiKey ? await fetchPopularViaApi(apiKey) : await fetchViaRss();
+      } catch (err) {
+        console.error("Primary fetch failed, falling back to RSS:", err);
+        videos = await fetchViaRss();
+      }
       cache = { at: Date.now(), videos };
     }
 
-    const out = random ? shuffle(videos) : videos;
-
-    return new Response(JSON.stringify({ videos: out }), {
-      headers: {
-        ...corsHeaders,
-        "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=300",
-      },
+    return new Response(JSON.stringify({ videos }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "public, max-age=600" },
     });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Unknown error";
