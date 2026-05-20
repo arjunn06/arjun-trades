@@ -7,6 +7,7 @@ import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import TestimonialWall from "@/components/TestimonialWall";
 import { supabase } from "@/integrations/supabase/client";
+import { Helmet } from "react-helmet-async";
 
 interface YTVideo {
   id: string;
@@ -61,6 +62,54 @@ const Index = () => {
   }, []);
 
   return (
+    <>
+  <Helmet>
+    <title>Arjun IFVG | Tamil Trading Community</title>
+
+    <meta
+      name="description"
+      content="Tamil trading community focused on ICT concepts, price action, liquidity, iFVG strategy, and trading psychology."
+    />
+
+    <meta
+      name="keywords"
+      content="ICT trading, SMC trading, Tamil trading, iFVG, forex trading, futures trading"
+    />
+
+    <link rel="canonical" href="https://ifvg.in/" />
+
+    {/* Open Graph */}
+    <meta property="og:title" content="Arjun IFVG" />
+    <meta
+      property="og:description"
+      content="Tamil trading community focused on ICT concepts and trading education."
+    />
+    <meta property="og:url" content="https://ifvg.in/" />
+    <meta property="og:type" content="website" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {/* Schema */}
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "IFVG",
+        url: "https://ifvg.in",
+        founder: {
+          "@type": "Person",
+          name: "Arjun S"
+        },
+        sameAs: [
+          "https://youtube.com/@arjun_ifvg",
+          "https://discord.gg/SCHeKKCa6c"
+        ]
+      })}
+    </script>
+  </Helmet>
+
+  <div className="min-h-screen bg-background">
     <div className="min-h-screen bg-background">
       <Header />
 
@@ -415,7 +464,9 @@ const Index = () => {
           <p className="text-muted-foreground text-sm">© 2026 Arjun Trades</p>
         </div>
       </footer>
-    </div>);
+    </div>
+</>
+);
 
 };
 
