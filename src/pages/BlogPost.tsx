@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
+import { Helmet } from "react-helmet-async";
 
 interface Blog {
   id: string;
@@ -115,6 +116,72 @@ const BlogPost = () => {
   }
 
   return (
+    <>
+  <Helmet>
+    <title>{post.title} | Arjun IFVG</title>
+
+    <meta
+      name="description"
+      content={post.excerpt || post.title}
+    />
+
+    <link
+      rel="canonical"
+      href={`https://ifvg.in/blog/${post.slug}`}
+    />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={post.title} />
+    <meta
+      property="og:description"
+      content={post.excerpt || post.title}
+    />
+    <meta
+      property="og:url"
+      content={`https://ifvg.in/blog/${post.slug}`}
+    />
+
+    {/* Featured Image */}
+    {post.cover_image && (
+      <meta property="og:image" content={post.cover_image} />
+    )}
+
+    {/* Twitter */}
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+
+    {/* Article Schema */}
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.title,
+        description: post.excerpt || post.title,
+        image: post.cover_image,
+        author: {
+          "@type": "Person",
+          name: "Arjun S"
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "IFVG",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://ifvg.in/logo.png"
+          }
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://ifvg.in/blog/${post.slug}`
+        },
+        datePublished: post.created_at,
+        dateModified: post.updated_at || post.created_at
+      })}
+    </script>
+  </Helmet>
     <div className="min-h-screen bg-background">
       <Header />
       <article className="max-w-3xl mx-auto px-6 py-16">
@@ -141,8 +208,9 @@ const BlogPost = () => {
           dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }}
         />
       </article>
-    </div>
-  );
+   </div>
+</>
+);
 };
 
 export default BlogPost;
