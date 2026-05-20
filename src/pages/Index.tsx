@@ -41,7 +41,18 @@ const Index = () => {
       .invoke("youtube-videos", { method: "GET" })
       .then(({ data, error }) => {
         if (cancelled || error || !data?.videos?.length) return;
-        setVideos(data.videos as YTVideo[]);
+        const fetched = data.videos as YTVideo[];
+        // Ensure at least 3 videos by padding from fallback if needed.
+        const seen = new Set(fetched.map((v) => v.id));
+        const padded = [...fetched];
+        for (const fb of fallbackVideos) {
+          if (padded.length >= 6) break;
+          if (!seen.has(fb.id)) {
+            padded.push(fb);
+            seen.add(fb.id);
+          }
+        }
+        setVideos(padded);
       })
       .catch(() => {});
     return () => {
