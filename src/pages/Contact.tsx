@@ -112,6 +112,9 @@ const Contact = () => {
               </div>
             </div>
           </form>
+    </div>  {/* Close the max-w-3xl div */}
+    </main>   {/* Close the main element */}
+
 
       <footer className="border-t border-border">
         <div className="max-w-3xl mx-auto px-6 py-8 text-center text-sm text-muted-foreground">
