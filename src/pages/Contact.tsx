@@ -112,7 +112,6 @@ const Contact = () => {
               </div>
             </div>
           </form>
-     </main>
 
       <footer className="border-t border-border">
         <div className="max-w-3xl mx-auto px-6 py-8 text-center text-sm text-muted-foreground">
