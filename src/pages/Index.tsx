@@ -54,16 +54,16 @@ const Index = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden px-6 pt-16 pb-20 lg:pt-24 lg:pb-28">
+      <section className="relative overflow-hidden px-4 sm:px-6 pt-10 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28">
         {/* Background glow effects */}
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-secondary/5 blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-secondary/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: copy + CTAs */}
           <div className="text-center lg:text-left">
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 text-primary text-sm font-medium tracking-wide uppercase">
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-5 sm:mb-6">
+              <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-primary/30 text-primary text-xs sm:text-sm font-medium tracking-wide uppercase">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 Tamil Trading Community
               </span>
@@ -74,7 +74,7 @@ const Index = () => {
               animate="visible"
               variants={fadeUp}
               custom={1}
-              className="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
+              className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-5 sm:mb-6">
               <span className="text-foreground">Arjun</span>{" "}
               <span className="neon-text text-primary">IFVG</span>
             </motion.h1>
@@ -84,7 +84,7 @@ const Index = () => {
               animate="visible"
               variants={fadeUp}
               custom={2}
-              className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+              className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-8 sm:mb-10 leading-relaxed">
               We don't chase dopamine, we chase patience. See what the community is learning right now — fresh breakdowns, recaps and ICT concepts every week.
             </motion.p>
 
@@ -93,12 +93,12 @@ const Index = () => {
               animate="visible"
               variants={fadeUp}
               custom={3}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <a
                 href="https://youtube.com/@arjun_ifvg?sub_confirmation=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base">
+                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-sm sm:text-base">
                 <Youtube className="w-5 h-5" />
                 Subscribe on YouTube
               </a>
@@ -106,7 +106,7 @@ const Index = () => {
                 href="https://discord.gg/SCHeKKCa6c"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-base">
+                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-sm sm:text-base">
                 <Users className="w-5 h-5" />
                 Join Discord
               </a>
@@ -136,16 +136,16 @@ const Index = () => {
                           loading="lazy"
                         />
                       </div>
-                      <div className="p-4 flex items-start gap-3">
+                      <div className="p-3 sm:p-4 flex items-start gap-3">
                         <Youtube className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                        <p className="text-sm text-foreground line-clamp-2">{video.title}</p>
+                        <p className="text-xs sm:text-sm text-foreground line-clamp-2">{video.title}</p>
                       </div>
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-3 bg-background/80 backdrop-blur border-border text-foreground hover:bg-muted" />
-              <CarouselNext className="right-3 bg-background/80 backdrop-blur border-border text-foreground hover:bg-muted" />
+              <CarouselPrevious className="left-2 sm:left-3 bg-background/80 backdrop-blur border-border text-foreground hover:bg-muted" />
+              <CarouselNext className="right-2 sm:right-3 bg-background/80 backdrop-blur border-border text-foreground hover:bg-muted" />
             </Carousel>
             <p className="text-xs text-muted-foreground text-center mt-4">
               Swipe through the latest uploads · <a href="https://youtube.com/@arjun_ifvg" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">view channel</a>

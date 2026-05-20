@@ -8,7 +8,9 @@ const corsHeaders = {
 
 const HANDLE = "arjun_ifvg";
 
-let cachedChannelId: string | null = null;
+// Known channel ID for @arjun_ifvg — used as primary to avoid HTML scraping failures.
+const FALLBACK_CHANNEL_ID = "UC6GxCECop3P-z6WQisVVqxQ";
+let cachedChannelId: string | null = FALLBACK_CHANNEL_ID;
 let cache: { at: number; videos: Video[] } | null = null;
 const CACHE_MS = 10 * 60 * 1000; // 10 minutes
 
