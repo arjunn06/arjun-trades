@@ -26,9 +26,9 @@ const personJsonLd = {
     "Price Action",
   ],
   sameAs: [
+    "https://www.instagram.com/arjun_ifvg",
     "https://youtube.com/@arjun_ifvg",
     "https://discord.gg/SCHeKKCa6c",
-    "https://www.instagram.com/arjun_ifvg",
   ],
 };
 
