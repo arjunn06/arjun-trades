@@ -110,7 +110,6 @@ const Index = () => {
   </Helmet>
 
   <div className="min-h-screen bg-background">
-    <div className="min-h-screen bg-background">
       <Header />
 
       {/* Hero Section */}
