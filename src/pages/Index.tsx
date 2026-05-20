@@ -166,7 +166,7 @@ const Index = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-24 px-6">
+      <section className="py-16 sm:py-24 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -253,7 +253,7 @@ const Index = () => {
       </section>
 
       {/* YouTube Carousel Section */}
-      <section className="py-24 px-6 border-t border-border">
+      <section className="py-16 sm:py-24 px-4 sm:px-6 border-t border-border">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -310,7 +310,7 @@ const Index = () => {
       </section>
 
       {/* Featured Playlists Section */}
-      <section className="py-24 px-6 border-t border-border">
+      <section className="py-16 sm:py-24 px-4 sm:px-6 border-t border-border">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -385,7 +385,7 @@ const Index = () => {
       <TestimonialWall />
 
       {/* Footer */}
-      <footer className="border-t border-border py-12 px-6">
+      <footer className="border-t border-border py-10 sm:py-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="font-display font-bold text-lg text-foreground">Arjun Trades</p>
           <div className="flex items-center gap-6">
