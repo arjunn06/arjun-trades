@@ -4,7 +4,7 @@ import { Youtube, Users, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import portrait from "@/assets/arjun-portrait.jpg";
 
-const SITE_URL = "https://gleam-blog-pad.lovable.app";
+const SITE_URL = "https://ifvg.in";
 const IMAGE_URL = `${SITE_URL}/arjun-ifvg.jpg`;
 
 const personJsonLd = {
