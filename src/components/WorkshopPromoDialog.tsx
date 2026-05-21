@@ -77,15 +77,15 @@ const WorkshopPromoDialog = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-md bg-card border-border">
+      <DialogContent className="w-[calc(100vw-2rem)] max-w-[420px] max-h-[calc(100svh-2rem)] overflow-y-auto rounded-xl bg-card border-border p-5 sm:p-6">
         <DialogHeader>
-          <div className="mx-auto w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-2">
+          <div className="mx-auto w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-2">
             <BookOpen className="w-6 h-6" />
           </div>
-          <DialogTitle className="text-center font-display text-2xl">
+          <DialogTitle className="text-center font-display text-xl sm:text-2xl leading-tight">
             Free iFVG Workshop
           </DialogTitle>
-          <DialogDescription className="text-center">
+          <DialogDescription className="text-center text-sm leading-relaxed">
             Live, in-depth ICT + iFVG breakdown with real chart examples and Q&amp;A.
             Drop your details to get notified the moment we open seats.
           </DialogDescription>
@@ -149,16 +149,16 @@ const WorkshopPromoDialog = () => {
                 Send me workshop updates and trading tips. No spam.
               </Label>
             </div>
-            <DialogFooter className="flex-col sm:flex-row gap-2">
+            <DialogFooter className="flex-col gap-2 sm:flex-row sm:space-x-0">
               <Button
                 type="button"
                 variant="ghost"
                 onClick={() => setOpen(false)}
-                className="sm:flex-1"
+                className="w-full sm:flex-1"
               >
                 Maybe later
               </Button>
-              <Button type="submit" disabled={submitting} className="sm:flex-1">
+              <Button type="submit" disabled={submitting} className="w-full sm:flex-1">
                 {submitting ? "Submitting..." : "Register interest"}
               </Button>
             </DialogFooter>
