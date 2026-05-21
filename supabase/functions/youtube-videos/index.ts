@@ -93,10 +93,16 @@ async function fetchPopularViaApi(apiKey: string): Promise<Video[]> {
       item.contentDetails?.duration ?? "PT0S"
     );
 
-    // Filter Shorts
-    const isShort = seconds > 0 && seconds < 120;
+    const title: string = item.snippet?.title ?? "";
+    const description: string = item.snippet?.description ?? "";
 
-    // Filter livestreams + upcoming streams
+    // Filter Shorts: YouTube Shorts can be up to ~3 minutes. Also exclude by hashtag.
+    const isShort =
+      (seconds > 0 && seconds <= 181) ||
+      /#shorts?\b/i.test(title) ||
+      /#shorts?\b/i.test(description);
+
+    // Filter livestreams + upcoming + past live broadcasts
     const isLive =
       !!item.liveStreamingDetails ||
       item.snippet?.liveBroadcastContent === "live" ||
@@ -106,7 +112,7 @@ async function fetchPopularViaApi(apiKey: string): Promise<Video[]> {
 
     videos.push({
       id: item.id,
-      title: item.snippet?.title ?? "",
+      title,
       publishedAt: item.snippet?.publishedAt,
       thumbnail:
         item.snippet?.thumbnails?.maxres?.url ??
@@ -118,6 +124,7 @@ async function fetchPopularViaApi(apiKey: string): Promise<Video[]> {
       ),
     });
   }
+
 
   // Sort by highest views
   videos.sort(
