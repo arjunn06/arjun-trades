@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import TestimonialWall from "@/components/TestimonialWall";
+import WorkshopPromoDialog from "@/components/WorkshopPromoDialog";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 
@@ -111,6 +112,7 @@ const Index = () => {
 
   <div className="min-h-screen bg-background">
       <Header />
+      <WorkshopPromoDialog />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 sm:px-6 pt-10 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28">
