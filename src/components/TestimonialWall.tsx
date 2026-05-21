@@ -110,7 +110,7 @@ const TestimonialWall = () => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="py-24 px-6 border-t border-border">
+    <section className="py-16 sm:py-24 px-4 sm:px-6 border-t border-border">
       <div className="max-w-6xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
           <motion.h2
