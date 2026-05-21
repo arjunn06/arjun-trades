@@ -133,10 +133,11 @@ const Index = () => {
               animate="visible"
               variants={fadeUp}
               custom={1}
-              className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-5 sm:mb-6">
+              className="font-display font-bold text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1] tracking-tight mb-5 sm:mb-6 break-words">
               <span className="text-foreground">Arjun</span>{" "}
               <span className="neon-text text-primary">IFVG</span>
             </motion.h1>
+
 
             <motion.p
               initial="hidden"
