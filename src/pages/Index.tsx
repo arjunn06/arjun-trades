@@ -217,13 +217,13 @@ const Index = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
+      <section className="overflow-hidden py-14 sm:py-24 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="grid md:grid-cols-4 gap-6">
+            className="grid min-w-0 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             
             {[
             {
@@ -263,7 +263,7 @@ const Index = () => {
               key={i}
               variants={fadeUp}
               custom={i}
-              className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-500">
+              className="group relative min-w-0 p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-500">
               
                 <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
                   {item.icon}
@@ -304,7 +304,7 @@ const Index = () => {
       </section>
 
       {/* YouTube Carousel Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 border-t border-border">
+      <section className="overflow-hidden py-14 sm:py-24 px-4 sm:px-6 border-t border-border">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -315,20 +315,20 @@ const Index = () => {
               variants={fadeUp}
               custom={0}
               className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center">
-              Latest from YouTube
+              Popular on YouTube
             </motion.h2>
             <motion.p
               variants={fadeUp}
               custom={1}
-              className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">
-              Free trading education — daily livestreams on YouTube
+              className="text-muted-foreground text-center mb-10 sm:mb-12 max-w-xl mx-auto">
+              Long-form trading breakdowns from the channel
             </motion.p>
             <motion.div variants={fadeUp} custom={2}>
               <Carousel opts={{ align: "start", loop: true }} className="w-full">
-                <CarouselContent className="-ml-4">
+                <CarouselContent className="-ml-2 sm:-ml-4">
                   {videos.map((video, i) => (
-                    <CarouselItem key={i} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                      <div className="aspect-video rounded-2xl overflow-hidden border border-border bg-card">
+                    <CarouselItem key={i} className="pl-2 sm:pl-4 md:basis-1/2 lg:basis-1/3">
+                      <div className="aspect-video rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card">
                         <iframe
                           src={`https://www.youtube.com/embed/${video.id}`}
                           title={video.title}
