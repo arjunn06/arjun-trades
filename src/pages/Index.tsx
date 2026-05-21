@@ -110,19 +110,19 @@ const Index = () => {
     </script>
   </Helmet>
 
-  <div className="min-h-screen bg-background">
+  <div className="min-h-screen max-w-full overflow-x-hidden bg-background">
       <Header />
       <WorkshopPromoDialog />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden px-4 sm:px-6 pt-10 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28">
+      <section className="relative overflow-hidden px-4 sm:px-6 pt-8 pb-12 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28">
         {/* Background glow effects */}
         <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-secondary/5 blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="max-w-7xl mx-auto relative z-10 grid min-w-0 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left: copy + CTAs */}
-          <div className="text-center lg:text-left">
+          <div className="min-w-0 text-center lg:text-left">
             <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-5 sm:mb-6">
               <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-primary/30 text-primary text-xs sm:text-sm font-medium tracking-wide uppercase">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -135,7 +135,7 @@ const Index = () => {
               animate="visible"
               variants={fadeUp}
               custom={1}
-              className="font-display font-bold text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1] tracking-tight mb-5 sm:mb-6 break-words">
+              className="font-display font-bold text-[2.65rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-5 sm:mb-6 break-words">
               <span className="text-foreground">Arjun</span>{" "}
               <span className="neon-text text-primary">IFVG</span>
             </motion.h1>
@@ -146,7 +146,7 @@ const Index = () => {
               animate="visible"
               variants={fadeUp}
               custom={2}
-              className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-8 sm:mb-10 leading-relaxed">
+              className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-7 sm:mb-10 leading-relaxed">
               We don't chase dopamine, we chase patience. See what the community is learning right now — fresh breakdowns, recaps and ICT concepts every week.
             </motion.p>
 
@@ -160,7 +160,7 @@ const Index = () => {
                 href="https://youtube.com/@arjun_ifvg?sub_confirmation=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-sm sm:text-base">
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-sm sm:text-base">
                 <Youtube className="w-5 h-5" />
                 Subscribe on YouTube
               </a>
@@ -168,7 +168,7 @@ const Index = () => {
                 href="https://discord.gg/SCHeKKCa6c"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-sm sm:text-base">
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-sm sm:text-base">
                 <Users className="w-5 h-5" />
                 Join Discord
               </a>
@@ -181,13 +181,13 @@ const Index = () => {
             animate="visible"
             variants={fadeUp}
             custom={2}
-            className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent blur-2xl rounded-3xl pointer-events-none" />
+            className="relative min-w-0 w-full">
+            <div className="absolute inset-0 sm:-inset-4 bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent blur-2xl rounded-3xl pointer-events-none" />
             <Carousel opts={{ align: "start", loop: true }} className="w-full relative">
-              <CarouselContent>
+              <CarouselContent className="-ml-2 sm:-ml-4">
                 {videos.map((video, i) => (
-                  <CarouselItem key={i} className="basis-full">
-                    <div className="rounded-2xl overflow-hidden border border-border bg-card shadow-2xl">
+                  <CarouselItem key={i} className="basis-full pl-2 sm:pl-4">
+                    <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card shadow-2xl">
                       <div className="aspect-video">
                         <iframe
                           src={`https://www.youtube.com/embed/${video.id}`}
