@@ -112,6 +112,7 @@ const Index = () => {
 
   <div className="min-h-screen bg-background">
       <Header />
+      <WorkshopPromoDialog />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 sm:px-6 pt-10 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28">
