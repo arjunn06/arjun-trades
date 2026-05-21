@@ -361,7 +361,7 @@ const Index = () => {
       </section>
 
       {/* Featured Playlists Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 border-t border-border">
+      <section className="overflow-hidden py-14 sm:py-24 px-4 sm:px-6 border-t border-border">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -377,11 +377,11 @@ const Index = () => {
             <motion.p
               variants={fadeUp}
               custom={1}
-              className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">
+              className="text-muted-foreground text-center mb-10 sm:mb-12 max-w-xl mx-auto">
               Structured courses to take you from beginner to confident trader
             </motion.p>
 
-            <motion.div variants={fadeUp} custom={2} className="grid md:grid-cols-2 gap-8">
+            <motion.div variants={fadeUp} custom={2} className="grid min-w-0 md:grid-cols-2 gap-5 sm:gap-8">
               {[
                 {
                   title: "Bootcamp: Basics to Trading",
@@ -401,7 +401,7 @@ const Index = () => {
                   href={playlist.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-500">
+                  className="group block min-w-0 rounded-xl sm:rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-500">
                   <div className="aspect-video">
                     <iframe
                       src={`https://www.youtube.com/embed/${playlist.embedId}`}
@@ -412,7 +412,7 @@ const Index = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="p-6">
+                  <div className="p-5 sm:p-6">
                     <h3 className="font-display font-semibold text-xl text-foreground mb-2 group-hover:text-primary transition-colors">
                       {playlist.title}
                     </h3>
