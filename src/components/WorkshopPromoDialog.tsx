@@ -59,8 +59,8 @@ const WorkshopPromoDialog = () => {
       email: parsed.data.email,
       promo_consent: parsed.data.promo_consent,
     });
-    setSubmitting(false);
     if (error) {
+      setSubmitting(false);
       toast({
         title: "Something went wrong",
         description: error.message,
@@ -68,6 +68,15 @@ const WorkshopPromoDialog = () => {
       });
       return;
     }
+
+    // Fire-and-forget: add to Resend audience + send welcome email
+    supabase.functions
+      .invoke("workshop-signup-email", {
+        body: { name: parsed.data.name, email: parsed.data.email },
+      })
+      .catch((e) => console.error("workshop-signup-email failed", e));
+
+    setSubmitting(false);
     setSubmitted(true);
     toast({
       title: "You're on the list!",

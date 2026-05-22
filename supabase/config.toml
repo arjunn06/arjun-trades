@@ -2,3 +2,6 @@ project_id = "nfruhexbfxtxqvcvjbmm"
 
 [functions.youtube-videos]
 verify_jwt = false
+
+[functions.workshop-signup-email]
+verify_jwt = false
