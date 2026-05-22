@@ -3,7 +3,7 @@ import { z } from 'npm:zod@3.23.8';
 
 const GATEWAY_URL = 'https://connector-gateway.lovable.dev/resend';
 const AUDIENCE_ID = '4cf37413-09ce-4808-bfba-04abc22ecc08';
-const FROM_ADDRESS = 'Arjun Trades <onboarding@resend.dev>';
+const FROM_ADDRESS = 'Arjun Trades <workshop@ifvg.in>';
 
 const BodySchema = z.object({
   name: z.string().trim().min(1).max(100),
