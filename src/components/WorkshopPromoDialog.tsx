@@ -69,12 +69,16 @@ const WorkshopPromoDialog = () => {
       return;
     }
 
-    // Fire-and-forget: add to Resend audience + send welcome email
-    supabase.functions
-      .invoke("workshop-signup-email", {
-        body: { name: parsed.data.name, email: parsed.data.email },
-      })
-      .catch((e) => console.error("workshop-signup-email failed", e));
+    // Add to Resend audience + send welcome email
+    const { data: fnData, error: fnError } = await supabase.functions.invoke(
+      "workshop-signup-email",
+      { body: { name: parsed.data.name, email: parsed.data.email } },
+    );
+    if (fnError) {
+      console.error("workshop-signup-email failed", fnError, fnData);
+    } else {
+      console.log("workshop-signup-email ok", fnData);
+    }
 
     setSubmitting(false);
     setSubmitted(true);
