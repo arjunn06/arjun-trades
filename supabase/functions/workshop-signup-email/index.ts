@@ -687,7 +687,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from: FROM_ADDRESS,
         to: [email],
-        subject: "You're in — Free iFVG Workshop",
+        subject: "Workshop Update - Date and Time Announcement Livestream",
         html,
       }),
     });
