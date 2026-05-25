@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import redPillHand from "@/assets/red-pill-hand.jpg";
 import bluePillHand from "@/assets/blue-pill-hand.jpg";
