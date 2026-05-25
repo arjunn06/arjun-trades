@@ -338,7 +338,7 @@ const RedPill = () => {
             >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="inline-block px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wide">
-                  Batch 1 Sold Out — Join Waitlist for Batch 2
+                  Applications Open — Batch 2
                 </span>
               </div>
 
@@ -366,11 +366,11 @@ const RedPill = () => {
                 className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
                 <ClipboardList className="w-5 h-5" />
-                Join Waitlist
+                Apply Now
               </button>
 
               <p className="text-center text-xs text-muted-foreground mt-4">
-                All slots for the current batch have been filled. Join the waitlist to be notified when the next batch opens.
+                Submit your application and we'll reach out to confirm your enrolment call.
               </p>
             </motion.div>
           </motion.div>
