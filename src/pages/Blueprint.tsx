@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import redPillHand from "@/assets/red-pill-hand.jpg";
 import bluePillHand from "@/assets/blue-pill-hand.jpg";
+import whopLogo from "@/assets/whop-logo.svg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -36,11 +37,11 @@ const ProgressiveBlurText = ({ text }: { text: string }) => (
 );
 
 const WhopIcon = ({ className = "" }: { className?: string }) => (
-  <span
-    className={`inline-flex items-center justify-center w-5 h-5 rounded-md bg-white text-blue-600 font-black text-[0.7rem] ${className}`}
-  >
-    W
-  </span>
+  <img
+    src={whopLogo}
+    alt="Whop"
+    className={`h-4 w-auto ${className}`}
+  />
 );
 
 const Blueprint = () => {
