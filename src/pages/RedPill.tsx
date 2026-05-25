@@ -405,7 +405,7 @@ const RedPill = () => {
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
                 <ClipboardList className="w-5 h-5" />
-                Join Waitlist
+                Apply Now
               </button>
             </motion.div>
           </motion.div>
