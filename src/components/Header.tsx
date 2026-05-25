@@ -69,10 +69,10 @@ const Header = () => {
             Contact
           </Link>
           <Link
-            to="/red-pill"
+            to="/blueprint"
             className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 hover:drop-shadow-[0_10px_30px_rgba(239,68,68,0.28)] hover:scale-[1.03] hover:ring-2 hover:ring-primary/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-transform duration-200 text-sm"
           >
-            Take The Red Pill
+            The Blueprint
           </Link>
         </nav>
 
