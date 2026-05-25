@@ -24,6 +24,7 @@ import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import Blueprint from "./pages/Blueprint";
+import RedPillReviews from "./pages/RedPillReviews";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/admin/bookings" element={<AdminBookings />} />
           <Route path="/admin/workshop-interest" element={<AdminWorkshopInterest />} />
           <Route path="/red-pill/info" element={<RedPillInfo />} />
+          <Route path="/red-pill/review" element={<RedPillReviews />} />
           <Route path="/admin/red-pill-info" element={<AdminRedPillInfo />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
