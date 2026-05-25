@@ -110,7 +110,7 @@ const RedPill = () => {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-8">
             <span className="inline-block px-5 py-1.5 rounded-full border border-primary/30 text-primary text-sm font-medium tracking-wide uppercase">
-              Batch 1 — Slots Filled 🔒
+              Applications Open — Batch 2
             </span>
           </motion.div>
 
@@ -147,7 +147,7 @@ const RedPill = () => {
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
             >
               <ClipboardList className="w-5 h-5" />
-              Join Waitlist
+              Apply Now
             </button>
             <a
               href="#about"
@@ -338,7 +338,7 @@ const RedPill = () => {
             >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="inline-block px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wide">
-                  Batch 1 Sold Out — Join Waitlist for Batch 2
+                  Applications Open — Batch 2
                 </span>
               </div>
 
@@ -366,11 +366,11 @@ const RedPill = () => {
                 className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
                 <ClipboardList className="w-5 h-5" />
-                Join Waitlist
+                Apply Now
               </button>
 
               <p className="text-center text-xs text-muted-foreground mt-4">
-                All slots for the current batch have been filled. Join the waitlist to be notified when the next batch opens.
+                Submit your application and we'll reach out to confirm your enrolment call.
               </p>
             </motion.div>
           </motion.div>
@@ -405,7 +405,7 @@ const RedPill = () => {
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-base"
               >
                 <ClipboardList className="w-5 h-5" />
-                Join Waitlist
+                Apply Now
               </button>
             </motion.div>
           </motion.div>
@@ -490,7 +490,7 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
       <DialogContent className="sm:max-w-lg bg-card border-border">
         <DialogHeader>
           <DialogTitle className="font-display text-xl text-foreground">
-            {submitted ? "Booking Confirmed!" : "Book a Call"}
+            {submitted ? "Application Received!" : "Apply for The Red Pill"}
           </DialogTitle>
         </DialogHeader>
 
@@ -501,7 +501,7 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
             </div>
             <h3 className="font-display font-semibold text-lg text-foreground">Thank you, {name}!</h3>
             <p className="text-sm text-muted-foreground">
-              We'll reach out to you at <span className="text-foreground">{contact}</span> to confirm your call on{' '}
+              Your application has been submitted. We'll reach out to you at <span className="text-foreground">{contact}</span> to confirm your enrolment call on{' '}
               <span className="text-foreground">{date && format(date, "MMM d, yyyy")}</span> at{' '}
               <span className="text-foreground">{time}</span>.
             </p>
@@ -597,8 +597,8 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
               disabled={submitting}
               className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all disabled:opacity-50 text-sm"
             >
-              <Phone className="w-4 h-4" />
-              {submitting ? "Submitting…" : "Confirm Booking"}
+              <ClipboardList className="w-4 h-4" />
+              {submitting ? "Submitting…" : "Submit Application"}
             </button>
           </form>
         )}

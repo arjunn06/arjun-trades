@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import redPillHand from "@/assets/red-pill-hand.jpg";
 import bluePillHand from "@/assets/blue-pill-hand.jpg";
@@ -45,9 +46,67 @@ const WhopIcon = ({ className = "" }: { className?: string }) => (
 );
 
 const Blueprint = () => {
+  const courseSchema = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: "The Red Pill — Tamil Trading Mentorship Course",
+    description:
+      "Affordable Tamil trading mentorship covering ICT, iFVG, Smart Money Concepts, liquidity, risk and psychology. One-time payment, lifetime access.",
+    provider: {
+      "@type": "Organization",
+      name: "Arjun Trades",
+      sameAs: "https://ifvg.in",
+    },
+    inLanguage: ["ta", "en"],
+    educationalCredentialAwarded: "Trading Mentorship",
+    offers: [
+      {
+        "@type": "Offer",
+        name: "The Red Pill — Lifetime Access",
+        price: "4999",
+        priceCurrency: "INR",
+        category: "OneTimePayment",
+        url: "https://ifvg.in/red-pill",
+      },
+      {
+        "@type": "Offer",
+        name: "The Blue Pill — Monthly Membership",
+        priceCurrency: "INR",
+        category: "Subscription",
+        url: "https://whop.com/arjun-ifvg/thebluepill/",
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background overflow-hidden">
+      <Helmet>
+        <title>Trading Course in Tamil — ICT & iFVG Mentorship | Arjun Trades</title>
+        <meta
+          name="description"
+          content="Affordable Tamil trading course and mentorship. Learn ICT, iFVG, Smart Money Concepts, liquidity and risk management. The Red Pill (lifetime access) and The Blue Pill (monthly membership) by Arjun Trades."
+        />
+        <meta
+          name="keywords"
+          content="trading course in tamil, tamil trading course, cheap trading course, trading mentorship tamil, ict trading course, ifvg trading course, smart money concepts tamil, arjun trades, arjun ifvg, tamil trading mentorship"
+        />
+        <link rel="canonical" href="https://ifvg.in/blueprint" />
+        <meta property="og:title" content="Trading Course in Tamil — ICT & iFVG Mentorship by Arjun Trades" />
+        <meta
+          property="og:description"
+          content="Two paths into Arjun Trades' Tamil trading mentorship — The Red Pill (lifetime) and The Blue Pill (monthly). ICT, iFVG and Smart Money Concepts simplified."
+        />
+        <meta property="og:url" content="https://ifvg.in/blueprint" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Trading Course in Tamil — Arjun Trades Blueprint" />
+        <meta
+          name="twitter:description"
+          content="Tamil trading mentorship by Arjun Trades. ICT, iFVG, Smart Money Concepts. The Red Pill and The Blue Pill."
+        />
+        <script type="application/ld+json">{JSON.stringify(courseSchema)}</script>
+      </Helmet>
       <Header />
+
 
       <section className="relative min-h-screen flex items-center justify-center px-6 py-24">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
