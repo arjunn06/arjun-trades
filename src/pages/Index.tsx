@@ -112,7 +112,6 @@ const Index = () => {
 
   <div className="min-h-screen max-w-full overflow-x-hidden bg-background">
       <Header />
-      <WorkshopPromoDialog />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 sm:px-6 pt-8 pb-12 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28">
@@ -124,10 +123,17 @@ const Index = () => {
           {/* Left: copy + CTAs */}
           <div className="min-w-0 text-center lg:text-left">
             <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-5 sm:mb-6">
-              <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-primary/30 text-primary text-xs sm:text-sm font-medium tracking-wide uppercase">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                Tamil Trading Community
-              </span>
+              <Link
+                to="/blueprint"
+                className="group inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-primary/40 bg-primary/5 text-primary text-xs sm:text-sm font-medium tracking-wide hover:bg-primary/10 transition-all duration-300"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span className="uppercase">Introducing</span>
+                <span className="text-foreground font-semibold normal-case">The Blueprint</span>
+                <span className="inline-flex items-center gap-1 text-primary group-hover:gap-2 transition-all">
+                  Enter Now <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </Link>
             </motion.div>
 
             <motion.h1
