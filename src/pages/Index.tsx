@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import NewsletterSheet from "@/components/NewsletterSheet";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import TestimonialWall from "@/components/TestimonialWall";
-import WorkshopPromoDialog from "@/components/WorkshopPromoDialog";
+import { Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 
