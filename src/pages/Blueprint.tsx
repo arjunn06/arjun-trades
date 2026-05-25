@@ -14,34 +14,26 @@ const fadeUp = {
   }),
 };
 
-const ProgressiveBlurText = ({ text }: { text: string }) => {
-  // Stacked blur layers that progressively sharpen from left to right.
-  const layers = [
-    { blur: 14, from: 35, to: 100 },
-    { blur: 6, from: 55, to: 100 },
-    { blur: 2, from: 75, to: 100 },
-    { blur: 0, from: 90, to: 100 },
-  ];
-  return (
-    <span className="relative inline-block text-foreground">
-      <span className="invisible">{text}</span>
-      {layers.map((l, i) => (
-        <span
-          key={i}
-          aria-hidden
-          className="absolute inset-0 whitespace-nowrap"
-          style={{
-            filter: l.blur ? `blur(${l.blur}px)` : undefined,
-            WebkitMaskImage: `linear-gradient(to right, transparent 0%, black ${l.from}%, black ${l.to}%)`,
-            maskImage: `linear-gradient(to right, transparent 0%, black ${l.from}%, black ${l.to}%)`,
-          }}
-        >
-          {text}
-        </span>
-      ))}
+const ProgressiveBlurText = ({ text }: { text: string }) => (
+  <span className="relative inline-block text-foreground">
+    {/* Sharp base text */}
+    <span className="relative">{text}</span>
+    {/* Single blurred copy, masked to fade in from the left */}
+    <span
+      aria-hidden
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        filter: "blur(10px)",
+        WebkitMaskImage:
+          "linear-gradient(to right, hsl(0 0% 0% / 0.9) 0%, transparent 70%)",
+        maskImage:
+          "linear-gradient(to right, hsl(0 0% 0% / 0.9) 0%, transparent 70%)",
+      }}
+    >
+      {text}
     </span>
-  );
-};
+  </span>
+);
 
 const WhopIcon = ({ className = "" }: { className?: string }) => (
   <span
