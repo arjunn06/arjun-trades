@@ -16,27 +16,29 @@ const fadeUp = {
 
 const ProgressiveBlurText = ({ text }: { text: string }) => {
   // Stacked blur layers that progressively sharpen from left to right.
+  // Each layer is given negative margins + padding so the blur can bleed
+  // outside the text box without producing hard rectangular edges.
   const layers = [
-    { blur: 14, from: 35, to: 100 },
-    { blur: 6, from: 55, to: 100 },
-    { blur: 2, from: 75, to: 100 },
-    { blur: 0, from: 90, to: 100 },
+    { blur: 14, from: 35 },
+    { blur: 6, from: 55 },
+    { blur: 2, from: 75 },
+    { blur: 0, from: 90 },
   ];
   return (
-    <span className="relative inline-block text-foreground">
+    <span className="relative inline-block text-foreground align-baseline">
       <span className="invisible">{text}</span>
       {layers.map((l, i) => (
         <span
           key={i}
           aria-hidden
-          className="absolute inset-0 whitespace-nowrap"
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
           style={{
             filter: l.blur ? `blur(${l.blur}px)` : undefined,
-            WebkitMaskImage: `linear-gradient(to right, transparent 0%, black ${l.from}%, black ${l.to}%)`,
-            maskImage: `linear-gradient(to right, transparent 0%, black ${l.from}%, black ${l.to}%)`,
+            WebkitMaskImage: `linear-gradient(to right, transparent 0%, black ${l.from}%, black 100%)`,
+            maskImage: `linear-gradient(to right, transparent 0%, black ${l.from}%, black 100%)`,
           }}
         >
-          {text}
+          <span className="whitespace-nowrap">{text}</span>
         </span>
       ))}
     </span>
