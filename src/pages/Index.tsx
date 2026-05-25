@@ -214,6 +214,43 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Blueprint Promo Section */}
+      <section className="relative overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 border-t border-border">
+        {/* Atmospheric glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[140px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-primary/5 blur-[100px] pointer-events-none" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative z-10 max-w-5xl mx-auto text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/5 text-primary text-xs sm:text-sm font-medium tracking-[0.2em] uppercase mb-8">
+            <Sparkles className="w-3.5 h-3.5" />
+            Introducing
+          </div>
+
+          <h2 className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.9] tracking-tight mb-6 sm:mb-8">
+            <span className="text-foreground">The </span>
+            <span className="neon-text text-primary">Blueprint</span>
+          </h2>
+
+          <p className="text-muted-foreground text-base sm:text-xl md:text-2xl max-w-2xl mx-auto mb-10 sm:mb-14 leading-relaxed">
+            The choice is yours. Two paths to mastering the markets — pick the one that fits your journey.
+          </p>
+
+          <Link
+            to="/blueprint"
+            className="group inline-flex items-center justify-center gap-3 px-8 sm:px-12 py-4 sm:py-5 bg-primary text-primary-foreground font-semibold text-base sm:text-lg rounded-lg hover:brightness-110 transition-all duration-300 shadow-[0_0_40px_-10px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_60px_-10px_hsl(var(--primary)/0.8)]"
+          >
+            Enter Now
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
+      </section>
+
       {/* Features Grid */}
       <section className="overflow-hidden py-14 sm:py-24 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
