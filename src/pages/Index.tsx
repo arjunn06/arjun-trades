@@ -123,17 +123,9 @@ const Index = () => {
           {/* Left: copy + CTAs */}
           <div className="min-w-0 text-center lg:text-left">
             <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-5 sm:mb-6">
-              <Link
-                to="/blueprint"
-                className="group inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-primary/40 bg-primary/5 text-primary text-xs sm:text-sm font-medium tracking-wide hover:bg-primary/10 transition-all duration-300"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span className="uppercase">Introducing</span>
-                <span className="text-foreground font-semibold normal-case">The Blueprint</span>
-                <span className="inline-flex items-center gap-1 text-primary group-hover:gap-2 transition-all">
-                  Enter Now <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </Link>
+              <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-border bg-muted/30 text-muted-foreground text-xs sm:text-sm font-medium tracking-wide uppercase">
+                Tamil Trading Community
+              </span>
             </motion.div>
 
             <motion.h1
