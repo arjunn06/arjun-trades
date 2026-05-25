@@ -490,7 +490,7 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
       <DialogContent className="sm:max-w-lg bg-card border-border">
         <DialogHeader>
           <DialogTitle className="font-display text-xl text-foreground">
-            {submitted ? "Booking Confirmed!" : "Book a Call"}
+            {submitted ? "Application Received!" : "Apply for The Red Pill"}
           </DialogTitle>
         </DialogHeader>
 
@@ -501,7 +501,7 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
             </div>
             <h3 className="font-display font-semibold text-lg text-foreground">Thank you, {name}!</h3>
             <p className="text-sm text-muted-foreground">
-              We'll reach out to you at <span className="text-foreground">{contact}</span> to confirm your call on{' '}
+              Your application has been submitted. We'll reach out to you at <span className="text-foreground">{contact}</span> to confirm your enrolment call on{' '}
               <span className="text-foreground">{date && format(date, "MMM d, yyyy")}</span> at{' '}
               <span className="text-foreground">{time}</span>.
             </p>
