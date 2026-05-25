@@ -110,7 +110,7 @@ const RedPill = () => {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-8">
             <span className="inline-block px-5 py-1.5 rounded-full border border-primary/30 text-primary text-sm font-medium tracking-wide uppercase">
-              Batch 1 — Slots Filled 🔒
+              Applications Open — Batch 2
             </span>
           </motion.div>
 
