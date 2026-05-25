@@ -204,6 +204,33 @@ export type Database = {
         }
         Relationships: []
       }
+      red_pill_reviews: {
+        Row: {
+          approved: boolean
+          created_at: string
+          id: string
+          name: string
+          rating: number
+          review: string
+        }
+        Insert: {
+          approved?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          rating: number
+          review: string
+        }
+        Update: {
+          approved?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          rating?: number
+          review?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
