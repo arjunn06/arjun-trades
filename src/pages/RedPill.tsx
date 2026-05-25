@@ -597,8 +597,8 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
               disabled={submitting}
               className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all disabled:opacity-50 text-sm"
             >
-              <Phone className="w-4 h-4" />
-              {submitting ? "Submitting…" : "Confirm Booking"}
+              <ClipboardList className="w-4 h-4" />
+              {submitting ? "Submitting…" : "Submit Application"}
             </button>
           </form>
         )}
