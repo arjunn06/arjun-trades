@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import redPillHand from "@/assets/red-pill-hand.jpg";
 import bluePillHand from "@/assets/blue-pill-hand.jpg";
+import whopLogo from "@/assets/whop-logo.svg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
