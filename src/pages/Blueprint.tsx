@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
-import TestimonialWall from "@/components/TestimonialWall";
+import RedPillReviewsWall from "@/components/RedPillReviewsWall";
 import redPillHand from "@/assets/red-pill-hand.jpg";
 import bluePillHand from "@/assets/blue-pill-hand.jpg";
 import whopLogo from "@/assets/whop-logo.svg";
@@ -269,7 +269,7 @@ const Blueprint = () => {
         </div>
       </section>
 
-      <TestimonialWall />
+      <RedPillReviewsWall />
     </div>
   );
 };

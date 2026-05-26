@@ -1,0 +1,145 @@
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { motion } from "framer-motion";
+import { Star } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Review {
+  name: string;
+  rating: number;
+  review: string;
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.5, ease: "easeOut" as const },
+  }),
+};
+
+const SCROLL_SPEED = 50;
+
+const ScrollColumn = ({
+  reviews,
+  direction,
+}: {
+  reviews: Review[];
+  direction: "up" | "down";
+}) => {
+  const items = [...reviews, ...reviews];
+  const measureRef = useRef<HTMLDivElement>(null);
+  const [totalHeight, setTotalHeight] = useState(0);
+
+  useEffect(() => {
+    if (measureRef.current) {
+      setTotalHeight(measureRef.current.scrollHeight / 2);
+    }
+  }, [reviews]);
+
+  return (
+    <div className="relative h-[540px] overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+
+      <motion.div
+        ref={measureRef}
+        className="flex flex-col gap-4"
+        animate={
+          totalHeight > 0
+            ? { y: direction === "up" ? [0, -totalHeight] : [-totalHeight, 0] }
+            : undefined
+        }
+        transition={{
+          y: { duration: SCROLL_SPEED, repeat: Infinity, ease: "linear" },
+        }}
+      >
+        {items.map((t, idx) => (
+          <div
+            key={idx}
+            className="rounded-2xl border border-border bg-card p-5 flex flex-col"
+          >
+            <p className="text-foreground text-sm leading-relaxed">
+              "{t.review}"
+            </p>
+            <div className="flex items-center gap-3 pt-3 mt-auto">
+              <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold uppercase shrink-0">
+                {t.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+              </div>
+              <div>
+                <span className="text-xs font-medium text-foreground block">{t.name}</span>
+                <div className="flex gap-0.5">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star
+                      key={s}
+                      className={`w-3 h-3 ${
+                        s <= t.rating ? "text-primary fill-primary" : "text-muted-foreground/20"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+const RedPillReviewsWall = () => {
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("red_pill_reviews")
+      .select("name, rating, review")
+      .eq("approved", true)
+      .order("created_at", { ascending: false })
+      .limit(18)
+      .then(({ data }) => {
+        if (data) setReviews(data);
+      });
+  }, []);
+
+  const columns = useMemo(() => {
+    const cols: Review[][] = [[], [], []];
+    reviews.forEach((t, i) => cols[i % 3].push(t));
+    return cols;
+  }, [reviews]);
+
+  if (reviews.length === 0) return null;
+
+  return (
+    <section className="py-16 sm:py-24 px-4 sm:px-6 border-t border-border">
+      <div className="max-w-6xl mx-auto">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <motion.h2
+            variants={fadeUp}
+            custom={0}
+            className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center"
+          >
+            Real Students, Real Feedbacks.
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            custom={1}
+            className="text-muted-foreground text-center mb-12 max-w-xl mx-auto"
+          >
+            Honest words from students inside The Red Pill
+          </motion.p>
+
+          <motion.div variants={fadeUp} custom={2} className="grid md:grid-cols-3 gap-4">
+            {columns.map((col, i) =>
+              col.length > 0 ? (
+                <ScrollColumn key={i} reviews={col} direction={i % 2 === 0 ? "up" : "down"} />
+              ) : null
+            )}
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default RedPillReviewsWall;
