@@ -164,9 +164,13 @@ const Blueprint = () => {
               </div>
 
               <div className="relative z-10 p-8 md:p-10 -mt-6">
-                <h2 className="font-display font-bold text-4xl text-foreground mb-4">
+                <h2 className="font-display font-bold text-4xl text-foreground mb-3">
                   The Red Pill
                 </h2>
+                <div className="flex items-baseline gap-2 mb-5">
+                  <span className="font-display font-bold text-4xl text-primary">₹4,999</span>
+                  <span className="text-muted-foreground text-sm">/ for lifetime</span>
+                </div>
                 <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
                   The complete trading mentorship program. Learn market
                   structure, liquidity, execution, psychology, risk management
@@ -229,9 +233,13 @@ const Blueprint = () => {
               </div>
 
               <div className="relative z-10 p-8 md:p-10 -mt-6">
-                <h2 className="font-display font-bold text-4xl text-foreground mb-4">
+                <h2 className="font-display font-bold text-4xl text-foreground mb-3">
                   The Blue Pill
                 </h2>
+                <div className="flex items-baseline gap-2 mb-5">
+                  <span className="font-display font-bold text-4xl text-blue-400">₹499</span>
+                  <span className="text-muted-foreground text-sm">/ per month</span>
+                </div>
                 <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
                   A recurring membership for traders who want ongoing access.
                   Premium class recordings from The Red Pill, monthly private
