@@ -269,7 +269,7 @@ const Blueprint = () => {
         </div>
       </section>
 
-      <TestimonialWall />
+      <RedPillReviewsWall />
     </div>
   );
 };
