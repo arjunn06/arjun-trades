@@ -236,10 +236,13 @@ const Blueprint = () => {
                 <h2 className="font-display font-bold text-4xl text-foreground mb-3">
                   The Blue Pill
                 </h2>
-                <div className="flex items-baseline gap-2 mb-5">
+                <div className="flex items-baseline gap-2 mb-2">
                   <span className="font-display font-bold text-4xl text-blue-400">₹499</span>
                   <span className="text-muted-foreground text-sm">/ per month</span>
                 </div>
+                <p className="text-blue-400 text-sm font-semibold mb-5">
+                  Start with a 3-day free trial
+                </p>
                 <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
                   A recurring membership for traders who want ongoing access.
                   Premium class recordings from The Red Pill, monthly private
