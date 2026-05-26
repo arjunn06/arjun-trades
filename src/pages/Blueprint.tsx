@@ -268,6 +268,8 @@ const Blueprint = () => {
           </div>
         </div>
       </section>
+
+      <TestimonialWall />
     </div>
   );
 };
