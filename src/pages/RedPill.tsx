@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Gift, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2, Phone, CalendarIcon, X, ClipboardList } from "lucide-react";
 import Header from "@/components/Header";
 import { Link } from "react-router-dom";
