@@ -230,6 +230,7 @@ const Workshop = () => {
           )}
         </DialogContent>
       </Dialog>
+      </main>
     </div>
   );
 };
