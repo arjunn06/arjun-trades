@@ -101,8 +101,18 @@ const RedPill = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>The Red Pill — Elite Trading Mentorship | Arjun IFVG</title>
+        <meta name="description" content="The Red Pill is Arjun IFVG's elite 1-on-1 trading mentorship for serious students of ICT, SMC and the iFVG strategy." />
+        <link rel="canonical" href="https://ifvg.in/red-pill" />
+        <meta property="og:title" content="The Red Pill — Elite Trading Mentorship" />
+        <meta property="og:description" content="Arjun IFVG's elite 1-on-1 trading mentorship program." />
+        <meta property="og:url" content="https://ifvg.in/red-pill" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Header />
       <BookingFormDialog open={showBooking} onOpenChange={setShowBooking} />
+
 
       {/* Hero */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden px-6">
