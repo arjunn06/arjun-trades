@@ -49,7 +49,18 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <Helmet>
+        <title>Contact Arjun IFVG — Get in Touch</title>
+        <meta name="description" content="Reach out to Arjun IFVG for questions about the workshop, The Red Pill mentorship, or anything trading related." />
+        <link rel="canonical" href="https://ifvg.in/contact" />
+        <meta property="og:title" content="Contact Arjun IFVG" />
+        <meta property="og:description" content="Get in touch with Arjun IFVG." />
+        <meta property="og:url" content="https://ifvg.in/contact" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Header />
+
+
 
       <main className="flex-grow">
         <div className="max-w-3xl mx-auto px-6 py-16 md:py-24">
