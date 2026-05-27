@@ -470,6 +470,7 @@ const Index = () => {
 
       {/* Testimonials */}
       <TestimonialWall />
+      </main>
 
       {/* Footer */}
       <footer className="border-t border-border py-10 sm:py-12 px-4 sm:px-6">
