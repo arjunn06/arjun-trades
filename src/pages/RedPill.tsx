@@ -423,6 +423,7 @@ const RedPill = () => {
           </motion.div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="border-t border-border py-12 px-6">
