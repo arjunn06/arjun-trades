@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { ArrowRight, Brain, Target, TrendingUp, Zap, Users, Clock, BarChart3, Gift, Award, Crosshair, BookOpen, MessageCircle, CheckCircle2, Phone, CalendarIcon, X, ClipboardList } from "lucide-react";
 import Header from "@/components/Header";
 import { Link } from "react-router-dom";
@@ -100,8 +101,19 @@ const RedPill = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>The Red Pill — Elite Trading Mentorship | Arjun IFVG</title>
+        <meta name="description" content="The Red Pill is Arjun IFVG's elite 1-on-1 trading mentorship for serious students of ICT, SMC and the iFVG strategy." />
+        <link rel="canonical" href="https://ifvg.in/red-pill" />
+        <meta property="og:title" content="The Red Pill — Elite Trading Mentorship" />
+        <meta property="og:description" content="Arjun IFVG's elite 1-on-1 trading mentorship program." />
+        <meta property="og:url" content="https://ifvg.in/red-pill" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Header />
       <BookingFormDialog open={showBooking} onOpenChange={setShowBooking} />
+      <main>
+
 
       {/* Hero */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden px-6">
@@ -411,6 +423,7 @@ const RedPill = () => {
           </motion.div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="border-t border-border py-12 px-6">

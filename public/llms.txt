@@ -1,0 +1,15 @@
+# Arjun Trades (Arjun IFVG)
+
+> Tamil trading community and education by Arjun IFVG — ICT, Smart Money Concepts and the iFVG strategy simplified for beginners.
+
+Arjun IFVG runs a Tamil-language trading community focused on price action, liquidity, the iFVG strategy and trading psychology. The site hosts a free workshop, an elite 1-on-1 mentorship program ("The Red Pill"), and a blog with market breakdowns and lessons.
+
+## Pages
+
+- [Home](/): Overview of Arjun Trades, featured YouTube content and student testimonials.
+- [About](/about): About Arjun IFVG — Tamil trader and educator.
+- [Workshop](/workshop): Free Tamil trading workshop covering ICT, SMC and iFVG.
+- [The Red Pill](/red-pill): Elite 1-on-1 trading mentorship program.
+- [Blueprint](/blueprint): Choose between the Red Pill (lifetime mentorship) and Blue Pill (monthly program).
+- [Blog](/blogs): Trading insights, breakdowns and lessons.
+- [Contact](/contact): Get in touch with Arjun IFVG.

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { Star, Send, ChevronLeft, ChevronRight, Quote, CheckCircle2, Clock, PlayCircle, Sparkles, Share2 } from "lucide-react";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -67,7 +68,26 @@ const Workshop = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Free Trading Workshop — Arjun IFVG</title>
+        <meta name="description" content="Join the free Arjun IFVG workshop. Learn ICT, Smart Money Concepts and the iFVG strategy in Tamil with live sessions and Q&A." />
+        <link rel="canonical" href="https://ifvg.in/workshop" />
+        <meta property="og:title" content="Free Trading Workshop — Arjun IFVG" />
+        <meta property="og:description" content="Free Tamil trading workshop covering ICT, SMC and iFVG strategy." />
+        <meta property="og:url" content="https://ifvg.in/workshop" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "Arjun IFVG Free Trading Workshop",
+          description: "Free Tamil trading workshop covering ICT, Smart Money Concepts and the iFVG strategy.",
+          provider: { "@type": "Organization", name: "Arjun Trades", sameAs: "https://ifvg.in" },
+        })}</script>
+      </Helmet>
       <Header />
+      <main>
+
+
 
       <section className="py-16 md:py-20 px-6">
         <motion.div
@@ -210,6 +230,7 @@ const Workshop = () => {
           )}
         </DialogContent>
       </Dialog>
+      </main>
     </div>
   );
 };

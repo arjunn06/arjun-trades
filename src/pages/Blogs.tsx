@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 
@@ -40,8 +41,19 @@ const Blogs = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Trading Blog — Arjun IFVG</title>
+        <meta name="description" content="Trading insights, ICT and SMC breakdowns, and lessons from the iFVG strategy by Arjun IFVG." />
+        <link rel="canonical" href="https://ifvg.in/blogs" />
+        <meta property="og:title" content="Trading Blog — Arjun IFVG" />
+        <meta property="og:description" content="ICT, SMC and iFVG insights from Arjun IFVG." />
+        <meta property="og:url" content="https://ifvg.in/blogs" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Header />
+      <main>
       <section className="py-20 px-6">
+
         <div className="max-w-6xl mx-auto">
           <h1 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-4">Blog</h1>
           <p className="text-muted-foreground text-lg mb-12 max-w-xl">
@@ -94,6 +106,7 @@ const Blogs = () => {
           )}
         </div>
       </section>
+      </main>
     </div>
   );
 };
