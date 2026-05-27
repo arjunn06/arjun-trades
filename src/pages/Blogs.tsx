@@ -106,6 +106,7 @@ const Blogs = () => {
           )}
         </div>
       </section>
+      </main>
     </div>
   );
 };
