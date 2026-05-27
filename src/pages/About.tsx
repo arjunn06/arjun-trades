@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Youtube, Users, ArrowRight } from "lucide-react";
+import { Youtube, Users, ArrowRight, Instagram, Twitter, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import portrait from "@/assets/arjun-portrait.jpg";
 
@@ -28,9 +28,18 @@ const personJsonLd = {
   sameAs: [
     "https://www.instagram.com/arjun_ifvg",
     "https://youtube.com/@arjun_ifvg",
+    "https://x.com/arjun_ifvg",
+    "https://twitter.com/arjun_ifvg",
     "https://discord.gg/SCHeKKCa6c",
   ],
 };
+
+const socials = [
+  { label: "Instagram", handle: "@arjun_ifvg", url: "https://www.instagram.com/arjun_ifvg", Icon: Instagram, accent: "from-pink-500 to-orange-500" },
+  { label: "YouTube", handle: "@arjun_ifvg", url: "https://youtube.com/@arjun_ifvg", Icon: Youtube, accent: "from-red-500 to-red-700" },
+  { label: "X (Twitter)", handle: "@arjun_ifvg", url: "https://x.com/arjun_ifvg", Icon: Twitter, accent: "from-zinc-400 to-zinc-700" },
+  { label: "Discord", handle: "Join community", url: "https://discord.gg/SCHeKKCa6c", Icon: MessageCircle, accent: "from-indigo-500 to-violet-700" },
+];
 
 const About = () => {
   return (
@@ -117,6 +126,35 @@ const About = () => {
             />
           </div>
         </div>
+
+        <section aria-labelledby="socials-heading" className="mt-20 sm:mt-28">
+          <div className="flex items-end justify-between mb-6">
+            <h2 id="socials-heading" className="font-display font-bold text-2xl sm:text-3xl text-foreground">
+              Find me online
+            </h2>
+            <span className="text-muted-foreground text-xs sm:text-sm">Follow @arjun_ifvg</span>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            {socials.map(({ label, handle, url, Icon, accent }) => (
+              <a
+                key={label}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer me"
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 hover:border-primary/40 transition-all"
+              >
+                <div className={`absolute -top-10 -right-10 w-28 h-28 rounded-full bg-gradient-to-br ${accent} opacity-20 group-hover:opacity-40 blur-2xl transition-opacity`} />
+                <div className="relative flex flex-col gap-3">
+                  <Icon className="w-6 h-6 text-foreground" />
+                  <div>
+                    <p className="font-display font-semibold text-foreground text-base leading-tight">{label}</p>
+                    <p className="text-muted-foreground text-xs mt-0.5">{handle}</p>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );
