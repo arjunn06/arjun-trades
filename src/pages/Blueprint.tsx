@@ -282,6 +282,7 @@ const Blueprint = () => {
       </section>
 
       <RedPillReviewsWall />
+      </main>
     </div>
   );
 };
