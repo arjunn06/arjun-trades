@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { Star, Send, ChevronLeft, ChevronRight, Quote, CheckCircle2, Clock, PlayCircle, Sparkles, Share2 } from "lucide-react";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
