@@ -112,6 +112,7 @@ const RedPill = () => {
       </Helmet>
       <Header />
       <BookingFormDialog open={showBooking} onOpenChange={setShowBooking} />
+      <main>
 
 
       {/* Hero */}
