@@ -107,6 +107,7 @@ const Blueprint = () => {
         <script type="application/ld+json">{JSON.stringify(courseSchema)}</script>
       </Helmet>
       <Header />
+      <main>
 
 
       <section className="relative min-h-screen flex items-center justify-center px-6 py-24">
