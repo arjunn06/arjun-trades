@@ -24,6 +24,7 @@ import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import Blueprint from "./pages/Blueprint";
+import RedPillReview from "./pages/RedPillReview";
 
 const queryClient = new QueryClient();
 
