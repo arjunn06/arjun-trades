@@ -128,8 +128,7 @@ const Blueprint = () => {
               <ProgressiveBlurText text="Hello Neo," />
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Two paths. One keeps you asleep. One changes how you see the
-              market forever.
+              Two paths. One puts you into the system. One gives you access to overlook the system. Choose wisely, Neo.
             </p>
           </motion.div>
 
