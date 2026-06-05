@@ -25,6 +25,7 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import Blueprint from "./pages/Blueprint";
 import RedPillReview from "./pages/RedPillReview";
+import BrandGuidelines from "./pages/BrandGuidelines";
 
 const queryClient = new QueryClient();
 
