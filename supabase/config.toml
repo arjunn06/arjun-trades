@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.workshop-signup-email]
 verify_jwt = false
+
+[functions.redpill-create-calendar-event]
+verify_jwt = false
