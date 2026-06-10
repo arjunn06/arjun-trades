@@ -482,6 +482,18 @@ const BookingFormDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
       toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
       return;
     }
+    // Fire-and-forget: sync to Google Calendar
+    supabase.functions
+      .invoke("redpill-create-calendar-event", {
+        body: {
+          name: name.trim(),
+          contact: contact.trim(),
+          trading_experience: experience,
+          preferred_date: format(date, "yyyy-MM-dd"),
+          preferred_time: time,
+        },
+      })
+      .catch((err) => console.error("Calendar sync failed", err));
     setSubmitted(true);
   };
 
