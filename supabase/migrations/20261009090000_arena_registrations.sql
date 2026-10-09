@@ -21,6 +21,24 @@ CREATE UNIQUE INDEX IF NOT EXISTS arena_registrations_email_key
 CREATE UNIQUE INDEX IF NOT EXISTS arena_registrations_utr_key
   ON public.arena_registrations (upper(btrim(utr)));
 
+-- Admin check used by the policies below. It reads user_roles directly (as the table owner, so row-level security
+-- on user_roles can't hide the caller's own row) instead of depending on a has_role() helper.
+CREATE OR REPLACE FUNCTION public.arena_is_admin()
+RETURNS boolean
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.user_roles
+    WHERE user_id = auth.uid() AND role::text = 'admin'
+  );
+$$;
+
+REVOKE ALL ON FUNCTION public.arena_is_admin() FROM public;
+GRANT EXECUTE ON FUNCTION public.arena_is_admin() TO authenticated;
+
 ALTER TABLE public.arena_registrations ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can register for the arena" ON public.arena_registrations;
@@ -29,15 +47,15 @@ CREATE POLICY "Anyone can register for the arena" ON public.arena_registrations
 
 DROP POLICY IF EXISTS "Admins can read arena registrations" ON public.arena_registrations;
 CREATE POLICY "Admins can read arena registrations" ON public.arena_registrations
-  FOR SELECT TO authenticated USING (has_role(auth.uid(), 'admin'::app_role));
+  FOR SELECT TO authenticated USING (public.arena_is_admin());
 
 DROP POLICY IF EXISTS "Admins can update arena registrations" ON public.arena_registrations;
 CREATE POLICY "Admins can update arena registrations" ON public.arena_registrations
-  FOR UPDATE TO authenticated USING (has_role(auth.uid(), 'admin'::app_role));
+  FOR UPDATE TO authenticated USING (public.arena_is_admin());
 
 DROP POLICY IF EXISTS "Admins can delete arena registrations" ON public.arena_registrations;
 CREATE POLICY "Admins can delete arena registrations" ON public.arena_registrations
-  FOR DELETE TO authenticated USING (has_role(auth.uid(), 'admin'::app_role));
+  FOR DELETE TO authenticated USING (public.arena_is_admin());
 
 -- Public counter for the page: how many entries are confirmed. Returns a number only, never personal data.
 CREATE OR REPLACE FUNCTION public.arena_stats()
