@@ -18,9 +18,10 @@ export default {
         '3xl': '1920px',
       },
       fontFamily: {
-        'sans': ['Archivo', 'system-ui', 'sans-serif'],
-        'serif': ['Playfair Display', 'Georgia', 'serif'],
-        'display': ['Clash Display', 'system-ui', 'sans-serif'],
+        'sans': ['"Mona Sans Variable"', '"Noto Sans Tamil Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'display': ['"Mona Sans Variable"', '"Noto Sans Tamil Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'mono': ['"Geist Mono Variable"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        'tamil': ['"Noto Sans Tamil Variable"', '"Mona Sans Variable"', 'sans-serif'],
       },
       gridTemplateColumns: {
         '16': 'repeat(16, minmax(0, 1fr))',
@@ -79,6 +80,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        panel: {
+          DEFAULT: "hsl(var(--panel))",
+          foreground: "hsl(var(--panel-foreground))",
+          muted: "hsl(var(--panel-muted))",
+          border: "hsl(var(--panel-border))",
+        },
+        signal: "hsl(var(--signal))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -92,8 +100,11 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "var(--radius)",
+        sm: "var(--radius)",
+      },
+      transitionTimingFunction: {
+        'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
         "accordion-down": {

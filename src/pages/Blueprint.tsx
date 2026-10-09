@@ -1,36 +1,27 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Check } from "@phosphor-icons/react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import RedPillReviewsWall from "@/components/RedPillReviewsWall";
 import redPillHand from "@/assets/red-pill-hand.jpg";
 import bluePillHand from "@/assets/blue-pill-hand.jpg";
 import whopLogo from "@/assets/whop-logo.svg";
+import { BLUEPILL_URL, REDPILL_URL } from "@/lib/links";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.8, ease: "easeOut" as const },
-  }),
-};
+const ease = [0.16, 1, 0.3, 1] as const;
 
+/** Sharp text with a blurred copy masked in from the left, so the line reads as coming into focus. */
 const ProgressiveBlurText = ({ text }: { text: string }) => (
-  <span className="relative inline-block text-foreground">
-    {/* Sharp base text */}
+  <span className="relative inline-block">
     <span className="relative">{text}</span>
-    {/* Single blurred copy, masked to fade in from the left */}
     <span
       aria-hidden
-      className="absolute inset-0 pointer-events-none"
+      className="pointer-events-none absolute inset-0"
       style={{
-        filter: "blur(10px)",
-        WebkitMaskImage:
-          "linear-gradient(to right, hsl(0 0% 0% / 0.9) 0%, transparent 70%)",
-        maskImage:
-          "linear-gradient(to right, hsl(0 0% 0% / 0.9) 0%, transparent 70%)",
+        filter: "blur(8px)",
+        WebkitMaskImage: "linear-gradient(to right, hsl(0 0% 0% / 0.85) 0%, transparent 55%)",
+        maskImage: "linear-gradient(to right, hsl(0 0% 0% / 0.85) 0%, transparent 55%)",
       }}
     >
       {text}
@@ -38,12 +29,79 @@ const ProgressiveBlurText = ({ text }: { text: string }) => (
   </span>
 );
 
-const WhopIcon = ({ className = "" }: { className?: string }) => (
-  <img
-    src={whopLogo}
-    alt="Whop"
-    className={`h-4 w-auto ${className}`}
-  />
+interface PillPanelProps {
+  image: string;
+  imageAlt: string;
+  imagePosition: string;
+  kicker: string;
+  title: string;
+  price: string;
+  priceNote: string;
+  trial?: string;
+  description: string;
+  points: string[];
+  cta: React.ReactNode;
+  delay: number;
+  /** Red panel uses the signal colour for ticks; the blue panel stays neutral so red never leaks into it. */
+  accent?: boolean;
+}
+
+const PillPanel = ({
+  image,
+  imageAlt,
+  imagePosition,
+  kicker,
+  title,
+  price,
+  priceNote,
+  trial,
+  description,
+  points,
+  cta,
+  delay,
+  accent = false,
+}: PillPanelProps) => (
+  <motion.article
+    initial={{ opacity: 0, y: 28 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.9, delay, ease }}
+    className="group relative flex flex-col overflow-hidden bg-panel text-panel-foreground"
+  >
+    <div className="relative aspect-[5/4] overflow-hidden">
+      <img
+        src={image}
+        alt={imageAlt}
+        width={1024}
+        height={1024}
+        className={`h-full w-full object-cover transition-transform [transition-duration:1400ms] ease-out-expo group-hover:scale-[1.04] ${imagePosition}`}
+      />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-panel to-transparent" />
+    </div>
+
+    <div className="-mt-10 flex flex-1 flex-col px-7 pb-8 sm:px-10 sm:pb-10">
+      <p className="type-label text-panel-muted">{kicker}</p>
+      <h2 className="type-title mt-3 text-[clamp(2.75rem,5vw,4rem)]">{title}</h2>
+
+      <div className="mt-5 flex items-baseline gap-3">
+        <span className="type-title text-5xl tabular-nums sm:text-6xl">{price}</span>
+        <span className="text-panel-muted">{priceNote}</span>
+      </div>
+      <p className="mt-2 font-semibold lg:h-7">{trial}</p>
+
+      <p className="mt-4 max-w-md text-[1.0625rem] leading-relaxed text-panel-foreground/85 lg:min-h-[7.25rem]">{description}</p>
+
+      <ul className="mt-7 space-y-3">
+        {points.map((pt) => (
+          <li key={pt} className="flex items-start gap-3 text-[0.9375rem]">
+            <Check className={`mt-0.5 h-5 w-5 shrink-0 ${accent ? "text-signal" : "text-panel-muted"}`} weight="bold" />
+            {pt}
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-auto pt-9">{cta}</div>
+    </div>
+  </motion.article>
 );
 
 const Blueprint = () => {
@@ -79,8 +137,11 @@ const Blueprint = () => {
     ],
   };
 
+  const solidBtn =
+    "inline-flex h-14 max-w-full items-center justify-center gap-2.5 whitespace-nowrap px-5 text-[0.9375rem] font-semibold transition-[background-color,color,transform] duration-200 ease-out-expo active:translate-y-px sm:px-7 sm:text-base";
+
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-[100dvh]">
       <Helmet>
         <title>Trading Course in Tamil — ICT & iFVG Mentorship | Arjun Trades</title>
         <meta
@@ -107,181 +168,81 @@ const Blueprint = () => {
         <script type="application/ld+json">{JSON.stringify(courseSchema)}</script>
       </Helmet>
       <Header />
-      <main>
-
-
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-24">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[15%] left-[10%] w-[500px] h-[500px] bg-primary/10 blur-[140px] rounded-full" />
-          <div className="absolute bottom-[5%] right-[10%] w-[500px] h-[500px] bg-blue-500/10 blur-[140px] rounded-full" />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto w-full">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={0}
-            className="text-center mb-16 md:mb-24"
+      <main id="main">
+        <section className="shell pb-12 pt-10 sm:pt-16 lg:pb-16">
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease }}
+            className="type-display text-[clamp(3.75rem,13vw,11rem)]"
           >
-            <h1 className="font-display font-bold text-6xl md:text-8xl tracking-tight leading-none mb-6">
-              <ProgressiveBlurText text="Hello Neo," />
-            </h1>
-            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Two paths. One puts you into the system. One gives you access to overlook the system. Choose wisely, Neo.
-            </p>
-          </motion.div>
+            <ProgressiveBlurText text="Hello Neo," />
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.25, ease }}
+            className="type-lead mt-6 max-w-2xl text-muted-foreground"
+          >
+            Two paths. One puts you into the system. One gives you access to overlook the system. Choose wisely, Neo.
+          </motion.p>
+        </section>
 
-          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-            {/* RED PILL */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={1}
-              className="group relative rounded-3xl border border-primary/20 bg-card/60 backdrop-blur-xl overflow-hidden transition-all duration-500 hover:border-primary/60"
-            >
-              <div className="absolute -top-20 right-0 w-72 h-72 bg-primary/10 blur-[100px] rounded-full transition-opacity duration-500 group-hover:opacity-100 opacity-60" />
+        <section className="shell grid gap-4 lg:grid-cols-2 lg:gap-6">
+          <PillPanel
+            delay={0.2}
+            image={redPillHand}
+            imageAlt="An open hand holding a glowing red pill"
+            imagePosition="object-[50%_40%]"
+            accent
+            kicker="Choose reality"
+            title="The Red Pill"
+            price="₹4,999"
+            priceNote="for lifetime"
+            description="The complete trading mentorship program. Learn market structure, liquidity, execution, psychology, risk management and build your own edge from scratch."
+            points={["Complete trading curriculum", "Private Discord community", "Personalised mentorship"]}
+            cta={
+              <a
+                href={REDPILL_URL}
+                className={`${solidBtn} bg-signal text-panel hover:bg-panel-foreground hover:text-panel`}
+              >
+                Enter The Red Pill
+                <ArrowRight className="h-5 w-5" weight="bold" />
+              </a>
+            }
+          />
+          <PillPanel
+            delay={0.32}
+            image={bluePillHand}
+            imageAlt="An open hand holding a glowing blue pill"
+            imagePosition="object-[50%_40%]"
+            kicker="Stay connected"
+            title="The Blue Pill"
+            price="₹499"
+            priceNote="per month"
+            trial="Start with a 3-day free trial"
+            description="A recurring membership for traders who want ongoing access. Premium class recordings from The Red Pill, monthly private 1-on-1 calls and future premium drops, delivered every month."
+            points={[
+              "Red Pill premium class recordings",
+              "Monthly private 1-on-1 call",
+              "Recurring access to premium drops",
+            ]}
+            cta={
+              <a
+                href={BLUEPILL_URL}
+                className={`${solidBtn} border border-panel-foreground text-panel-foreground hover:bg-panel-foreground hover:text-panel`}
+              >
+                <img src={whopLogo} alt="Whop" className="h-4 w-auto" />
+                Subscribe using Whop
+                <ArrowRight className="h-5 w-5" weight="bold" />
+              </a>
+            }
+          />
+        </section>
 
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={redPillHand}
-                  alt="Hand holding a glowing red pill"
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                  <div className="absolute inset-0 bg-primary/20 mix-blend-screen blur-3xl" />
-                </div>
-                <div className="absolute top-6 left-6">
-                  <p className="text-primary uppercase tracking-[0.3em] text-xs font-semibold">
-                    Choose Reality
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative z-10 p-8 md:p-10 -mt-6">
-                <h2 className="font-display font-bold text-4xl text-foreground mb-3">
-                  The Red Pill
-                </h2>
-                <div className="flex items-baseline gap-2 mb-5">
-                  <span className="font-display font-bold text-4xl text-primary">₹4,999</span>
-                  <span className="text-muted-foreground text-sm">/ for lifetime</span>
-                </div>
-                <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
-                  The complete trading mentorship program. Learn market
-                  structure, liquidity, execution, psychology, risk management
-                  and build your own edge from scratch.
-                </p>
-
-                <div className="space-y-3 mb-10">
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Complete trading curriculum
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Private Discord community
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Personalised mentorship
-                  </div>
-                </div>
-
-                <Link
-                  to="/red-pill"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:brightness-110 transition-all duration-300 shadow-[0_0_40px_hsl(var(--primary)/0.4)]"
-                >
-                  Enter The Red Pill
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* BLUE PILL */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={2}
-              className="group relative rounded-3xl border border-blue-500/20 bg-card/60 backdrop-blur-xl overflow-hidden transition-all duration-500 hover:border-blue-500/60"
-            >
-              <div className="absolute -bottom-20 left-0 w-72 h-72 bg-blue-500/10 blur-[100px] rounded-full transition-opacity duration-500 group-hover:opacity-100 opacity-60" />
-
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={bluePillHand}
-                  alt="Hand holding a glowing blue pill"
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                  <div className="absolute inset-0 bg-blue-500/25 mix-blend-screen blur-3xl" />
-                </div>
-                <div className="absolute top-6 left-6">
-                  <p className="text-blue-400 uppercase tracking-[0.3em] text-xs font-semibold">
-                    Stay Connected
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative z-10 p-8 md:p-10 -mt-6">
-                <h2 className="font-display font-bold text-4xl text-foreground mb-3">
-                  The Blue Pill
-                </h2>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="font-display font-bold text-4xl text-blue-400">₹499</span>
-                  <span className="text-muted-foreground text-sm">/ per month</span>
-                </div>
-                <p className="text-blue-400 text-sm font-semibold mb-5">
-                  Start with a 3-day free trial
-                </p>
-                <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8">
-                  A recurring membership for traders who want ongoing access.
-                  Premium class recordings from The Red Pill, monthly private
-                  1-on-1 calls and future premium drops, delivered every month.
-                </p>
-
-                <div className="space-y-3 mb-10">
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                    Red Pill premium class recordings
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                    Monthly private 1-on-1 call
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                    Recurring access to premium drops
-                  </div>
-                </div>
-
-                <a
-                  href="https://whop.com/arjun-ifvg/thebluepill/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-blue-500 text-white rounded-xl font-semibold hover:brightness-110 transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.4)]"
-                >
-                  <WhopIcon />
-                  Subscribe using Whop
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <RedPillReviewsWall />
+        <RedPillReviewsWall />
       </main>
+      <Footer />
     </div>
   );
 };

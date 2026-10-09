@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      arena_registrations: {
+        Row: {
+          created_at: string
+          discord: string
+          email: string
+          id: string
+          journey: string | null
+          name: string
+          status: string
+          utr: string
+        }
+        Insert: {
+          created_at?: string
+          discord: string
+          email: string
+          id?: string
+          journey?: string | null
+          name: string
+          status?: string
+          utr: string
+        }
+        Update: {
+          created_at?: string
+          discord?: string
+          email?: string
+          id?: string
+          journey?: string | null
+          name?: string
+          status?: string
+          utr?: string
+        }
+        Relationships: []
+      }
       blog_sessions: {
         Row: {
           blog_id: string
@@ -305,6 +338,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      arena_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

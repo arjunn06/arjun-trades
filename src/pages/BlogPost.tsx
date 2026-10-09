@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Eye } from "lucide-react";
+import { ArrowLeft, Eye } from "@phosphor-icons/react";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 
 interface Blog {
@@ -92,12 +93,13 @@ const BlogPost = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-[100dvh]">
         <Header />
-        <div className="max-w-3xl mx-auto px-6 py-20 animate-pulse space-y-4">
-          <div className="h-8 bg-muted rounded w-3/4" />
-          <div className="h-4 bg-muted rounded w-1/4" />
-          <div className="h-64 bg-muted rounded mt-8" />
+        <div className="shell max-w-4xl animate-pulse space-y-6 py-16" aria-busy="true" aria-label="Loading post">
+          <div className="h-4 w-28 bg-muted" />
+          <div className="h-14 w-4/5 bg-muted" />
+          <div className="h-14 w-2/5 bg-muted" />
+          <div className="aspect-[16/9] w-full bg-muted" />
         </div>
       </div>
     );
@@ -105,12 +107,21 @@ const BlogPost = () => {
 
   if (!blog) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="flex min-h-[100dvh] flex-col">
         <Header />
-        <div className="max-w-3xl mx-auto px-6 py-20 text-center">
-          <h1 className="font-display font-bold text-3xl text-foreground mb-4">Post not found</h1>
-          <Link to="/blogs" className="text-primary hover:underline">← Back to blog</Link>
-        </div>
+        <main id="main" className="shell flex-grow py-20">
+          <h1 className="type-display text-[clamp(3rem,9vw,7rem)]">Post not found</h1>
+          <p className="type-lead mt-6 max-w-md text-muted-foreground">
+            This post may have been unpublished or the link is wrong.
+          </p>
+          <Link
+            to="/blogs"
+            className="mt-8 inline-flex items-center gap-2 font-semibold underline decoration-primary decoration-2 underline-offset-[6px]"
+          >
+            <ArrowLeft className="h-4 w-4" weight="bold" /> Back to blog
+          </Link>
+        </main>
+        <Footer />
       </div>
     );
   }
@@ -173,35 +184,56 @@ const BlogPost = () => {
     })}
   </script>
 </Helmet>
-    <div className="min-h-screen bg-background">
-      <Header />
-      <article className="max-w-3xl mx-auto px-6 py-16">
-        <Link to="/blogs" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors mb-8 text-sm">
-          <ArrowLeft className="w-4 h-4" /> Back to blog
-        </Link>
+      <div className="min-h-[100dvh]">
+        <Header />
+        <main id="main">
+          <article>
+            <header className="shell max-w-4xl pb-10 pt-10 sm:pt-14">
+              <Link
+                to="/blogs"
+                className="group inline-flex items-center gap-2 text-[0.9375rem] font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+                Back to blog
+              </Link>
 
-        <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 leading-tight">
-          {blog.title}
-        </h1>
-        <div className="flex items-center gap-4 text-muted-foreground mb-8">
-          <span>{new Date(blog.created_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
-          <span className="inline-flex items-center gap-1">
-            <Eye className="w-4 h-4" /> {viewCount} {viewCount === 1 ? "view" : "views"}
-          </span>
-        </div>
+              <h1 className="type-title mt-8 text-[clamp(2.5rem,6.5vw,5rem)]">{blog.title}</h1>
+              <div className="type-label mt-8 flex items-center gap-6 border-t border-foreground pt-4 text-muted-foreground">
+                <time dateTime={blog.created_at}>
+                  {new Date(blog.created_at).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </time>
+                <span className="inline-flex items-center gap-1.5">
+                  <Eye className="h-4 w-4" /> {viewCount} {viewCount === 1 ? "view" : "views"}
+                </span>
+              </div>
+            </header>
 
-        {blog.cover_image_url && (
-          <img src={blog.cover_image_url} alt={blog.title} className="w-full rounded-2xl mb-10 object-cover max-h-[500px]" />
-        )}
+            {blog.cover_image_url && (
+              <div className="shell">
+                <img
+                  src={blog.cover_image_url}
+                  alt={blog.title}
+                  className="max-h-[560px] w-full object-cover"
+                />
+              </div>
+            )}
 
-        <div
-          className="prose prose-invert prose-lg max-w-none text-foreground [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_h2]:text-foreground [&_h2]:font-display [&_h2]:font-semibold [&_h3]:text-foreground"
-          dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }}
-        />
-      </article>
-   </div>
-</>
-);
+            <div className="shell max-w-4xl py-12 sm:py-16">
+              <div
+                className="article-body max-w-[68ch]"
+                dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }}
+              />
+            </div>
+          </article>
+        </main>
+        <Footer />
+      </div>
+    </>
+  );
 };
 
 export default BlogPost;

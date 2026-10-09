@@ -4,7 +4,10 @@ import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Star } from "lucide-react";
+import { CheckCircle, Star } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
+import Logo from "@/components/Logo";
+import { cn } from "@/lib/utils";
 
 const RedPillReview = () => {
   const [name, setName] = useState("");
@@ -34,61 +37,72 @@ const RedPillReview = () => {
     }
   };
 
+  const bar = (
+    <header className="border-b border-border">
+      <div className="shell flex h-16 items-center">
+        <Link to="/" aria-label="Arjun IFVG, home">
+          <Logo className="h-5 w-5 text-foreground" />
+        </Link>
+      </div>
+    </header>
+  );
+
   if (submitted) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center px-6">
-        <div className="text-center space-y-4 max-w-md">
-          <CheckCircle className="w-16 h-16 text-primary mx-auto" />
-          <h2 className="font-display text-2xl font-bold text-foreground">Thank you!</h2>
-          <p className="text-muted-foreground">Your review has been submitted.</p>
-        </div>
+      <div className="min-h-[100dvh]">
+        {bar}
+        <main id="main" className="shell max-w-2xl py-20">
+          <CheckCircle className="h-14 w-14 text-primary" weight="fill" />
+          <h1 className="type-display mt-8 text-[clamp(3.5rem,10vw,6.5rem)]">Thank you</h1>
+          <p className="type-lead mt-6 text-muted-foreground">Your review has been submitted.</p>
+        </main>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background py-16 px-6">
-      <div className="max-w-xl mx-auto space-y-8">
-        <div className="text-center space-y-2">
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-            Share Your <span className="text-primary">Red Pill</span> Experience
-          </h1>
-          <p className="text-muted-foreground">Your honest feedback helps us improve and inspires others.</p>
-        </div>
+    <div className="min-h-[100dvh]">
+      {bar}
+      <main id="main" className="shell max-w-2xl py-12 sm:py-16">
+        <h1 className="type-display text-[clamp(3rem,9vw,5.5rem)]">
+          Share your <span className="text-primary">Red Pill</span> experience
+        </h1>
+        <p className="type-lead mt-6 text-muted-foreground">Your honest feedback helps us improve and inspires others.</p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="rounded-2xl border border-border bg-card p-6 space-y-3">
-            <label className="text-sm font-semibold text-foreground block">Your Name</label>
-            <Input value={name} onChange={e => setName(e.target.value)} placeholder="Full name" required />
+        <form onSubmit={handleSubmit} className="mt-12 space-y-8">
+          <div>
+            <label htmlFor="rpr-name" className="field-label">Your name</label>
+            <Input id="rpr-name" value={name} onChange={e => setName(e.target.value)} placeholder="Full name" required />
           </div>
 
-          <div className="rounded-2xl border border-border bg-card p-6 space-y-3">
-            <label className="text-sm font-semibold text-foreground block">Rating</label>
-            <div className="flex gap-2">
+          <fieldset>
+            <legend className="field-label">Rating</legend>
+            <div role="radiogroup" aria-label="Rating" className="flex gap-1">
               {[1, 2, 3, 4, 5].map(s => (
                 <button
                   key={s}
                   type="button"
+                  role="radio"
+                  aria-checked={rating === s}
+                  aria-label={`${s} out of 5`}
                   onClick={() => setRating(s)}
                   onMouseEnter={() => setHover(s)}
                   onMouseLeave={() => setHover(0)}
-                  className="transition-transform hover:scale-110"
+                  className="p-1.5 transition-transform active:scale-95"
                 >
                   <Star
-                    className={`w-8 h-8 ${
-                      s <= (hover || rating)
-                        ? "text-primary fill-primary"
-                        : "text-muted-foreground/30"
-                    }`}
+                    className={cn("h-9 w-9 transition-colors", s <= (hover || rating) ? "text-primary" : "text-border")}
+                    weight={s <= (hover || rating) ? "fill" : "regular"}
                   />
                 </button>
               ))}
             </div>
-          </div>
+          </fieldset>
 
-          <div className="rounded-2xl border border-border bg-card p-6 space-y-3">
-            <label className="text-sm font-semibold text-foreground block">Your Review</label>
+          <div>
+            <label htmlFor="rpr-review" className="field-label">Your review</label>
             <Textarea
+              id="rpr-review"
               value={review}
               onChange={e => setReview(e.target.value)}
               placeholder="Share your experience with The Red Pill..."
@@ -97,11 +111,11 @@ const RedPillReview = () => {
             />
           </div>
 
-          <Button type="submit" className="w-full h-12 text-base font-semibold" disabled={submitting}>
-            {submitting ? "Submitting..." : "Submit Review"}
+          <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+            {submitting ? "Submitting..." : "Submit review"}
           </Button>
         </form>
-      </div>
+      </main>
     </div>
   );
 };

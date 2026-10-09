@@ -1,51 +1,114 @@
+@import "@fontsource-variable/mona-sans/wdth.css";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/noto-sans-tamil";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Design language: ink, paper, one signal red.
+  Light is a cool paper with near-black ink. Dark is the same system inverted.
+  --panel is an always-dark surface (photo panels, pricing) in both themes.
+  Radius is 0 everywhere on purpose: one shape rule, no mixing.
+*/
 @layer base {
   :root {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
+    --background: 220 9% 94.5%;
+    --foreground: 222 20% 8%;
 
-    --card: 240 10% 7%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 10% 97.5%;
+    --card-foreground: 222 20% 8%;
 
-    --popover: 240 10% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 10% 98.5%;
+    --popover-foreground: 222 20% 8%;
 
-    --primary: 0 85% 55%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 6 72% 46%;
+    --primary-foreground: 220 20% 98%;
 
-    --secondary: 270 95% 65%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 220 9% 89%;
+    --secondary-foreground: 222 20% 8%;
 
-    --accent: 45 100% 55%;
-    --accent-foreground: 0 0% 2%;
+    --muted: 220 9% 90%;
+    --muted-foreground: 220 8% 36%;
 
-    --muted: 240 10% 12%;
-    --muted-foreground: 240 5% 55%;
+    --accent: 220 9% 89%;
+    --accent-foreground: 222 20% 8%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 358 70% 38%;
+    --destructive-foreground: 220 20% 98%;
 
-    --border: 240 10% 14%;
-    --input: 240 10% 14%;
-    --ring: 0 85% 55%;
+    --border: 220 10% 80%;
+    --input: 220 8% 46%;
+    --ring: 222 20% 8%;
 
-    --radius: 0.75rem;
+    --panel: 222 22% 7%;
+    --panel-foreground: 220 14% 93%;
+    --panel-muted: 220 8% 66%;
+    --panel-border: 222 10% 20%;
+    --signal: 6 80% 58%;
 
-    --glow-primary: 0 0 40px hsl(0 85% 55% / 0.3);
-    --glow-secondary: 0 0 40px hsl(270 95% 65% / 0.3);
-    --glow-accent: 0 0 40px hsl(45 100% 55% / 0.3);
+    --radius: 0rem;
 
-    --sidebar-background: 240 10% 4%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 0 85% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 10% 12%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 10% 14%;
-    --sidebar-ring: 0 85% 55%;
+    --font-display: "Mona Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+    --sidebar-background: 220 9% 94.5%;
+    --sidebar-foreground: 222 20% 8%;
+    --sidebar-primary: 6 72% 46%;
+    --sidebar-primary-foreground: 220 20% 98%;
+    --sidebar-accent: 220 9% 89%;
+    --sidebar-accent-foreground: 222 20% 8%;
+    --sidebar-border: 220 10% 80%;
+    --sidebar-ring: 222 20% 8%;
+
+    color-scheme: light;
+  }
+
+  .dark {
+    --background: 222 16% 6.5%;
+    --foreground: 220 14% 93%;
+
+    --card: 222 14% 9.5%;
+    --card-foreground: 220 14% 93%;
+
+    --popover: 222 14% 10%;
+    --popover-foreground: 220 14% 93%;
+
+    --primary: 6 80% 58%;
+    --primary-foreground: 222 20% 6%;
+
+    --secondary: 222 12% 14%;
+    --secondary-foreground: 220 14% 93%;
+
+    --muted: 222 12% 13%;
+    --muted-foreground: 220 8% 63%;
+
+    --accent: 222 12% 15%;
+    --accent-foreground: 220 14% 93%;
+
+    --destructive: 358 75% 62%;
+    --destructive-foreground: 222 20% 6%;
+
+    --border: 222 10% 19%;
+    --input: 220 8% 46%;
+    --ring: 220 14% 93%;
+
+    --panel: 222 22% 4.5%;
+    --panel-foreground: 220 14% 93%;
+    --panel-muted: 220 8% 63%;
+    --panel-border: 222 10% 17%;
+    --signal: 6 80% 58%;
+
+    --sidebar-background: 222 16% 6.5%;
+    --sidebar-foreground: 220 14% 93%;
+    --sidebar-primary: 6 80% 58%;
+    --sidebar-primary-foreground: 222 20% 6%;
+    --sidebar-accent: 222 12% 15%;
+    --sidebar-accent-foreground: 220 14% 93%;
+    --sidebar-border: 222 10% 19%;
+    --sidebar-ring: 220 14% 93%;
+
+    color-scheme: dark;
   }
 }
 
@@ -54,78 +117,208 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   html,
   body,
   #root {
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-size: 1rem;
+    @apply bg-background text-foreground font-sans;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
   }
-}
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  h1, h2, h3, h4 {
+    text-wrap: balance;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  p, li {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
 @layer components {
-  .blog-feed__item {
-    opacity: 0;
-    transform: translateY(30px);
+  /* Page container: one width, one gutter, used by every page. */
+  .shell {
+    @apply mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-12;
   }
 
-  .blog-feed__item.animate-fadeInUp {
-    animation: fadeInUp 0.3s ease-out forwards;
+  /* Type roles. Display is Mona Sans pulled to its narrow width, set tight. */
+  .type-display {
+    font-family: var(--font-display);
+    font-stretch: 76%;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.9;
   }
 
-  .glow-border {
-    position: relative;
+  .type-title {
+    font-family: var(--font-display);
+    font-stretch: 82%;
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    line-height: 0.96;
   }
 
-  .glow-border::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, hsl(0 85% 55% / 0.5), hsl(270 95% 65% / 0.5));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  .type-heading {
+    font-family: var(--font-display);
+    font-stretch: 90%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
   }
 
-  .neon-text {
-    text-shadow: 0 0 20px hsl(0 85% 55% / 0.5), 0 0 40px hsl(0 85% 55% / 0.2);
+  .type-lead {
+    font-size: clamp(1.125rem, 1.4vw, 1.3125rem);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+  }
+
+  .type-mono {
+    @apply font-mono;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  .type-label {
+    @apply font-mono text-[0.8125rem] font-medium;
+    letter-spacing: 0.02em;
+  }
+
+  /* A short red rule that leads small labels. Not a dot. */
+  .rule-mark::before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: 2px;
+    margin-right: 0.75rem;
+    vertical-align: middle;
+    background: hsl(var(--primary));
+  }
+
+  /* Fields: one boxed style for every form on the site. */
+  .field {
+    @apply block w-full border border-input bg-card px-4 py-3.5 text-base text-foreground placeholder:text-muted-foreground transition-colors;
+  }
+  .field:hover {
+    border-color: hsl(var(--foreground));
+  }
+  .field:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-color: hsl(var(--foreground));
+  }
+  .field-label {
+    @apply mb-2 block text-sm font-semibold text-foreground;
+  }
+
+  /* Article body for blog posts (content is user-authored HTML). */
+  .article-body {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: hsl(var(--foreground) / 0.88);
+  }
+  .article-body > * + * { margin-top: 1.25em; }
+  .article-body h2,
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-stretch: 88%;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: hsl(var(--foreground));
+    margin-top: 2.2em;
+  }
+  .article-body h2 { font-size: 2rem; }
+  .article-body h3 { font-size: 1.5rem; }
+  .article-body a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .article-body ul { list-style: square; padding-left: 1.4em; }
+  .article-body ol { list-style: decimal; padding-left: 1.4em; }
+  .article-body li + li { margin-top: 0.4em; }
+  .article-body blockquote {
+    border-left: 3px solid hsl(var(--primary));
+    padding-left: 1.25em;
+    font-size: 1.25em;
+    line-height: 1.5;
+    color: hsl(var(--foreground));
+  }
+  .article-body img { width: 100%; height: auto; }
+  .article-body pre,
+  .article-body code {
+    @apply font-mono;
+    font-size: 0.9em;
+  }
+  .article-body pre {
+    overflow-x: auto;
+    background: hsl(var(--panel));
+    color: hsl(var(--panel-foreground));
+    padding: 1.25rem;
   }
 }
-@keyframes blurPulse {
-  0% {
-    filter: blur(0px);
-    opacity: 1;
-  }
 
-  50% {
-    filter: blur(6px);
-    opacity: 0.7;
-  }
+@layer utilities {
+  .text-signal { color: hsl(var(--signal)); }
+  .bg-signal { background-color: hsl(var(--signal)); }
 
-  100% {
-    filter: blur(0px);
-    opacity: 1;
+  /* Reserve descender room when a line is clipped for a reveal. */
+  .clip-line {
+    overflow: hidden;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
   }
+}
+
+/* Paper grain. Fixed, static, pointer-events none: it never repaints on scroll. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark body::after {
+  mix-blend-mode: screen;
+  opacity: 0.035;
+}
+@media (prefers-reduced-transparency: reduce) {
+  body::after { display: none; }
 }

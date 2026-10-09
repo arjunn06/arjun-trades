@@ -1,14 +1,21 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ArrowRight, Youtube, Users, BookOpen, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
-import NewsletterSheet from "@/components/NewsletterSheet";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import TestimonialWall from "@/components/TestimonialWall";
-import { Sparkles } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, ArrowUpRight, DiscordLogo, YoutubeLogo } from "@phosphor-icons/react";
 import { Helmet } from "react-helmet-async";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
+import TextLink from "@/components/TextLink";
+import TestimonialWall from "@/components/TestimonialWall";
+import YouTubeFacade, { ytThumb } from "@/components/YouTubeFacade";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
+import { BLUEPRINT_URL, BLUEPILL_URL, REDPILL_URL } from "@/lib/links";
+import portrait from "@/assets/arjun-portrait.webp";
+import redPill from "@/assets/red-pill-hand.jpg";
+import bluePill from "@/assets/blue-pill-hand.jpg";
 
 interface YTVideo {
   id: string;
@@ -25,17 +32,70 @@ const fallbackVideos: YTVideo[] = [
   { id: "uJY02oI3LOI", title: "This Simple iFVG Trading Strategy Will Make You Rich In 2026 - For Beginners (Tamil)" },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const }
-  })
-};
+const directory = [
+  {
+    title: "YouTube content",
+    desc: "Free trading education: breakdowns, recaps, and ICT concepts explained clearly.",
+    cta: "Watch now",
+    href: "https://youtube.com/@arjun_ifvg",
+  },
+  {
+    title: "Live workshop",
+    desc: "Deep-dive, structured iFVG workshop with live examples and Q&A.",
+    cta: "View workshop",
+    to: "/workshop",
+  },
+  {
+    title: "Blogs",
+    desc: "Trading insights, market analysis, and lessons from the journey.",
+    cta: "Read blogs",
+    to: "/blogs",
+  },
+  {
+    title: "Discord community",
+    desc: "Connect with like-minded traders. Daily analysis, alerts, and live discussion.",
+    cta: "Join Discord",
+    href: "https://discord.gg/SCHeKKCa6c",
+  },
+];
+
+const playlists = [
+  {
+    title: "Bootcamp: Basics to Trading",
+    description:
+      "Start your trading journey from scratch: learn the fundamentals, chart reading, and core concepts step by step.",
+    url: "https://www.youtube.com/playlist?list=PL6eNJ1hMC0iaity1hyA8V59IMEk_6nldG",
+    embedId: "videoseries?list=PL6eNJ1hMC0iaity1hyA8V59IMEk_6nldG",
+    span: "lg:col-span-7",
+  },
+  {
+    title: "iFVG Free Course",
+    description:
+      "Master the iFVG trading strategy with this comprehensive free course, from theory to live market application.",
+    url: "https://www.youtube.com/playlist?list=PL6eNJ1hMC0ibTLpZZPrDqk5abwsqZ5hV8",
+    embedId: "videoseries?list=PL6eNJ1hMC0ibTLpZZPrDqk5abwsqZ5hV8",
+    span: "lg:col-span-5",
+  },
+];
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
+const HeroLine = ({ children, delay }: { children: React.ReactNode; delay: number }) => (
+  <span className="clip-line block">
+    <motion.span
+      className="block"
+      initial={{ y: "108%" }}
+      animate={{ y: 0 }}
+      transition={{ duration: 1, delay, ease }}
+    >
+      {children}
+    </motion.span>
+  </span>
+);
 
 const Index = () => {
   const [videos, setVideos] = useState<YTVideo[]>(fallbackVideos);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -44,7 +104,7 @@ const Index = () => {
       .then(({ data, error }) => {
         if (cancelled || error || !data?.videos?.length) return;
         const fetched = data.videos as YTVideo[];
-        // Ensure at least 3 videos by padding from fallback if needed.
+        // Ensure at least 6 videos by padding from fallback if needed.
         const seen = new Set(fetched.map((v) => v.id));
         const padded = [...fetched];
         for (const fb of fallbackVideos) {
@@ -55,6 +115,7 @@ const Index = () => {
           }
         }
         setVideos(padded);
+        setActive(0);
       })
       .catch(() => {});
     return () => {
@@ -62,451 +123,322 @@ const Index = () => {
     };
   }, []);
 
+  const current = videos[active] ?? videos[0];
+
   return (
     <>
-  <Helmet>
-    <title>Arjun IFVG | Tamil Trading Community</title>
+      <Helmet>
+        <title>Arjun IFVG | Tamil Trading Community</title>
+        <meta
+          name="description"
+          content="Tamil trading community focused on ICT concepts, price action, liquidity, iFVG strategy, and trading psychology."
+        />
+        <meta
+          name="keywords"
+          content="ICT trading, SMC trading, Tamil trading, iFVG, forex trading, futures trading"
+        />
+        <link rel="canonical" href="https://ifvg.in/" />
 
-    <meta
-      name="description"
-      content="Tamil trading community focused on ICT concepts, price action, liquidity, iFVG strategy, and trading psychology."
-    />
+        {/* Open Graph */}
+        <meta property="og:title" content="Arjun IFVG" />
+        <meta
+          property="og:description"
+          content="Tamil trading community focused on ICT concepts and trading education."
+        />
+        <meta property="og:url" content="https://ifvg.in/" />
+        <meta property="og:type" content="website" />
 
-    <meta
-      name="keywords"
-      content="ICT trading, SMC trading, Tamil trading, iFVG, forex trading, futures trading"
-    />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="canonical" href="https://ifvg.in/" />
+        {/* Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "IFVG",
+            url: "https://ifvg.in",
+            founder: {
+              "@type": "Person",
+              name: "Arjun S",
+            },
+            sameAs: ["https://youtube.com/@arjun_ifvg", "https://discord.gg/SCHeKKCa6c"],
+          })}
+        </script>
+      </Helmet>
 
-    {/* Open Graph */}
-    <meta property="og:title" content="Arjun IFVG" />
-    <meta
-      property="og:description"
-      content="Tamil trading community focused on ICT concepts and trading education."
-    />
-    <meta property="og:url" content="https://ifvg.in/" />
-    <meta property="og:type" content="website" />
-
-    {/* Twitter */}
-    <meta name="twitter:card" content="summary_large_image" />
-
-    {/* Schema */}
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        name: "IFVG",
-        url: "https://ifvg.in",
-        founder: {
-          "@type": "Person",
-          name: "Arjun S"
-        },
-        sameAs: [
-          "https://youtube.com/@arjun_ifvg",
-          "https://discord.gg/SCHeKKCa6c"
-        ]
-      })}
-    </script>
-  </Helmet>
-
-  <div className="min-h-screen max-w-full overflow-x-hidden bg-background">
-      <Header />
-      <main>
-
-      {/* Hero Section */}
-      <section className="relative overflow-hidden px-4 sm:px-6 pt-8 pb-12 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28">
-        {/* Background glow effects */}
-        <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-secondary/5 blur-[120px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto relative z-10 grid min-w-0 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          {/* Left: copy + CTAs */}
-          <div className="min-w-0 text-center lg:text-left">
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-5 sm:mb-6">
-              <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-border bg-muted/30 text-muted-foreground text-xs sm:text-sm font-medium tracking-wide uppercase">
-                Tamil Trading Community
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={1}
-              className="font-display font-bold text-[2.65rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-5 sm:mb-6 break-words">
-              <span className="text-foreground">Arjun</span>{" "}
-              <span className="neon-text text-primary">IFVG</span>
-            </motion.h1>
-
-
+      <div className="min-h-[100dvh]">
+        <Header />
+        <main id="main">
+          {/* Hero */}
+          <section className="shell pb-8 pt-8 sm:pt-12 lg:pb-12">
             <motion.p
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={2}
-              className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-7 sm:mb-10 leading-relaxed">
-              We don't chase dopamine, we chase patience. See what the community is learning right now — fresh breakdowns, recaps and ICT concepts every week.
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="type-label rule-mark text-muted-foreground"
+            >
+              Arjun IFVG, Tamil trading community
             </motion.p>
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={3}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-              <a
-                href="https://youtube.com/@arjun_ifvg?sub_confirmation=1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all duration-300 text-sm sm:text-base">
-                <Youtube className="w-5 h-5" />
-                Subscribe on YouTube
-              </a>
-              <a
-                href="https://discord.gg/SCHeKKCa6c"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all duration-300 text-sm sm:text-base">
-                <Users className="w-5 h-5" />
-                Join Discord
-              </a>
-            </motion.div>
-          </div>
+            <h1 className="type-display mt-5 text-[clamp(2.75rem,min(10.6vw,15.5vh),8.25rem)] sm:mt-6">
+              <span className="sr-only">Arjun IFVG. </span>
+              <HeroLine delay={0.1}>We don't chase dopamine,</HeroLine>
+              <HeroLine delay={0.22}>
+                we chase <span className="text-primary">patience.</span>
+              </HeroLine>
+            </h1>
 
-          {/* Right: YouTube carousel preview */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={2}
-            className="relative min-w-0 w-full">
-            <div className="absolute inset-0 sm:-inset-4 bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent blur-2xl rounded-3xl pointer-events-none" />
-            <Carousel opts={{ align: "start", loop: true }} className="w-full relative">
-              <CarouselContent className="-ml-2 sm:-ml-4">
-                {videos.map((video, i) => (
-                  <CarouselItem key={i} className="basis-full pl-2 sm:pl-4">
-                    <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card shadow-2xl">
-                      <div className="aspect-video">
-                        <iframe
-                          src={`https://www.youtube.com/embed/${video.id}`}
-                          title={video.title}
-                          className="w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="p-3 sm:p-4 flex items-start gap-3">
-                        <Youtube className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                        <p className="text-xs sm:text-sm text-foreground line-clamp-2">{video.title}</p>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-2 sm:left-3 bg-background/80 backdrop-blur border-border text-foreground hover:bg-muted" />
-              <CarouselNext className="right-2 sm:right-3 bg-background/80 backdrop-blur border-border text-foreground hover:bg-muted" />
-            </Carousel>
-            <p className="text-xs text-muted-foreground text-center mt-4">
-              Swipe through the latest uploads · <a href="https://youtube.com/@arjun_ifvg" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">view channel</a>
-            </p>
-          </motion.div>
-        </div>
-      </section>
+            <div className="mt-8 grid gap-8 lg:mt-12 lg:grid-cols-12 lg:gap-12">
+              <div className="flex min-w-0 flex-col justify-between gap-8 lg:col-span-5">
+                <motion.p
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5, ease }}
+                  className="type-lead max-w-md"
+                >
+                  See what the community is learning right now: fresh breakdowns, recaps and ICT concepts every week.
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.62, ease }}
+                  className="flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+                >
+                  <Button asChild size="lg">
+                    <a
+                      href="https://youtube.com/@arjun_ifvg?sub_confirmation=1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <YoutubeLogo weight="fill" />
+                      Subscribe on YouTube
+                    </a>
+                  </Button>
+                  <Button asChild size="lg" variant="outline">
+                    <a href="https://discord.gg/SCHeKKCa6c" target="_blank" rel="noopener noreferrer">
+                      <DiscordLogo weight="fill" />
+                      Join Discord
+                    </a>
+                  </Button>
+                </motion.div>
+              </div>
 
-      {/* Blueprint Promo Section */}
-      <section className="relative overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 border-t border-border">
-        {/* Atmospheric glows */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[140px] pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-primary/5 blur-[100px] pointer-events-none" />
+              <div className="relative aspect-[4/3] overflow-hidden bg-muted sm:aspect-[16/9] lg:col-span-7 lg:aspect-auto lg:h-[clamp(240px,38vh,400px)]">
+                <motion.img
+                  src={portrait}
+                  alt="Arjun, Tamil trader and founder of Arjun Trades, in a camouflage jacket at dusk"
+                  width={1920}
+                  height={1280}
+                  {...{ fetchpriority: "high" }}
+                  initial={{ scale: 1.08 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 1.6, ease }}
+                  className="h-full w-full object-cover object-[50%_28%]"
+                />
+              </div>
+            </div>
+          </section>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10 max-w-5xl mx-auto text-center"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/5 text-primary text-xs sm:text-sm font-medium tracking-[0.2em] uppercase mb-8">
-            <Sparkles className="w-3.5 h-3.5" />
-            Introducing
-          </div>
-
-          <h2 className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.9] tracking-tight mb-6 sm:mb-8">
-            <span className="text-foreground">The </span>
-            <span className="neon-text text-primary">Blueprint</span>
-          </h2>
-
-          <p className="text-muted-foreground text-base sm:text-xl md:text-2xl max-w-2xl mx-auto mb-10 sm:mb-14 leading-relaxed">
-            The choice is yours. Two paths to mastering the markets — pick the one that fits your journey.
-          </p>
-
-          <Link
-            to="/blueprint"
-            className="group inline-flex items-center justify-center gap-3 px-8 sm:px-12 py-4 sm:py-5 bg-primary text-primary-foreground font-semibold text-base sm:text-lg rounded-lg hover:brightness-110 transition-all duration-300 shadow-[0_0_40px_-10px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_60px_-10px_hsl(var(--primary)/0.8)]"
-          >
-            Enter Now
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="overflow-hidden py-14 sm:py-24 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid min-w-0 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            
-            {[
-            {
-              icon: <Youtube className="w-7 h-7" />,
-              title: "YouTube Content",
-              desc: "Free trading education — breakdowns, recaps, and ICT concepts explained clearly.",
-              link: "https://youtube.com/@arjun_ifvg",
-              linkText: "Watch Now",
-              external: true
-            },
-            {
-              icon: <BookOpen className="w-7 h-7" />,
-              title: "Live Workshop",
-              desc: "Deep-dive, structured iFVG workshop with live examples and Q&A.",
-              link: "/workshop",
-              linkText: "View Workshop",
-              external: false
-            },
-            {
-              icon: <BookOpen className="w-7 h-7" />,
-              title: "Blogs",
-              desc: "Trading insights, market analysis, and lessons from the journey.",
-              link: "/blogs",
-              linkText: "Read Blogs",
-              external: true
-            },
-            {
-              icon: <Users className="w-7 h-7" />,
-              title: "Discord Community",
-              desc: "Connect with like-minded traders. Daily analysis, alerts, and live discussion.",
-              link: "https://discord.gg/SCHeKKCa6c",
-              linkText: "Join Discord",
-              external: true
-            }].
-            map((item, i) =>
-            <motion.div
-              key={i}
-              variants={fadeUp}
-              custom={i}
-              className="group relative min-w-0 p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-500">
-              
-                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
-                  {item.icon}
+          {/* Popular on YouTube */}
+          <section className="py-16 sm:py-20">
+            <div className="shell">
+              <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h2 className="type-title text-[clamp(2.5rem,6vw,4.75rem)]">Popular on YouTube</h2>
+                  <p className="type-lead mt-5 max-w-xl text-muted-foreground">
+                    Long-form trading breakdowns from the channel.
+                  </p>
                 </div>
-                <h3 className="font-display font-semibold text-xl text-foreground mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                  {item.desc}
-                </p>
-                {item.external ? (
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300"
-                  >
-                    {item.linkText}
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                ) : (
-                  <Link
-                    to={item.link}
-                    className={`inline-flex items-center gap-1.5 text-sm font-medium ${
-                      item.title === "Live Workshop"
-                        ? "text-primary group-hover:gap-3 transition-all duration-300"
-                        : "text-muted-foreground"
-                    }`}
-                  >
-                    {item.linkText}
-                    <ChevronRight className="w-4 h-4" />
-                  </Link>
-                )}
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
-      </section>
+                <TextLink href="https://youtube.com/@arjun_ifvg">View all videos on YouTube</TextLink>
+              </Reveal>
 
-      {/* YouTube Carousel Section */}
-      <section className="overflow-hidden py-14 sm:py-24 px-4 sm:px-6 border-t border-border">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}>
-            
-            <motion.h2
-              variants={fadeUp}
-              custom={0}
-              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center">
-              Popular on YouTube
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              custom={1}
-              className="text-muted-foreground text-center mb-10 sm:mb-12 max-w-xl mx-auto">
-              Long-form trading breakdowns from the channel
-            </motion.p>
-            <motion.div variants={fadeUp} custom={2}>
-              <Carousel opts={{ align: "start", loop: true }} className="w-full">
-                <CarouselContent className="-ml-2 sm:-ml-4">
-                  {videos.map((video, i) => (
-                    <CarouselItem key={i} className="pl-2 sm:pl-4 md:basis-1/2 lg:basis-1/3">
-                      <div className="aspect-video rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card">
+              <Reveal delay={0.1} className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-12">
+                <div className="lg:col-span-8">
+                  <YouTubeFacade key={current.id} id={current.id} title={current.title} />
+                  <h3 className="type-heading mt-6 max-w-[40ch] text-2xl sm:text-[1.75rem]">{current.title}</h3>
+                </div>
+
+                <ol className="flex flex-col lg:col-span-4" aria-label="More videos">
+                  {videos.map((v, i) => (
+                    <li key={v.id}>
+                      <button
+                        type="button"
+                        onClick={() => setActive(i)}
+                        aria-current={active === i}
+                        className={cn(
+                          "group grid w-full grid-cols-[6.5rem_1fr] items-start gap-4 border-t py-4 text-left transition-colors",
+                          active === i ? "border-primary" : "border-border hover:border-foreground",
+                        )}
+                      >
+                        <span className="relative block aspect-video overflow-hidden bg-muted">
+                          <img
+                            src={ytThumb(v.id, "mqdefault")}
+                            alt=""
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                          />
+                        </span>
+                        <span
+                          className={cn(
+                            "line-clamp-3 text-[0.9375rem] font-medium leading-snug transition-colors",
+                            active === i ? "text-foreground" : "text-muted-foreground group-hover:text-foreground",
+                          )}
+                        >
+                          {v.title}
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* The Blueprint */}
+          <section className="py-16 sm:py-20">
+            <div className="shell grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
+              <Reveal className="lg:col-span-6">
+                <h2 className="type-display text-[clamp(3.5rem,9.5vw,8.5rem)]">
+                  The <span className="text-primary">Blueprint</span>
+                </h2>
+                <p className="type-lead mt-8 max-w-md">
+                  The choice is yours. Two paths to mastering the markets: pick the one that fits your journey.
+                </p>
+                <Button asChild size="lg" className="mt-10">
+                  <a href={BLUEPRINT_URL}>
+                    Enter now
+                    <ArrowRight weight="bold" />
+                  </a>
+                </Button>
+              </Reveal>
+
+              <Reveal delay={0.12} className="grid grid-cols-2 gap-4 sm:gap-6 lg:col-span-6">
+                {[
+                  { img: redPill, label: "The Red Pill", href: REDPILL_URL, alt: "An open hand holding a glowing red pill" },
+                  { img: bluePill, label: "The Blue Pill", href: BLUEPILL_URL, alt: "An open hand holding a glowing blue pill" },
+                ].map((p, i) => (
+                  <a
+                    key={p.label}
+                    href={p.href}
+                    className={cn("group block", i === 1 && "mt-10 sm:mt-14")}
+                  >
+                    <div className="aspect-square overflow-hidden bg-panel">
+                      <img
+                        src={p.img}
+                        alt={p.alt}
+                        loading="lazy"
+                        width={1024}
+                        height={1024}
+                        className="h-full w-full object-cover transition-transform duration-1000 ease-out-expo group-hover:scale-[1.05]"
+                      />
+                    </div>
+                    <p className="mt-3 flex items-center justify-between font-semibold">
+                      {p.label}
+                      <ArrowUpRight
+                        className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        weight="bold"
+                      />
+                    </p>
+                  </a>
+                ))}
+              </Reveal>
+            </div>
+          </section>
+
+          {/* Where to go */}
+          <section className="py-16 sm:py-20">
+            <div className="shell">
+              <ul className="border-b border-foreground">
+                {directory.map((item, i) => {
+                  const inner = (
+                    <>
+                      <div className="grid items-baseline gap-3 px-0 py-8 transition-transform duration-500 ease-out-expo group-hover:translate-x-4 md:grid-cols-12 md:gap-8 md:py-10">
+                        <h3 className="type-title text-[clamp(2.25rem,5vw,3.75rem)] md:col-span-5">{item.title}</h3>
+                        <p className="text-muted-foreground transition-colors group-hover:text-background/75 md:col-span-5 md:max-w-sm">
+                          {item.desc}
+                        </p>
+                        <span className="inline-flex items-center gap-2 font-semibold md:col-span-2 md:justify-end">
+                          {item.cta}
+                          {item.to ? (
+                            <ArrowRight className="h-4 w-4" weight="bold" />
+                          ) : (
+                            <ArrowUpRight className="h-4 w-4" weight="bold" />
+                          )}
+                        </span>
+                      </div>
+                    </>
+                  );
+                  const cls =
+                    "group block border-t border-foreground transition-colors duration-300 hover:bg-foreground hover:text-background";
+                  return (
+                    <li key={item.title}>
+                      <Reveal delay={i * 0.05}>
+                        {item.to ? (
+                          <Link to={item.to} className={cls}>
+                            {inner}
+                          </Link>
+                        ) : (
+                          <a href={item.href} target="_blank" rel="noopener noreferrer" className={cls}>
+                            {inner}
+                          </a>
+                        )}
+                      </Reveal>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </section>
+
+          {/* Featured playlists */}
+          <section className="py-16 sm:py-20">
+            <div className="shell">
+              <Reveal>
+                <h2 className="type-title text-[clamp(2.5rem,6vw,4.75rem)]">Featured playlists</h2>
+                <p className="type-lead mt-5 max-w-xl text-muted-foreground">
+                  Structured courses to take you from beginner to confident trader.
+                </p>
+              </Reveal>
+
+              <div className="mt-12 grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
+                {playlists.map((pl, i) => (
+                  <Reveal key={pl.title} delay={i * 0.1} className={pl.span}>
+                    <a
+                      href={pl.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block"
+                    >
+                      <div className="aspect-video overflow-hidden bg-panel">
                         <iframe
-                          src={`https://www.youtube.com/embed/${video.id}`}
-                          title={video.title}
-                          className="w-full h-full"
+                          src={`https://www.youtube.com/embed/${pl.embedId}`}
+                          title={pl.title}
+                          className="pointer-events-none h-full w-full"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                           loading="lazy"
                         />
                       </div>
-                      <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{video.title}</p>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="hidden md:flex -left-12 bg-card border-border text-foreground hover:bg-muted" />
-                <CarouselNext className="hidden md:flex -right-12 bg-card border-border text-foreground hover:bg-muted" />
-              </Carousel>
-            </motion.div>
-            <motion.div variants={fadeUp} custom={3} className="text-center mt-8">
-              <a
-                href="https://youtube.com/@arjun_ifvg"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all duration-300">
-                View all videos on YouTube
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+                      <h3 className="type-heading mt-6 text-2xl sm:text-3xl">{pl.title}</h3>
+                      <p className="mt-3 max-w-md text-muted-foreground">{pl.description}</p>
+                      <span className="mt-5 inline-flex items-center gap-2 font-semibold underline decoration-border decoration-2 underline-offset-[6px] transition-colors group-hover:decoration-primary">
+                        Watch playlist
+                        <ArrowUpRight className="h-4 w-4" weight="bold" />
+                      </span>
+                    </a>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
 
-      {/* Featured Playlists Section */}
-      <section className="overflow-hidden py-14 sm:py-24 px-4 sm:px-6 border-t border-border">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}>
-            
-            <motion.h2
-              variants={fadeUp}
-              custom={0}
-              className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 text-center">
-              Featured Playlists
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              custom={1}
-              className="text-muted-foreground text-center mb-10 sm:mb-12 max-w-xl mx-auto">
-              Structured courses to take you from beginner to confident trader
-            </motion.p>
-
-            <motion.div variants={fadeUp} custom={2} className="grid min-w-0 md:grid-cols-2 gap-5 sm:gap-8">
-              {[
-                {
-                  title: "Bootcamp: Basics to Trading",
-                  description: "Start your trading journey from scratch — learn the fundamentals, chart reading, and core concepts step by step.",
-                  url: "https://www.youtube.com/playlist?list=PL6eNJ1hMC0iaity1hyA8V59IMEk_6nldG",
-                  embedId: "videoseries?list=PL6eNJ1hMC0iaity1hyA8V59IMEk_6nldG",
-                },
-                {
-                  title: "iFVG Free Course",
-                  description: "Master the iFVG trading strategy with this comprehensive free course — from theory to live market application.",
-                  url: "https://www.youtube.com/playlist?list=PL6eNJ1hMC0ibTLpZZPrDqk5abwsqZ5hV8",
-                  embedId: "videoseries?list=PL6eNJ1hMC0ibTLpZZPrDqk5abwsqZ5hV8",
-                },
-              ].map((playlist, i) => (
-                <a
-                  key={i}
-                  href={playlist.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block min-w-0 rounded-xl sm:rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-500">
-                  <div className="aspect-video">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${playlist.embedId}`}
-                      title={playlist.title}
-                      className="w-full h-full pointer-events-none"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-5 sm:p-6">
-                    <h3 className="font-display font-semibold text-xl text-foreground mb-2 group-hover:text-primary transition-colors">
-                      {playlist.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                      {playlist.description}
-                    </p>
-                    <span className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-3 transition-all duration-300">
-                      Watch Playlist <ArrowRight className="w-4 h-4" />
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-
-
-      {/* Testimonials */}
-      <TestimonialWall />
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-border py-10 sm:py-12 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="font-display font-bold text-lg text-foreground">Arjun Trades</p>
-          <div className="flex items-center gap-6">
-            <a
-              href="https://youtube.com/@arjun_ifvg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-              
-              YouTube
-            </a>
-            <a
-              href="https://discord.gg/SCHeKKCa6c"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-              
-              Discord
-            </a>
-            <Link to="/workshop" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-              Workshop
-            </Link>
-            <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-              Contact
-            </Link>
-          </div>
-          <p className="text-muted-foreground text-sm">© 2026 Arjun Trades</p>
-        </div>
-      </footer>
-    </div>
-</>
-);
-
+          <TestimonialWall />
+        </main>
+        <Footer />
+      </div>
+    </>
+  );
 };
 
 export default Index;

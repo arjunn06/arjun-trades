@@ -9,6 +9,7 @@ Arjun IFVG runs a Tamil-language trading community focused on price action, liqu
 - [Home](/): Overview of Arjun Trades, featured YouTube content and student testimonials.
 - [About](/about): About Arjun IFVG — Tamil trader and educator.
 - [Workshop](/workshop): Free Tamil trading workshop covering ICT, SMC and iFVG.
+- [Ultimate IFVG Arena](/arena): A ₹99 paper trading tournament. One-week league, live head-to-head playoffs on YouTube, and an Apex account for the winner with the activation fee covered by the community's entry fees.
 - [The Red Pill](/red-pill): Elite 1-on-1 trading mentorship program.
 - [Blueprint](/blueprint): Choose between the Red Pill (lifetime mentorship) and Blue Pill (monthly program).
 - [Blog](/blogs): Trading insights, breakdowns and lessons.

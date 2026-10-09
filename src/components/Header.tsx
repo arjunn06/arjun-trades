@@ -1,131 +1,135 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Menu, Youtube } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, List } from "@phosphor-icons/react";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import Logo from "@/components/Logo";
+import { BLUEPRINT_URL } from "@/lib/links";
+import { cn } from "@/lib/utils";
 
+type NavItem = { label: string; to?: string; href?: string };
+
+const navItems: NavItem[] = [
+  { label: "YouTube", href: "https://youtube.com/@arjun_ifvg" },
+  { label: "Workshop", to: "/workshop" },
+  { label: "Arena", to: "/arena" },
+  { label: "Discord", href: "https://discord.gg/SCHeKKCa6c" },
+  { label: "Blogs", to: "/blogs" },
+  { label: "Contact", to: "/contact" },
+];
+
+const linkBase =
+  "relative inline-flex items-center gap-1 px-3 py-2 text-[0.9375rem] font-medium text-foreground after:absolute after:inset-x-3 after:bottom-0.5 after:h-[2px] after:origin-left after:scale-x-0 after:bg-foreground after:transition-transform after:duration-300 after:ease-out-expo hover:after:scale-x-100 aria-[current=page]:after:scale-x-100 aria-[current=page]:after:bg-primary";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isActive = (to?: string) => !!to && (pathname === to || pathname.startsWith(`${to}/`));
 
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <Link
-          to="/"
-          className="flex items-center"
-        >
-          <svg
-            width="192"
-            height="192"
-            viewBox="0 0 192 192"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-auto"
-          >
-            <path
-              d="M59.7334 120.762L75.8281 104.667L91.9227 88.5722L108.017 72.4775H124.112V120.762H108.017V96.6195L83.8754 120.762H59.7334ZM124.112 72.4775H108.017L124.112 56.3828V72.4775Z"
-              fill="white"
-            />
-          </svg>
-        </Link>
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-foreground focus:px-4 focus:py-3 focus:text-background"
+      >
+        Skip to content
+      </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          <a
-            href="https://youtube.com/@arjun_ifvg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            YouTube
-          </a>
-          <Link
-            to="/workshop"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Workshop
+      <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-md">
+        <div className="shell flex h-16 items-center justify-between">
+          <Link to="/" aria-label="Arjun IFVG, home" className="flex items-center gap-2.5">
+            <Logo className="h-5 w-5 text-foreground" />
+            <span className="type-heading hidden text-[1.0625rem] sm:block">Arjun IFVG</span>
           </Link>
-          <a
-            href="https://discord.gg/SCHeKKCa6c"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Discord
-          </a>
-          <Link
-            to="/blogs"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Blogs
-          </Link>
-          <Link
-            to="/contact"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Contact
-          </Link>
-          <Link
-            to="/blueprint"
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 hover:drop-shadow-[0_10px_30px_rgba(239,68,68,0.28)] hover:scale-[1.03] hover:ring-2 hover:ring-primary/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-transform duration-200 text-sm"
-          >
-            The Blueprint
-          </Link>
-        </nav>
 
-        {/* Mobile Menu */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
-            <button
-              className="md:hidden p-2 text-foreground"
-              aria-label="Open menu"
+          <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item) =>
+              item.to ? (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  aria-current={isActive(item.to) ? "page" : undefined}
+                  className={linkBase}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className={linkBase}>
+                  {item.label}
+                  <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground" weight="bold" />
+                </a>
+              ),
+            )}
+            <a
+              href={BLUEPRINT_URL}
+              className="ml-4 inline-flex h-10 items-center gap-2 bg-primary px-5 text-[0.9375rem] font-semibold text-primary-foreground transition-[background-color,color,transform] duration-200 ease-out-expo hover:bg-foreground hover:text-background active:translate-y-px"
             >
-              <Menu size={22} />
-            </button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[300px]">
-            <nav className="flex flex-col gap-6 mt-8">
-              <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
-                Home
-              </Link>
-              <a
-                href="https://youtube.com/@arjun_ifvg"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-                className="text-lg font-medium text-foreground"
+              The Blueprint
+            </a>
+          </nav>
+
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <button
+                className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-foreground transition-colors hover:bg-foreground hover:text-background lg:hidden"
+                aria-label="Open menu"
               >
-                YouTube
-              </a>
-              <Link to="/workshop" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
-                Workshop
-              </Link>
-              <a
-                href="https://discord.gg/SCHeKKCa6c"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-                className="text-lg font-medium text-foreground"
-              >
-                Discord
-              </a>
-              <Link to="/blogs" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
-                Blogs
-              </Link>
-              <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground">
-                Contact
-              </Link>
-              <Link to="/red-pill" onClick={() => setIsOpen(false)} className="mt-4 inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:drop-shadow-[0_10px_30px_rgba(239,68,68,0.28)] hover:scale-[1.03] hover:ring-2 hover:ring-primary/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-transform duration-200">
-                Take The Red Pill
-              </Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+                <List className="h-6 w-6" weight="bold" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="flex w-full max-w-none flex-col border-0 p-0 sm:max-w-none">
+              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <div className="flex h-16 items-center px-5">
+                <Logo className="h-5 w-5 text-foreground" />
+              </div>
+              <nav aria-label="Mobile" className="flex flex-1 flex-col justify-center gap-1 px-5">
+                {[{ label: "Home", to: "/" }, ...navItems].map((item, i) => {
+                  const cls = cn(
+                    "type-title flex items-center justify-between border-b border-border py-4 text-[2.5rem] transition-colors hover:text-primary",
+                    isActive(item.to) && "text-primary",
+                  );
+                  return (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.08 + i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      {item.to ? (
+                        <Link to={item.to} onClick={() => setOpen(false)} className={cls}>
+                          {item.label}
+                          <ArrowRight className="h-6 w-6" weight="bold" />
+                        </Link>
+                      ) : (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setOpen(false)}
+                          className={cls}
+                        >
+                          {item.label}
+                          <ArrowUpRight className="h-6 w-6" weight="bold" />
+                        </a>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </nav>
+              <div className="menu-footer p-5 pb-8">
+                <a
+                  href={BLUEPRINT_URL}
+                  className="flex h-14 w-full items-center justify-center gap-2 bg-primary text-base font-semibold text-primary-foreground active:translate-y-px"
+                >
+                  The Blueprint
+                  <ArrowRight className="h-5 w-5" weight="bold" />
+                </a>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </header>
+    </>
   );
 };
 

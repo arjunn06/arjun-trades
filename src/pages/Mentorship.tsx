@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { Star, Send, ChevronLeft, ChevronRight, Quote, CheckCircle2, Clock, PlayCircle, Sparkles, Share2 } from "lucide-react";
+import { Star, PaperPlaneTilt, CheckCircle, Clock, Play, Sparkle, ShareNetwork } from "@phosphor-icons/react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
+import Testimonials, { type TestimonialItem } from "@/components/Testimonials";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,13 +21,36 @@ import {
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import workshopThumbnail from "@/assets/Thumbnail.png";
+import { cn } from "@/lib/utils";
+import workshopThumbnail from "@/assets/Thumbnail.webp";
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const interestSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.string().trim().email("Invalid email").max(255),
   promo_consent: z.boolean(),
 });
+
+const REPLAY_URL = "https://youtu.be/YifBHSrJhqc";
+
+const share = async (shareUrl: string, shareTitle: string) => {
+  const shareData = { title: shareTitle, url: shareUrl };
+  try {
+    if (typeof navigator !== "undefined" && navigator.share) {
+      await navigator.share(shareData);
+      return;
+    }
+  } catch {
+    // user cancelled or share failed; fall through to copy
+  }
+  try {
+    await navigator.clipboard.writeText(shareUrl);
+    toast({ title: "Link copied", description: "Workshop link is ready to share." });
+  } catch {
+    toast({ title: "Couldn't share", description: shareUrl });
+  }
+};
 
 const Workshop = () => {
   const [open, setOpen] = useState(false);
@@ -55,7 +81,7 @@ const Workshop = () => {
       return;
     }
     setSubmitted(true);
-    toast({ title: "You're on the list!", description: "We'll email you as soon as the workshop is live." });
+    toast({ title: "You're on the list", description: "We'll email you as soon as the workshop is live." });
   };
 
   const reset = () => {
@@ -67,298 +93,252 @@ const Workshop = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-[100dvh]">
       <Helmet>
         <title>Free Trading Workshop — Arjun IFVG</title>
-        <meta name="description" content="Join the free Arjun IFVG workshop. Learn ICT, Smart Money Concepts and the iFVG strategy in Tamil with live sessions and Q&A." />
+        <meta
+          name="description"
+          content="Join the free Arjun IFVG workshop. Learn ICT, Smart Money Concepts and the iFVG strategy in Tamil with live sessions and Q&A."
+        />
         <link rel="canonical" href="https://ifvg.in/workshop" />
         <meta property="og:title" content="Free Trading Workshop — Arjun IFVG" />
         <meta property="og:description" content="Free Tamil trading workshop covering ICT, SMC and iFVG strategy." />
         <meta property="og:url" content="https://ifvg.in/workshop" />
         <meta property="og:type" content="website" />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Course",
-          name: "Arjun IFVG Free Trading Workshop",
-          description: "Free Tamil trading workshop covering ICT, Smart Money Concepts and the iFVG strategy.",
-          provider: { "@type": "Organization", name: "Arjun Trades", sameAs: "https://ifvg.in" },
-        })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Course",
+            name: "Arjun IFVG Free Trading Workshop",
+            description: "Free Tamil trading workshop covering ICT, Smart Money Concepts and the iFVG strategy.",
+            provider: { "@type": "Organization", name: "Arjun Trades", sameAs: "https://ifvg.in" },
+          })}
+        </script>
       </Helmet>
       <Header />
-      <main>
+      <main id="main">
+        <section className="shell pb-6 pt-10 sm:pt-16">
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease }}
+            className="type-display text-[clamp(3.75rem,13vw,11rem)]"
+          >
+            Workshops
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease }}
+            className="type-lead mt-6 max-w-xl text-muted-foreground"
+          >
+            Free, no-fluff sessions to help you understand how markets really work.
+          </motion.p>
+        </section>
 
+        {/* Completed workshop */}
+        <section className="shell py-12 sm:py-16">
+          <div className="grid items-end gap-8 lg:grid-cols-12 lg:gap-12">
+            <Reveal className="lg:col-span-7">
+              <a
+                href={REPLAY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Watch the Beginner to Advanced free workshop replay on YouTube"
+                className="group relative block aspect-video overflow-hidden bg-muted"
+              >
+                <img
+                  src={workshopThumbnail}
+                  alt="Beginner to Advanced Free Workshop"
+                  className="h-full w-full scale-[1.02] object-cover transition-transform duration-1000 ease-out-expo group-hover:scale-[1.05]"
+                />
+                <span className="absolute bottom-0 left-0 flex h-16 w-16 items-center justify-center bg-primary text-primary-foreground transition-[width,background-color] duration-300 ease-out-expo group-hover:w-24 group-hover:bg-foreground group-hover:text-background">
+                  <Play className="h-6 w-6" weight="fill" />
+                </span>
+              </a>
+            </Reveal>
 
-
-      <section className="py-16 md:py-20 px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-6xl mx-auto"
-        >
-          {/* Heading */}
-          <div className="mb-12 md:mb-16 text-center">
-            <h1 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-4">
-              Workshops
-            </h1>
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-              Free, no-fluff sessions to help you understand how markets really work.
-            </p>
-          </div>
-
-          {/* Workshop thumbnails */}
-          <div className="grid gap-6 md:gap-8 md:grid-cols-2">
-            {/* Completed — Beginner to Advanced */}
-            <WorkshopCard
-              title="Beginner to Advanced — Free Workshop"
-              description="Candlestick anatomy, smart money concepts, liquidity, and a structured trading model. Watch the full replay anytime."
-              badge={{ label: "Completed", icon: CheckCircle2, tone: "completed" }}
-              cta={{ label: "Watch Now", icon: PlayCircle }}
-              shareUrl="https://youtu.be/YifBHSrJhqc"
-              shareTitle="Beginner to Advanced — Free Workshop by Arjun IFVG"
-              onActivate={() => window.open("https://youtu.be/YifBHSrJhqc", "_blank", "noopener,noreferrer")}
-              thumbnail={
-                <>
-                  <img
-                    src={workshopThumbnail}
-                    alt="Beginner to Advanced Free Workshop"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/0 to-background/0" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <PlayCircle className="w-16 h-16 text-white drop-shadow-2xl" />
-                  </div>
-                </>
-              }
-            />
-
-            {/* Coming Soon — IFVG Masterclass */}
-            <WorkshopCard
-              title="IFVG Masterclass — Free Workshop"
-              description="A deep-dive into the IFVG model, market structure, and the exact playbook I use weekly. Be the first to know when seats open."
-              badge={{ label: "Coming Soon", icon: Clock, tone: "coming" }}
-              cta={{ label: "I'm Interested", icon: Sparkles }}
-              shareUrl={typeof window !== "undefined" ? window.location.href : "/workshop"}
-              shareTitle="IFVG Masterclass — Free Workshop by Arjun IFVG"
-              onActivate={() => setOpen(true)}
-              thumbnail={
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/10 to-background flex items-center justify-center">
-                  <div className="text-center px-6">
-                    <Sparkles className="w-10 h-10 text-primary mx-auto mb-3" />
-                    <p className="font-display font-bold text-2xl md:text-3xl text-foreground leading-tight">
-                      IFVG <span className="text-primary">Masterclass</span>
-                    </p>
-                  </div>
-                </div>
-              }
-            />
-          </div>
-
-          {/* Testimonials */}
-          <TestimonialCarousel />
-
-          {/* Feedback Form */}
-          <FeedbackForm />
-        </motion.div>
-      </section>
-
-      {/* Interest Dialog */}
-      <Dialog open={open} onOpenChange={(v) => (v ? setOpen(true) : reset())}>
-        <DialogContent className="sm:max-w-md">
-          {submitted ? (
-            <div className="text-center py-6">
-              <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="w-7 h-7" />
-              </div>
-              <DialogTitle className="font-display text-2xl mb-2">You're on the list</DialogTitle>
-              <DialogDescription className="mb-6">
-                We'll send the workshop details to your inbox the moment it's announced.
-              </DialogDescription>
-              <Button onClick={reset} className="w-full">Done</Button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <DialogHeader>
-                <DialogTitle className="font-display text-2xl">Save my spot</DialogTitle>
-                <DialogDescription>
-                  Drop your details and we'll let you know the moment seats open.
-                </DialogDescription>
-              </DialogHeader>
-
-              <div className="space-y-4 py-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="Your full name"
-                    maxLength={100}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    placeholder="you@example.com"
-                    maxLength={255}
-                    required
-                  />
-                </div>
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <Checkbox
-                    checked={form.promo_consent}
-                    onCheckedChange={(v) => setForm({ ...form, promo_consent: v === true })}
-                    className="mt-0.5"
-                  />
-                  <span className="text-sm text-muted-foreground leading-snug">
-                    I agree to receive promotional mail from Arjun IFVG.
-                  </span>
-                </label>
-              </div>
-
-              <DialogFooter>
-                <Button type="submit" disabled={submitting} className="w-full">
-                  {submitting ? "Submitting..." : "Notify me"}
+            <Reveal delay={0.1} className="lg:col-span-5">
+              <p className="type-label inline-flex items-center gap-2 border border-border px-3 py-1.5 text-muted-foreground">
+                <CheckCircle className="h-4 w-4" weight="bold" />
+                Completed
+              </p>
+              <h2 className="type-title mt-6 text-[clamp(2rem,4vw,3.25rem)]">
+                Beginner to Advanced: Free Workshop
+              </h2>
+              <p className="mt-5 max-w-md text-[1.0625rem] text-muted-foreground">
+                Candlestick anatomy, smart money concepts, liquidity, and a structured trading model. Watch the full
+                replay anytime.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Button asChild size="lg">
+                  <a href={REPLAY_URL} target="_blank" rel="noopener noreferrer">
+                    <Play weight="fill" />
+                    Watch now
+                  </a>
                 </Button>
-              </DialogFooter>
-            </form>
-          )}
-        </DialogContent>
-      </Dialog>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => share(REPLAY_URL, "Beginner to Advanced: Free Workshop by Arjun IFVG")}
+                  aria-label="Share workshop"
+                >
+                  <ShareNetwork />
+                  Share
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Coming soon */}
+        <section className="shell py-6 sm:py-10">
+          <Reveal className="grid gap-10 bg-panel p-8 text-panel-foreground sm:p-12 lg:grid-cols-12 lg:items-end lg:gap-12 lg:p-16">
+            <div className="lg:col-span-7">
+              <p className="type-label inline-flex items-center gap-2 border border-panel-border px-3 py-1.5 text-panel-muted">
+                <Clock className="h-4 w-4" weight="bold" />
+                Coming soon
+              </p>
+              <h2 className="type-display mt-8 text-[clamp(3rem,8vw,6.5rem)]">
+                IFVG <span className="text-signal">Masterclass</span>
+              </h2>
+              <p className="mt-2 text-lg text-panel-muted">Free workshop</p>
+            </div>
+            <div className="lg:col-span-5">
+              <p className="max-w-md text-[1.0625rem] text-panel-foreground/85">
+                A deep-dive into the IFVG model, market structure, and the exact playbook I use weekly. Be the first to
+                know when seats open.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Button
+                  size="lg"
+                  onClick={() => setOpen(true)}
+                  className="bg-signal text-panel hover:bg-panel-foreground hover:text-panel"
+                >
+                  <Sparkle weight="fill" />
+                  I'm interested
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() =>
+                    share(
+                      typeof window !== "undefined" ? window.location.href : "/workshop",
+                      "IFVG Masterclass: Free Workshop by Arjun IFVG",
+                    )
+                  }
+                  aria-label="Share workshop"
+                  className="border-panel-foreground text-panel-foreground hover:bg-panel-foreground hover:text-panel"
+                >
+                  <ShareNetwork />
+                  Share
+                </Button>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
+        <AttendeeTestimonials />
+        <FeedbackForm />
+
+        {/* Interest dialog */}
+        <Dialog open={open} onOpenChange={(v) => (v ? setOpen(true) : reset())}>
+          <DialogContent className="sm:max-w-md">
+            {submitted ? (
+              <div className="space-y-4 py-2">
+                <CheckCircle className="h-12 w-12 text-primary" weight="fill" />
+                <DialogTitle>You're on the list</DialogTitle>
+                <DialogDescription>
+                  We'll send the workshop details to your inbox the moment it's announced.
+                </DialogDescription>
+                <Button onClick={reset} className="mt-2">
+                  Done
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <DialogHeader>
+                  <DialogTitle>Save my spot</DialogTitle>
+                  <DialogDescription>
+                    Drop your details and we'll let you know the moment seats open.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-5 py-6">
+                  <div>
+                    <Label htmlFor="name" className="field-label">
+                      Name
+                    </Label>
+                    <Input
+                      id="name"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      placeholder="Your full name"
+                      maxLength={100}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="email" className="field-label">
+                      Email
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      placeholder="you@example.com"
+                      maxLength={255}
+                      required
+                    />
+                  </div>
+                  <label className="flex cursor-pointer items-start gap-3">
+                    <Checkbox
+                      checked={form.promo_consent}
+                      onCheckedChange={(v) => setForm({ ...form, promo_consent: v === true })}
+                      className="mt-0.5"
+                    />
+                    <span className="text-[0.9375rem] leading-snug text-muted-foreground">
+                      I agree to receive promotional mail from Arjun IFVG.
+                    </span>
+                  </label>
+                </div>
+
+                <DialogFooter>
+                  <Button type="submit" size="lg" disabled={submitting} className="w-full">
+                    {submitting ? "Submitting..." : "Notify me"}
+                  </Button>
+                </DialogFooter>
+              </form>
+            )}
+          </DialogContent>
+        </Dialog>
       </main>
+      <Footer />
     </div>
   );
 };
 
-const TestimonialCarousel = () => {
-  const [testimonials, setTestimonials] = useState<
-    { name: string; rating: number; feedback: string; created_at: string }[]
-  >([]);
-  const [current, setCurrent] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [expanded, setExpanded] = useState<number | null>(null);
+const AttendeeTestimonials = () => {
+  const [items, setItems] = useState<TestimonialItem[]>([]);
 
   useEffect(() => {
-    const fetch = async () => {
+    const load = async () => {
       const { data } = await supabase
         .from("workshop_feedback")
         .select("name, rating, feedback, created_at")
         .order("created_at", { ascending: false });
-
-      if (data) setTestimonials(data);
-      setLoading(false);
+      if (data) setItems(data.map((d) => ({ name: d.name, rating: d.rating, text: d.feedback })));
     };
-
-    fetch();
+    load();
   }, []);
 
-  if (loading || testimonials.length === 0) return null;
-
-  const perPage = 3;
-  const totalPages = Math.ceil(testimonials.length / perPage);
-  const page = current % totalPages;
-
-  const visible = testimonials.slice(page * perPage, page * perPage + perPage);
-
-  const prev = () => setCurrent((c) => (c === 0 ? totalPages - 1 : c - 1));
-  const next = () => setCurrent((c) => (c === totalPages - 1 ? 0 : c + 1));
-
-  return (
-    <div className="mt-20">
-      <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6">
-        What attendees say
-      </h2>
-
-      <motion.div
-        key={page}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3 }}
-        className="grid gap-4 md:grid-cols-3"
-      >
-        {visible.map((t, idx) => {
-          const id = page * perPage + idx;
-          const isExpanded = expanded === id;
-
-          return (
-            <div
-              key={idx}
-              className="rounded-2xl border border-border bg-card p-5 space-y-3 h-full flex flex-col"
-            >
-              <Quote className="w-6 h-6 text-primary/20" />
-
-              <p
-                className={`text-foreground leading-relaxed text-sm ${
-                  isExpanded ? "" : "line-clamp-4"
-                }`}
-              >
-                "{t.feedback}"
-              </p>
-
-              {t.feedback.length > 180 && (
-                <button
-                  onClick={() => setExpanded(isExpanded ? null : id)}
-                  className="text-xs text-primary font-medium hover:underline self-start"
-                >
-                  {isExpanded ? "Read less" : "Read more"}
-                </button>
-              )}
-
-              <div className="flex items-center gap-2 pt-1 mt-auto">
-                <div className="flex gap-0.5">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <Star
-                      key={s}
-                      className={`w-3.5 h-3.5 ${
-                        s <= t.rating
-                          ? "text-primary fill-primary"
-                          : "text-muted-foreground/20"
-                      }`}
-                    />
-                  ))}
-                </div>
-
-                <span className="text-xs font-medium text-foreground">{t.name}</span>
-              </div>
-            </div>
-          );
-        })}
-      </motion.div>
-
-      {totalPages > 1 && (
-        <div className="flex items-center gap-2 mt-6">
-          <button
-            onClick={prev}
-            className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-
-          <span className="text-xs text-muted-foreground">
-            {page + 1} / {totalPages}
-          </span>
-
-          <button
-            onClick={next}
-            className="rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-      )}
-    </div>
-  );
+  return <Testimonials title="What attendees say" items={items} initial={6} />;
 };
 
 const FeedbackForm = () => {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
-  const [hoveredRating, setHoveredRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -381,162 +361,91 @@ const FeedbackForm = () => {
       return;
     }
     setSubmitted(true);
-    toast({ title: "Thank you for your feedback!" });
+    toast({ title: "Thank you for your feedback" });
   };
 
-  if (submitted) {
-    return (
-      <div className="mt-12 rounded-3xl border border-border bg-card p-8 text-center">
-        <Star className="w-8 h-8 text-primary fill-primary mx-auto mb-3" />
-        <h3 className="font-display text-xl font-semibold text-foreground mb-1">Thanks for your feedback!</h3>
-        <p className="text-sm text-muted-foreground">Your response has been recorded.</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="mt-12 rounded-3xl border border-border bg-card p-6 md:p-8">
-      <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-1">
-        Workshop Feedback
-      </h2>
-      <p className="text-sm text-muted-foreground mb-6">
-        Attended a workshop? We'd love to hear your thoughts.
-      </p>
-      <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
-        <div>
-          <label className="text-sm font-medium text-foreground mb-1.5 block">Name</label>
-          <input
-            value={name}
-            onChange={e => setName(e.target.value)}
-            placeholder="Your name"
-            maxLength={100}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-          />
+    <section className="py-16 sm:py-20">
+      <div className="shell grid gap-10 border-t border-foreground pt-10 lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-5">
+          <h2 className="type-title text-[clamp(2.25rem,5vw,3.75rem)]">Workshop feedback</h2>
+          <p className="mt-5 max-w-sm text-[1.0625rem] text-muted-foreground">
+            Attended a workshop? We'd love to hear your thoughts.
+          </p>
         </div>
-        <div>
-          <label className="text-sm font-medium text-foreground mb-1.5 block">Rating</label>
-          <div className="flex gap-1">
-            {[1, 2, 3, 4, 5].map(star => (
-              <button
-                key={star}
-                type="button"
-                onClick={() => setRating(star)}
-                onMouseEnter={() => setHoveredRating(star)}
-                onMouseLeave={() => setHoveredRating(0)}
-                className="p-1 transition-transform hover:scale-110"
-              >
-                <Star
-                  className={`w-6 h-6 transition-colors ${
-                    star <= (hoveredRating || rating)
-                      ? "text-primary fill-primary"
-                      : "text-muted-foreground/30"
-                  }`}
+
+        <div className="lg:col-span-7">
+          {submitted ? (
+            <div className="border border-foreground p-8">
+              <Star className="h-8 w-8 text-primary" weight="fill" />
+              <h3 className="type-heading mt-4 text-2xl">Thanks for your feedback</h3>
+              <p className="mt-1 text-muted-foreground">Your response has been recorded.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="max-w-xl space-y-6">
+              <div>
+                <label htmlFor="fb-name" className="field-label">
+                  Name
+                </label>
+                <input
+                  id="fb-name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
+                  maxLength={100}
+                  className="field"
                 />
-              </button>
-            ))}
-          </div>
+              </div>
+
+              <fieldset>
+                <legend className="field-label">Rating</legend>
+                <div role="radiogroup" aria-label="Rating" className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      role="radio"
+                      aria-checked={rating === star}
+                      aria-label={`${star} out of 5`}
+                      onClick={() => setRating(star)}
+                      className="group/star p-1.5 transition-transform active:scale-95"
+                    >
+                      <Star
+                        className={cn(
+                          "h-8 w-8 transition-colors",
+                          star <= rating ? "text-primary" : "text-border group-hover/star:text-muted-foreground",
+                        )}
+                        weight={star <= rating ? "fill" : "regular"}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+
+              <div>
+                <label htmlFor="fb-text" className="field-label">
+                  Feedback
+                </label>
+                <textarea
+                  id="fb-text"
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                  placeholder="What did you think of the workshop?"
+                  maxLength={1000}
+                  rows={4}
+                  className="field resize-none"
+                />
+              </div>
+
+              <Button type="submit" size="lg" disabled={submitting}>
+                <PaperPlaneTilt weight="bold" />
+                {submitting ? "Submitting…" : "Submit feedback"}
+              </Button>
+            </form>
+          )}
         </div>
-        <div>
-          <label className="text-sm font-medium text-foreground mb-1.5 block">Feedback</label>
-          <textarea
-            value={feedback}
-            onChange={e => setFeedback(e.target.value)}
-            placeholder="What did you think of the workshop?"
-            maxLength={1000}
-            rows={4}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all disabled:opacity-50"
-        >
-          <Send className="w-4 h-4" />
-          {submitting ? "Submitting…" : "Submit Feedback"}
-        </button>
-      </form>
-    </div>
-  );
-};
-
-type WorkshopCardProps = {
-  title: string;
-  description: string;
-  badge: { label: string; icon: React.ComponentType<{ className?: string }>; tone: "completed" | "coming" };
-  cta: { label: string; icon: React.ComponentType<{ className?: string }> };
-  shareUrl: string;
-  shareTitle: string;
-  thumbnail: React.ReactNode;
-  onActivate: () => void;
-};
-
-const WorkshopCard = ({ title, description, badge, cta, shareUrl, shareTitle, thumbnail, onActivate }: WorkshopCardProps) => {
-  const BadgeIcon = badge.icon;
-  const CtaIcon = cta.icon;
-  const badgeClasses =
-    badge.tone === "completed"
-      ? "border-emerald-500/30 bg-emerald-500/15 text-emerald-400"
-      : "border-primary/40 bg-primary/15 text-primary";
-
-  const handleShare = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const shareData = { title: shareTitle, url: shareUrl };
-    try {
-      if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share(shareData);
-        return;
-      }
-    } catch {
-      // user cancelled or share failed; fall through to copy
-    }
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      toast({ title: "Link copied", description: "Workshop link is ready to share." });
-    } catch {
-      toast({ title: "Couldn't share", description: shareUrl });
-    }
-  };
-
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={onActivate}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onActivate();
-        }
-      }}
-      className="group rounded-3xl border border-border bg-card overflow-hidden hover:border-primary/40 transition-all duration-300 flex flex-col text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40"
-    >
-      <div className="relative aspect-video overflow-hidden bg-muted">
-        {thumbnail}
-        <div className={`absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border backdrop-blur px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider ${badgeClasses}`}>
-          <BadgeIcon className="w-3.5 h-3.5" />
-          {badge.label}
-        </div>
-        <button
-          type="button"
-          onClick={handleShare}
-          aria-label="Share workshop"
-          className="absolute top-4 right-4 inline-flex items-center justify-center w-9 h-9 rounded-full border border-border bg-background/70 backdrop-blur text-foreground hover:bg-background hover:border-primary/40 transition-colors"
-        >
-          <Share2 className="w-4 h-4" />
-        </button>
       </div>
-      <div className="p-6 flex-1 flex flex-col">
-        <h2 className="font-display font-semibold text-xl md:text-2xl text-foreground mb-2 group-hover:text-primary transition-colors">
-          {title}
-        </h2>
-        <p className="text-sm text-muted-foreground mb-6 flex-1">{description}</p>
-        <span className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold bg-primary text-primary-foreground group-hover:brightness-110 transition-all self-start">
-          <CtaIcon className="w-4 h-4" />
-          {cta.label}
-        </span>
-      </div>
-    </div>
+    </section>
   );
 };
 

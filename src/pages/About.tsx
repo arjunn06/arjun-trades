@@ -1,8 +1,12 @@
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Youtube, Users, ArrowRight, Instagram, Twitter, MessageCircle } from "lucide-react";
+import { ArrowRight, ArrowUpRight, YoutubeLogo, Users } from "@phosphor-icons/react";
 import Header from "@/components/Header";
-import portrait from "@/assets/arjun-portrait.jpg";
+import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
+import { Button } from "@/components/ui/button";
+import portrait from "@/assets/arjun-portrait.webp";
 
 const SITE_URL = "https://ifvg.in";
 const IMAGE_URL = `${SITE_URL}/arjun-ifvg.jpg`;
@@ -35,15 +39,17 @@ const personJsonLd = {
 };
 
 const socials = [
-  { label: "Instagram", handle: "@arjun_ifvg", url: "https://www.instagram.com/arjun_ifvg", Icon: Instagram, accent: "from-pink-500 to-orange-500" },
-  { label: "YouTube", handle: "@arjun_ifvg", url: "https://youtube.com/@arjun_ifvg", Icon: Youtube, accent: "from-red-500 to-red-700" },
-  { label: "X (Twitter)", handle: "@arjun_ifvg", url: "https://x.com/arjun_ifvg", Icon: Twitter, accent: "from-zinc-400 to-zinc-700" },
-  { label: "Discord", handle: "Join community", url: "https://discord.gg/SCHeKKCa6c", Icon: MessageCircle, accent: "from-indigo-500 to-violet-700" },
+  { label: "Instagram", handle: "@arjun_ifvg", url: "https://www.instagram.com/arjun_ifvg" },
+  { label: "YouTube", handle: "@arjun_ifvg", url: "https://youtube.com/@arjun_ifvg" },
+  { label: "X (Twitter)", handle: "@arjun_ifvg", url: "https://x.com/arjun_ifvg" },
+  { label: "Discord", handle: "Join community", url: "https://discord.gg/SCHeKKCa6c" },
 ];
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-[100dvh]">
       <Helmet>
         <title>About Arjun IFVG — Tamil Trader & Founder of Arjun Trades</title>
         <meta
@@ -66,96 +72,143 @@ const About = () => {
 
       <Header />
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
-        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <div className="order-2 md:order-1">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 text-primary text-xs font-medium tracking-wide uppercase mb-5">
-              About
-            </span>
-            <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight mb-6">
-              <span className="text-foreground">Arjun</span>{" "}
-              <span className="text-primary">IFVG</span>
-            </h1>
-            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-5">
-              I'm Arjun — a Tamil trader and the founder of{" "}
-              <strong className="text-foreground">Arjun Trades</strong>. I teach the{" "}
-              <strong className="text-foreground">iFVG strategy</strong>, ICT concepts and
-              Smart Money Concepts in plain Tamil so beginners can finally cut through
-              the noise.
-            </p>
-            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8">
-              On <a href="https://youtube.com/@arjun_ifvg" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">YouTube</a>{" "}
-              and inside our <a href="https://discord.gg/SCHeKKCa6c" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Discord community</a>{" "}
-              I share daily breakdowns, recaps and structured education — from forex basics
-              to live futures trading. We don't chase dopamine, we chase patience.
-            </p>
+      <main id="main">
+        <section className="shell pb-16 pt-10 sm:pt-16">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease }}
+              className="lg:sticky lg:top-24 lg:col-span-5 lg:self-start"
+            >
+              <div className="aspect-[4/5] overflow-hidden bg-muted">
+                <img
+                  src={portrait}
+                  alt="Arjun IFVG, Tamil trader and founder of Arjun Trades"
+                  width={1920}
+                  height={1280}
+                  className="h-full w-full object-cover object-[63%_30%]"
+                  loading="eager"
+                />
+              </div>
+            </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a
-                href="https://youtube.com/@arjun_ifvg?sub_confirmation=1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:brightness-110 transition-all text-sm">
-                <Youtube className="w-5 h-5" />
-                Subscribe on YouTube
-              </a>
-              <Link
-                to="/workshop"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border text-foreground font-semibold rounded-lg hover:bg-muted transition-all text-sm">
-                <Users className="w-5 h-5" />
-                Explore Workshops
-              </Link>
-            </div>
-
-            <div className="mt-10 pt-8 border-t border-border">
-              <Link to="/" className="inline-flex items-center gap-1.5 text-primary text-sm font-medium hover:gap-3 transition-all">
-                Back to home <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="order-1 md:order-2 relative">
-            <div className="absolute -inset-4 bg-gradient-to-br from-primary/30 via-secondary/10 to-transparent blur-2xl rounded-3xl pointer-events-none" />
-            <img
-              src={portrait}
-              alt="Arjun IFVG — Tamil trader and founder of Arjun Trades"
-              width={1920}
-              height={1280}
-              className="relative rounded-2xl border border-border shadow-2xl w-full h-auto object-cover"
-              loading="eager"
-            />
-          </div>
-        </div>
-
-        <section aria-labelledby="socials-heading" className="mt-20 sm:mt-28">
-          <div className="flex items-end justify-between mb-6">
-            <h2 id="socials-heading" className="font-display font-bold text-2xl sm:text-3xl text-foreground">
-              Find me online
-            </h2>
-            <span className="text-muted-foreground text-xs sm:text-sm">Follow @arjun_ifvg</span>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            {socials.map(({ label, handle, url, Icon, accent }) => (
-              <a
-                key={label}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer me"
-                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 hover:border-primary/40 transition-all"
+            <div className="lg:col-span-7">
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.1, ease }}
+                className="type-display text-[clamp(4rem,12vw,9.5rem)]"
               >
-                <div className={`absolute -top-10 -right-10 w-28 h-28 rounded-full bg-gradient-to-br ${accent} opacity-20 group-hover:opacity-40 blur-2xl transition-opacity`} />
-                <div className="relative flex flex-col gap-3">
-                  <Icon className="w-6 h-6 text-foreground" />
-                  <div>
-                    <p className="font-display font-semibold text-foreground text-base leading-tight">{label}</p>
-                    <p className="text-muted-foreground text-xs mt-0.5">{handle}</p>
-                  </div>
-                </div>
-              </a>
-            ))}
+                Arjun <span className="text-primary">IFVG</span>
+              </motion.h1>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease }}
+                className="mt-10 max-w-xl space-y-6 text-[1.1875rem] leading-[1.6]"
+              >
+                <p>
+                  I'm Arjun, a Tamil trader and the founder of <strong>Arjun Trades</strong>. I teach the{" "}
+                  <strong>iFVG strategy</strong>, ICT concepts and Smart Money Concepts in plain Tamil so beginners
+                  can finally cut through the noise.
+                </p>
+                <p className="text-muted-foreground">
+                  On{" "}
+                  <a
+                    href="https://youtube.com/@arjun_ifvg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4"
+                  >
+                    YouTube
+                  </a>{" "}
+                  and inside our{" "}
+                  <a
+                    href="https://discord.gg/SCHeKKCa6c"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4"
+                  >
+                    Discord community
+                  </a>{" "}
+                  I share daily breakdowns, recaps and structured education, from forex basics to live futures
+                  trading.
+                </p>
+              </motion.div>
+
+              <Reveal className="mt-14 border-t border-foreground pt-8">
+                <p className="type-title max-w-[18ch] text-[clamp(2rem,4.5vw,3.5rem)]">
+                  We don't chase dopamine, we chase <span className="text-primary">patience.</span>
+                </p>
+                <p lang="ta" className="mt-4 font-tamil text-2xl font-semibold text-muted-foreground">
+                  பொறுமை
+                </p>
+              </Reveal>
+
+              <Reveal className="mt-12 flex flex-col gap-3 sm:flex-row">
+                <Button asChild size="lg">
+                  <a href="https://youtube.com/@arjun_ifvg?sub_confirmation=1" target="_blank" rel="noopener noreferrer">
+                    <YoutubeLogo weight="fill" />
+                    Subscribe on YouTube
+                  </a>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link to="/workshop">
+                    <Users weight="bold" />
+                    Explore workshops
+                  </Link>
+                </Button>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="socials-heading" className="py-16 sm:py-20">
+          <div className="shell">
+            <Reveal>
+              <h2 id="socials-heading" className="type-title text-[clamp(2.5rem,6vw,4.75rem)]">
+                Find me online
+              </h2>
+            </Reveal>
+
+            <ul className="mt-12 border-b border-foreground">
+              {socials.map(({ label, handle, url }, i) => (
+                <li key={label}>
+                  <Reveal delay={i * 0.05}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer me"
+                      className="group flex items-baseline justify-between gap-6 border-t border-foreground py-6 transition-colors duration-300 hover:bg-foreground hover:text-background"
+                    >
+                      <span className="type-title text-[clamp(1.75rem,4vw,2.75rem)] transition-transform duration-500 ease-out-expo group-hover:translate-x-4">
+                        {label}
+                      </span>
+                      <span className="inline-flex items-center gap-2 font-semibold">
+                        {handle}
+                        <ArrowUpRight className="h-4 w-4" weight="bold" />
+                      </span>
+                    </a>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10">
+              <Link
+                to="/"
+                className="group inline-flex items-center gap-2 font-semibold underline decoration-border decoration-2 underline-offset-[6px] hover:decoration-primary"
+              >
+                Back to home
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" weight="bold" />
+              </Link>
+            </div>
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };

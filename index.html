@@ -8,10 +8,18 @@
     <meta name="author" content="Arjun Trades" />
     <link rel="icon" href="favicon.png" type="image/png">
     <meta name="google-site-verification" content="oSMPl5PyUT5WfhsxrlX5-vuu5bhRBSgvf-JN7CiE8Oo" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+    <script>
+      // Set the theme before first paint so there is no flash. Mirrors next-themes' storage key.
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          var dark = t === "dark" || ((!t || t === "system") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+          document.documentElement.style.colorScheme = dark ? "dark" : "light";
+        } catch (e) {}
+      })();
+    </script>
 
     <meta property="og:title" content="Arjun Trades - Tamil Trading Community" />
     <meta property="og:description" content="iFVG and Smart Money Concepts are simplified here focussed on Beginners" />
@@ -41,7 +49,6 @@
         ]
       }
     </script>
-    <script src="https://cdn.pagesense.io/js/arjunifvg/245353d08bb746b78d1c10d262706341.js"></script>
   </head>
 
   <body>
