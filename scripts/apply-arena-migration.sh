@@ -64,10 +64,23 @@ code="$(node -e 'process.stdout.write(JSON.stringify({query: require("fs").readF
 echo "✓ Migration applied"
 
 # Check it as the public would see it: the counter answers, and the table is there but shows no rows.
+# The API layer can take a few seconds to notice new tables, so retry before complaining.
 ANON="$(grep -o 'eyJ[A-Za-z0-9_.-]*' src/integrations/supabase/client.ts | head -1)"
-stats="$(curl -sS -X POST "https://$REF.supabase.co/rest/v1/rpc/arena_stats" -H "apikey: $ANON" -H 'Content-Type: application/json' -d '{}' || true)"
-rows="$(curl -sS "https://$REF.supabase.co/rest/v1/arena_registrations?select=id&limit=1" -H "apikey: $ANON" || true)"
-[[ "$stats" == *entries* ]] && echo "✓ Public entry counter works ($stats)" || echo "! Counter didn't answer as expected: ${stats:0:200}"
-[[ "$rows" == "[]" ]] && echo "✓ Table exists, and the public can't read any rows" || echo "! Unexpected table response: ${rows:0:200}"
-
-say "Done. Registrations on /arena can now be saved. Review them at /admin/arena."
+stats=""; rows=""
+for _ in 1 2 3 4 5 6 7 8; do
+  stats="$(curl -sS -X POST "https://$REF.supabase.co/rest/v1/rpc/arena_stats" -H "apikey: $ANON" -H 'Content-Type: application/json' -d '{}' || true)"
+  rows="$(curl -sS "https://$REF.supabase.co/rest/v1/arena_registrations?select=id&limit=1" -H "apikey: $ANON" || true)"
+  [[ "$stats" == *entries* && "$rows" == "[]" ]] && break
+  sleep 3
+done
+if [[ "$stats" == *entries* && "$rows" == "[]" ]]; then
+  echo "✓ Public entry counter works ($stats)"
+  echo "✓ Table exists, and the public can't read any rows"
+  say "Done. Registrations on /arena can now be saved. Review them at /admin/arena."
+else
+  echo "! The migration ran, but the API still doesn't show the table after 24 seconds."
+  echo "  counter: ${stats:0:160}"
+  echo "  table:   ${rows:0:160}"
+  say "Wait a minute and open /arena. If registrations still fail, run this in the Supabase SQL editor:  NOTIFY pgrst, 'reload schema';"
+  exit 1
+fi

@@ -70,3 +70,6 @@ $$;
 
 REVOKE ALL ON FUNCTION public.arena_stats() FROM public;
 GRANT EXECUTE ON FUNCTION public.arena_stats() TO anon, authenticated;
+
+-- Ask PostgREST (the API layer) to reload so the new table and functions are usable immediately.
+NOTIFY pgrst, 'reload schema';
