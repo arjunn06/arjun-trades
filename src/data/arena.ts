@@ -14,6 +14,10 @@ export const ARENA = {
   /** Illustration only, taken from the example in the promise. Not a quoted Apex price. */
   exampleActivationFee: 5000,
 
+  /** The explainer video. It goes public on 2026-10-11 at 9 am, so until then YouTube shows it as unavailable. */
+  videoId: "Mbh_fDfFqe4",
+  videoUrl: "https://youtu.be/Mbh_fDfFqe4",
+
   youtubeUrl: "https://youtube.com/@arjun_ifvg",
   discordUrl: "https://discord.gg/SCHeKKCa6c",
   instagramUrl: "https://www.instagram.com/arjun_ifvg",

@@ -5,6 +5,9 @@ import { ArrowRight, DiscordLogo, Heart, InstagramLogo, Medal, Trophy } from "@p
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import Logo from "@/components/Logo";
+import TextLink from "@/components/TextLink";
+import YouTubeFacade from "@/components/YouTubeFacade";
 import Bracket from "@/components/arena/Bracket";
 import PoolExplainer from "@/components/arena/PoolExplainer";
 import RegistrationForm from "@/components/arena/RegistrationForm";
@@ -61,6 +64,21 @@ const glance = [
   { value: "4", label: "Reach the playoffs" },
   { value: "2", label: "Apex accounts to win" },
 ];
+
+/** Stands in for the video thumbnail until YouTube has one. The play button stays in the bottom-left corner. */
+const VideoPoster = () => (
+  <div className="absolute inset-0 flex flex-col justify-between bg-panel p-5 text-panel-foreground sm:p-8">
+    <div className="flex items-start justify-between gap-4">
+      <p className="type-label text-panel-muted">ULTIMATE IFVG ARENA</p>
+      <Logo className="h-6 w-6 text-panel-foreground sm:h-7 sm:w-7" />
+    </div>
+    <p className="type-display mb-14 text-[clamp(2.25rem,7vw,5.5rem)] sm:mb-16">
+      The Arena,
+      <br />
+      <span className="text-signal">explained.</span>
+    </p>
+  </div>
+);
 
 /** A hundred squares, one per ₹99, that fill in as the section scrolls into view. */
 const Chain = () => (
@@ -190,6 +208,29 @@ const Arena = () => {
                 ))}
               </dl>
             </motion.div>
+          </div>
+        </section>
+
+        {/* Watch */}
+        <section id="watch" className="shell scroll-mt-20 pb-4 pt-6 sm:pb-8 lg:pt-10">
+          <div className="grid items-end gap-8 lg:grid-cols-12 lg:gap-12">
+            <Reveal className="order-2 lg:order-1 lg:col-span-8">
+              <YouTubeFacade
+                id={ARENA.videoId}
+                title="Ultimate IFVG Arena, explained"
+                fallback={<VideoPoster />}
+              />
+            </Reveal>
+            <Reveal delay={0.1} className="order-1 lg:order-2 lg:col-span-4">
+              <Label>Watch first</Label>
+              <h2 className="type-title mt-5 text-[clamp(2rem,3.6vw,3rem)]">The tournament, in one video</h2>
+              <p className="mt-4 max-w-sm text-[1.0625rem] text-muted-foreground">
+                Prefer to watch than read? This is the Arena, explained. Everything below goes into the detail.
+              </p>
+              <TextLink href={ARENA.videoUrl} className="mt-6">
+                Watch on YouTube
+              </TextLink>
+            </Reveal>
           </div>
         </section>
 
