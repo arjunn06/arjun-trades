@@ -7,8 +7,14 @@ export const ARENA = {
   name: "Ultimate IFVG Arena",
   entryFee: 99,
 
-  /** Where the entry fees are paid. The name is the one registered with the bank, as UPI apps show it. */
+  /** What people see, copy and type into their UPI app. */
+  upiNumber: "7339563737",
+  /**
+   * The UPI address behind the number. Not shown on the page: UPI payment links and QR codes only accept an
+   * address, not a phone number, so it is used for the QR code and the tap-to-pay button.
+   */
   upiId: "arjun.2003@yescred",
+  /** The name registered with the bank, as UPI apps show it. */
   payeeName: "ARJUN S",
 
   /** Illustration only, taken from the example in the promise. Not a quoted Apex price. */
@@ -91,7 +97,7 @@ export const FAQ = [
   },
   {
     q: "How do I pay?",
-    a: "On the registration form, pay ₹99 to my UPI ID from any UPI app (scan the code, or tap the button on your phone), then paste the UPI reference number. I match every payment by hand, and your entry shows as confirmed once I have.",
+    a: "On the registration form, pay ₹99 to my UPI number from any UPI app (or scan the code, or tap the button on your phone), then paste the UPI reference number. I match every payment by hand, and your entry shows as confirmed once I have.",
   },
   {
     q: "Where exactly does my ₹99 go?",

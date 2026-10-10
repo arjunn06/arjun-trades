@@ -45,6 +45,9 @@ const FieldError = ({ id, message }: { id: string; message?: string }) =>
     </p>
   ) : null;
 
+/** "7339563737" -> "73395 63737", easier to read and check. The copy button still copies the plain digits. */
+const spaced = (n: string) => `${n.slice(0, 5)} ${n.slice(5)}`;
+
 /** A UPI payment link with the amount filled in, so the payer can't get it wrong. Used for the QR and the phone button. */
 const upiLink =
   `upi://pay?pa=${encodeURIComponent(ARENA.upiId)}&pn=${encodeURIComponent(ARENA.payeeName)}` +
@@ -92,11 +95,11 @@ const RegistrationForm = () => {
 
   const copyUpi = async () => {
     try {
-      await navigator.clipboard.writeText(ARENA.upiId);
+      await navigator.clipboard.writeText(ARENA.upiNumber);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      toast({ title: "Couldn't copy", description: ARENA.upiId });
+      toast({ title: "Couldn't copy", description: ARENA.upiNumber });
     }
   };
 
@@ -254,9 +257,9 @@ const RegistrationForm = () => {
             </div>
             <div className="min-w-0 flex-1 space-y-4">
               <div>
-                <p className="type-label text-muted-foreground">UPI ID</p>
+                <p className="type-label text-muted-foreground">UPI NUMBER</p>
                 <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <code className="type-mono min-w-0 break-all text-[1.0625rem] font-semibold">{ARENA.upiId}</code>
+                  <code className="type-mono min-w-0 text-[1.0625rem] font-semibold tracking-wide">{spaced(ARENA.upiNumber)}</code>
                   <button
                     type="button"
                     onClick={copyUpi}
@@ -275,7 +278,7 @@ const RegistrationForm = () => {
                 </a>
               </Button>
               <p className="text-sm text-muted-foreground">
-                Pay exactly {formatINR(ARENA.entryFee)}. On a computer, scan the code with any UPI app.
+                Pay exactly {formatINR(ARENA.entryFee)} to this number in any UPI app. On a computer you can also scan the code.
               </p>
             </div>
           </div>
