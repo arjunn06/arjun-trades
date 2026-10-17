@@ -26,7 +26,7 @@ const LivestreamRecord = () => {
             <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
               {/* Win rate: the headline number */}
               <div className="lg:col-span-5">
-                <h2 className="type-title text-[clamp(1.75rem,3vw,2.5rem)]">Public livestream record</h2>
+                <h2 className="type-title text-[clamp(1.75rem,3vw,2.5rem)]">All time win rate</h2>
                 <p className="type-display type-figure mt-5 flex items-start text-[clamp(5.5rem,10vw,8.5rem)] text-signal">
                   <CountUp to={winRate} />
                   <span className="mt-[0.12em] text-[0.5em]" aria-hidden>
@@ -34,7 +34,6 @@ const LivestreamRecord = () => {
                   </span>
                   <span className="sr-only">%</span>
                 </p>
-                <p className="type-label mt-2 text-panel-muted">Win rate</p>
               </div>
 
               {/* Wins and total trades on one short line, with the win share bar below (losses still feed the win rate) */}
