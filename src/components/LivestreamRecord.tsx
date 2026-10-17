@@ -78,8 +78,9 @@ const LivestreamRecord = () => {
             <div className="mt-12 flex flex-col gap-4 border-t border-panel-border pt-5 sm:flex-row sm:items-start sm:justify-between">
               <div className="max-w-xl">
                 <p className="text-sm leading-relaxed text-panel-muted">
-                  Taken from all public livestreams on YouTube since {TRACKING_SINCE}. These are approximate figures
-                  summarised by AI, so real results can vary slightly.
+                  Taken from all public livestreams on YouTube since {TRACKING_SINCE}. Approximately the first 100
+                  trades were summarised by AI from the public livestreams. After that, results are logged manually
+                  every day. Real results can vary slightly.
                 </p>
                 {updated && <p className="type-label mt-3 text-panel-muted">Last updated {updated}</p>}
               </div>
