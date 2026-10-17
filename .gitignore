@@ -25,3 +25,6 @@ dist-ssr
 
 # Discord recap bot secrets (set with `supabase secrets set --env-file`). Never commit.
 supabase/.env.discord
+
+# Cloudflare local runtime state (wrangler pages dev)
+.wrangler

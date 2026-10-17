@@ -7,6 +7,7 @@ import { BLUEPRINT_URL } from "@/lib/links";
 const explore: { label: string; to?: string; href?: string }[] = [
   { label: "Workshop", to: "/workshop" },
   { label: "Arena", to: "/arena" },
+  { label: "Livestream record", to: "/record" },
   { label: "Blogs", to: "/blogs" },
   { label: "The Blueprint", href: BLUEPRINT_URL },
   { label: "About", to: "/about" },

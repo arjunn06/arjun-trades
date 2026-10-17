@@ -1,16 +1,30 @@
 # Arjun Trades (Arjun IFVG)
 
-> Tamil trading community and education by Arjun IFVG — ICT, Smart Money Concepts and the iFVG strategy simplified for beginners.
+> Tamil trading community and education by Arjun IFVG: ICT, Smart Money Concepts and the iFVG strategy simplified for beginners. Arjun publishes a public livestream trading record, available as a web page and as JSON.
 
 Arjun IFVG runs a Tamil-language trading community focused on price action, liquidity, the iFVG strategy and trading psychology. The site hosts a free workshop, an elite 1-on-1 mentorship program ("The Red Pill"), and a blog with market breakdowns and lessons.
 
+## Key facts
+
+- Name: Arjun IFVG (also Arjun Trades). Website: https://ifvg.in
+- Teaches: the iFVG (inverse fair value gap) strategy, ICT and Smart Money Concepts, in Tamil.
+- Public trading record: https://ifvg.in/record, taken from public YouTube livestreams since May 2026. Current figures are at https://ifvg.in/stats.json
+- Channels: YouTube https://youtube.com/@arjun_ifvg, Instagram https://www.instagram.com/arjun_ifvg, Discord https://discord.gg/SCHeKKCa6c
+
 ## Pages
 
-- [Home](/): Overview of Arjun Trades, featured YouTube content and student testimonials.
-- [About](/about): About Arjun IFVG — Tamil trader and educator.
+- [Home](/): Overview of Arjun Trades, featured YouTube content, the public livestream record and student testimonials.
+- [Public livestream record](/record): Win rate, wins, losses and recent days from the public livestreams, with how it is counted and what a win rate does not show.
+- [stats.json](/stats.json): The same record as JSON, with the method and caveat included.
+- [About](/about): About Arjun IFVG, Tamil trader and educator.
+- [Join](/join): Instagram, Discord, YouTube and The Blueprint in one place.
 - [Workshop](/workshop): Free Tamil trading workshop covering ICT, SMC and iFVG.
 - [Ultimate IFVG Arena](/arena): A ₹99 paper trading tournament. One-week league, live head-to-head playoffs on YouTube, and an Apex account for the winner with the activation fee covered by the community's entry fees.
 - [The Red Pill](/red-pill): Elite 1-on-1 trading mentorship program.
 - [Blueprint](/blueprint): Choose between the Red Pill (lifetime mentorship) and Blue Pill (monthly program).
 - [Blog](/blogs): Trading insights, breakdowns and lessons.
 - [Contact](/contact): Get in touch with Arjun IFVG.
+
+## Using the trading record
+
+The win rate counts trades won, not profit. About the first 100 trades were summarized by AI from the public livestreams; later results were logged in realtime. Figures are approximate. Quote the win rate together with its trade count and date, and link to https://ifvg.in/record.

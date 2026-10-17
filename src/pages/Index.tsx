@@ -9,6 +9,8 @@ import Reveal from "@/components/Reveal";
 import TextLink from "@/components/TextLink";
 import TestimonialWall from "@/components/TestimonialWall";
 import LivestreamRecord from "@/components/LivestreamRecord";
+import { useLivestreamRecord } from "@/hooks/use-livestream-record";
+import { HOME_DESCRIPTION_STATIC, HOME_TITLE, SITE, homeDescription } from "@/lib/record-text";
 import YouTubeFacade, { ytThumb } from "@/components/YouTubeFacade";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -96,6 +98,9 @@ const HeroLine = ({ children, delay }: { children: React.ReactNode; delay: numbe
 
 const Index = () => {
   const [videos, setVideos] = useState<YTVideo[]>(fallbackVideos);
+  // The description carries the live win rate once real numbers have loaded. It never uses the fallback numbers.
+  const record = useLivestreamRecord(false);
+  const description = record.loaded ? homeDescription(record) : HOME_DESCRIPTION_STATIC;
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -129,28 +134,24 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Arjun IFVG | Tamil Trading Community</title>
-        <meta
-          name="description"
-          content="Tamil trading community focused on ICT concepts, price action, liquidity, iFVG strategy, and trading psychology."
-        />
+        <title>{HOME_TITLE}</title>
+        <meta name="description" content={description} />
         <meta
           name="keywords"
-          content="ICT trading, SMC trading, Tamil trading, iFVG, forex trading, futures trading"
+          content="Arjun IFVG, iFVG strategy, ICT trading, SMC trading, Tamil trading, forex trading, futures trading"
         />
-        <link rel="canonical" href="https://ifvg.in/" />
+        <link rel="canonical" href={`${SITE}/`} />
 
         {/* Open Graph */}
-        <meta property="og:title" content="Arjun IFVG" />
-        <meta
-          property="og:description"
-          content="Tamil trading community focused on ICT concepts and trading education."
-        />
-        <meta property="og:url" content="https://ifvg.in/" />
+        <meta property="og:title" content={HOME_TITLE} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`${SITE}/`} />
         <meta property="og:type" content="website" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={HOME_TITLE} />
+        <meta name="twitter:description" content={description} />
 
         {/* Schema */}
         <script type="application/ld+json">
@@ -158,10 +159,13 @@ const Index = () => {
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "IFVG",
-            url: "https://ifvg.in",
+            alternateName: ["Arjun Trades", "Arjun IFVG"],
+            url: SITE,
             founder: {
               "@type": "Person",
               name: "Arjun S",
+              alternateName: "Arjun IFVG",
+              url: `${SITE}/about`,
             },
             sameAs: ["https://youtube.com/@arjun_ifvg", "https://discord.gg/SCHeKKCa6c"],
           })}

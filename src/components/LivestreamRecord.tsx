@@ -1,12 +1,11 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
+import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
 import Reveal from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
 import { formatRecordDate, useLivestreamRecord } from "@/hooks/use-livestream-record";
-
-/** The date the record starts from. The totals themselves come from the database (see the admin panel). */
-const TRACKING_SINCE = "May 2026";
+import { RECORD_FOOTNOTE, YOUTUBE_STREAMS_URL } from "@/lib/record-text";
 
 const LivestreamRecord = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,7 +20,7 @@ const LivestreamRecord = () => {
   const updated = formatRecordDate(lastUpdated);
 
   return (
-    <section className="py-8 sm:py-12">
+    <section id="record" className="scroll-mt-20 py-8 sm:py-12">
       <div className="shell" ref={ref}>
         <Reveal>
           <div className="border border-panel-border bg-panel p-7 text-panel-foreground sm:p-9 lg:p-10">
@@ -70,25 +69,31 @@ const LivestreamRecord = () => {
 
             <div className="mt-8 flex flex-col gap-4 border-t border-panel-border pt-5 sm:flex-row sm:items-start sm:justify-between">
               <div className="max-w-xl">
-                <p className="text-sm leading-relaxed text-panel-muted">
-                  Based on public YouTube livestreams since {TRACKING_SINCE}. AI summarized about the first 100
-                  trades; later results were logged in realtime. Actual results may vary slightly.
-                </p>
+                <p className="text-sm leading-relaxed text-panel-muted">{RECORD_FOOTNOTE}</p>
                 {updated && <p className="type-label mt-2 text-panel-muted">Last updated {updated}</p>}
               </div>
-              <a
-                href="https://www.youtube.com/@arjun_ifvg/streams"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Here's proof: watch the public livestreams on YouTube"
-                className="group/link inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-panel-foreground underline decoration-panel-border decoration-2 underline-offset-[6px] transition-colors hover:decoration-signal"
-              >
-                Here's proof
-                <ArrowUpRight
-                  className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
-                  weight="bold"
-                />
-              </a>
+              <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2">
+                <Link to="/record" className="group/link inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-panel-foreground underline decoration-panel-border decoration-2 underline-offset-[6px] transition-colors hover:decoration-signal">
+                  Full record
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover/link:translate-x-1"
+                    weight="bold"
+                  />
+                </Link>
+                <a
+                  href={YOUTUBE_STREAMS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Here's proof: watch the public livestreams on YouTube"
+                  className="group/link inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-panel-foreground underline decoration-panel-border decoration-2 underline-offset-[6px] transition-colors hover:decoration-signal"
+                >
+                  Here's proof
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                    weight="bold"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </Reveal>
