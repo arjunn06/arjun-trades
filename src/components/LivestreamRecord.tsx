@@ -39,19 +39,13 @@ const LivestreamRecord = () => {
                 <p className="type-label mt-2 text-panel-muted">Win rate</p>
               </div>
 
-              {/* Wins, losses and the split between them, on one short line */}
+              {/* Wins and total trades on one short line, with the win share bar below (losses still feed the win rate) */}
               <div className="lg:col-span-7">
                 <dl className="flex flex-wrap items-baseline gap-x-10 gap-y-3">
                   <div className="flex items-baseline gap-3">
                     <dt className="order-2 text-lg text-panel-muted">wins</dt>
                     <dd className="type-heading type-figure order-1 text-[clamp(2.5rem,5vw,3.5rem)]">
                       <CountUp to={wins} />
-                    </dd>
-                  </div>
-                  <div className="flex items-baseline gap-3">
-                    <dt className="order-2 text-lg text-panel-muted">losses</dt>
-                    <dd className="type-heading type-figure order-1 text-[clamp(2.5rem,5vw,3.5rem)] text-panel-muted">
-                      <CountUp to={losses} />
                     </dd>
                   </div>
                   <div className="flex items-baseline gap-3">
@@ -77,9 +71,8 @@ const LivestreamRecord = () => {
             <div className="mt-8 flex flex-col gap-4 border-t border-panel-border pt-5 sm:flex-row sm:items-start sm:justify-between">
               <div className="max-w-xl">
                 <p className="text-sm leading-relaxed text-panel-muted">
-                  Taken from all public livestreams on YouTube since {TRACKING_SINCE}. Approximately the first 100
-                  trades were summarised by AI from the public livestreams. After that, results are logged manually
-                  every day. Real results can vary slightly.
+                  Based on public YouTube livestreams since {TRACKING_SINCE}. AI summarized about the first 100
+                  trades; later results were logged in realtime. Actual results may vary slightly.
                 </p>
                 {updated && <p className="type-label mt-2 text-panel-muted">Last updated {updated}</p>}
               </div>
