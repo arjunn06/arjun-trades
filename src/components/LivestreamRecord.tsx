@@ -24,41 +24,43 @@ const LivestreamRecord = () => {
     <section className="py-8 sm:py-12">
       <div className="shell" ref={ref}>
         <Reveal>
-          <div className="border border-panel-border bg-panel p-7 text-panel-foreground sm:p-10 lg:p-14">
-            <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="border border-panel-border bg-panel p-7 text-panel-foreground sm:p-9 lg:p-10">
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
               {/* Win rate: the headline number */}
-              <div className="flex flex-col justify-between gap-10 lg:col-span-6">
-                <h2 className="type-title max-w-[12ch] text-[clamp(2rem,4vw,3.25rem)]">Public livestream record</h2>
-                <div>
-                  <p className="type-display type-figure flex items-start text-[clamp(7rem,17vw,13rem)] text-signal">
-                    <CountUp to={winRate} />
-                    <span className="mt-[0.12em] text-[0.5em]" aria-hidden>
-                      %
-                    </span>
-                    <span className="sr-only">%</span>
-                  </p>
-                  <p className="type-label mt-3 text-panel-muted">Win rate</p>
-                </div>
+              <div className="lg:col-span-5">
+                <h2 className="type-title text-[clamp(1.75rem,3vw,2.5rem)]">Public livestream record</h2>
+                <p className="type-display type-figure mt-5 flex items-start text-[clamp(5.5rem,10vw,8.5rem)] text-signal">
+                  <CountUp to={winRate} />
+                  <span className="mt-[0.12em] text-[0.5em]" aria-hidden>
+                    %
+                  </span>
+                  <span className="sr-only">%</span>
+                </p>
+                <p className="type-label mt-2 text-panel-muted">Win rate</p>
               </div>
 
-              {/* Wins and losses */}
-              <div className="flex flex-col justify-end lg:col-span-6">
-                <dl>
-                  <div className="flex items-baseline justify-between border-t border-panel-border py-5">
-                    <dt className="text-lg text-panel-muted">Wins</dt>
-                    <dd className="type-display type-figure text-[clamp(4.5rem,9vw,7rem)]">
+              {/* Wins, losses and the split between them, on one short line */}
+              <div className="lg:col-span-7">
+                <dl className="flex flex-wrap items-baseline gap-x-10 gap-y-3">
+                  <div className="flex items-baseline gap-3">
+                    <dt className="order-2 text-lg text-panel-muted">wins</dt>
+                    <dd className="type-heading type-figure order-1 text-[clamp(2.5rem,5vw,3.5rem)]">
                       <CountUp to={wins} />
                     </dd>
                   </div>
-                  <div className="flex items-baseline justify-between border-t border-panel-border py-5">
-                    <dt className="text-lg text-panel-muted">Losses</dt>
-                    <dd className="type-display type-figure text-[clamp(4.5rem,9vw,7rem)] text-panel-muted">
+                  <div className="flex items-baseline gap-3">
+                    <dt className="order-2 text-lg text-panel-muted">losses</dt>
+                    <dd className="type-heading type-figure order-1 text-[clamp(2.5rem,5vw,3.5rem)] text-panel-muted">
                       <CountUp to={losses} />
                     </dd>
                   </div>
+                  <div className="flex items-baseline gap-3">
+                    <dt className="order-2 text-lg text-panel-muted">trades</dt>
+                    <dd className="type-heading type-figure order-1 text-[clamp(1.5rem,3vw,2rem)] text-panel-muted">{total}</dd>
+                  </div>
                 </dl>
 
-                <div className="mt-4" aria-hidden>
+                <div className="mt-5" aria-hidden>
                   <div className="h-2 w-full overflow-hidden bg-panel-foreground/20">
                     {/* Full-width fill scaled to the win share: transform only, so live changes animate smoothly. */}
                     <motion.div
@@ -69,20 +71,17 @@ const LivestreamRecord = () => {
                     />
                   </div>
                 </div>
-                <p className="type-label mt-3 text-panel-muted">
-                  {wins} wins out of {total} trades
-                </p>
               </div>
             </div>
 
-            <div className="mt-12 flex flex-col gap-4 border-t border-panel-border pt-5 sm:flex-row sm:items-start sm:justify-between">
+            <div className="mt-8 flex flex-col gap-4 border-t border-panel-border pt-5 sm:flex-row sm:items-start sm:justify-between">
               <div className="max-w-xl">
                 <p className="text-sm leading-relaxed text-panel-muted">
                   Taken from all public livestreams on YouTube since {TRACKING_SINCE}. Approximately the first 100
                   trades were summarised by AI from the public livestreams. After that, results are logged manually
                   every day. Real results can vary slightly.
                 </p>
-                {updated && <p className="type-label mt-3 text-panel-muted">Last updated {updated}</p>}
+                {updated && <p className="type-label mt-2 text-panel-muted">Last updated {updated}</p>}
               </div>
               <a
                 href="https://www.youtube.com/@arjun_ifvg/streams"
