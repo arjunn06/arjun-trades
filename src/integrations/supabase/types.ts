@@ -171,6 +171,60 @@ export type Database = {
         }
         Relationships: []
       }
+      livestream_recap_days: {
+        Row: {
+          day: string
+          prompt_message_id: string | null
+          public_message_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          day: string
+          prompt_message_id?: string | null
+          public_message_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          day?: string
+          prompt_message_id?: string | null
+          public_message_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      livestream_results: {
+        Row: {
+          created_at: string
+          entry_date: string
+          id: string
+          label: string | null
+          losses: number
+          source: string
+          wins: number
+        }
+        Insert: {
+          created_at?: string
+          entry_date?: string
+          id?: string
+          label?: string | null
+          losses?: number
+          source?: string
+          wins?: number
+        }
+        Update: {
+          created_at?: string
+          entry_date?: string
+          id?: string
+          label?: string | null
+          losses?: number
+          source?: string
+          wins?: number
+        }
+        Relationships: []
+      }
       red_pill_bookings: {
         Row: {
           contact: string
@@ -348,6 +402,14 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      livestream_record: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      livestream_replace_day: {
+        Args: { p_date: string; p_losses: number; p_source?: string; p_wins: number }
+        Returns: undefined
       }
     }
     Enums: {

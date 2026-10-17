@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Discord recap bot secrets (set with `supabase secrets set --env-file`). Never commit.
+supabase/.env.discord

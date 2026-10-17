@@ -200,6 +200,12 @@
     line-height: 1.05;
   }
 
+  /* Big numerals: proportional figures (Mona Sans' tabular set has a slashed zero) and looser tracking so digits never touch. */
+  .type-figure {
+    font-variant-numeric: normal;
+    letter-spacing: -0.02em;
+  }
+
   .type-lead {
     font-size: clamp(1.125rem, 1.4vw, 1.3125rem);
     line-height: 1.5;

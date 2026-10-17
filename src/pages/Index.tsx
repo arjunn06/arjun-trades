@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import TextLink from "@/components/TextLink";
 import TestimonialWall from "@/components/TestimonialWall";
+import LivestreamRecord from "@/components/LivestreamRecord";
 import YouTubeFacade, { ytThumb } from "@/components/YouTubeFacade";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -239,6 +240,8 @@ const Index = () => {
               </div>
             </div>
           </section>
+
+          <LivestreamRecord />
 
           {/* Popular on YouTube */}
           <section className="py-16 sm:py-20">

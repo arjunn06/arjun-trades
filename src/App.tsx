@@ -36,6 +36,7 @@ const AdminBookings = lazy(() => import("./pages/AdminBookings"));
 const AdminWorkshopInterest = lazy(() => import("./pages/AdminWorkshopInterest"));
 const AdminRedPillInfo = lazy(() => import("./pages/AdminRedPillInfo"));
 const AdminArena = lazy(() => import("./pages/AdminArena"));
+const AdminLivestream = lazy(() => import("./pages/AdminLivestream"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const BrandGuidelines = lazy(() => import("./pages/BrandGuidelines"));
 
@@ -77,6 +78,7 @@ const App = () => (
           <Route path="/red-pill/info" element={<RedPillInfo />} />
           <Route path="/admin/red-pill-info" element={<AdminRedPillInfo />} />
           <Route path="/admin/arena" element={<AdminArena />} />
+          <Route path="/admin/livestream" element={<AdminLivestream />} />
           <Route path="/brand" element={<BrandGuidelines />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
