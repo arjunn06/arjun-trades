@@ -24,7 +24,6 @@ import Join from "./pages/Join";
 
 // The Arena page carries its own QR and form code, so it ships as its own chunk.
 const Arena = lazy(() => import("./pages/Arena"));
-const Record = lazy(() => import("./pages/Record"));
 
 // Admin, brand and password-reset screens are rarely visited; keep them out of the main bundle.
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -58,7 +57,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/join" element={<Join />} />
-          <Route path="/record" element={<Record />} />
           <Route path="/workshop" element={<Workshop />} />
           <Route path="/free-workshop" element={<Workshop />} />
           <Route path="/arena" element={<Arena />} />

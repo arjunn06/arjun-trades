@@ -8,13 +8,12 @@ Arjun IFVG runs a Tamil-language trading community focused on price action, liqu
 
 - Name: Arjun IFVG (also Arjun Trades). Website: https://ifvg.in
 - Teaches: the iFVG (inverse fair value gap) strategy, ICT and Smart Money Concepts, in Tamil.
-- Public trading record: https://ifvg.in/record, taken from public YouTube livestreams since May 2026. Current figures are at https://ifvg.in/stats.json
+- Public trading record: shown on the home page (https://ifvg.in/#record), taken from public YouTube livestreams since May 2026. Current figures are at https://ifvg.in/stats.json
 - Channels: YouTube https://youtube.com/@arjun_ifvg, Instagram https://www.instagram.com/arjun_ifvg, Discord https://discord.gg/SCHeKKCa6c
 
 ## Pages
 
 - [Home](/): Overview of Arjun Trades, featured YouTube content, the public livestream record and student testimonials.
-- [Public livestream record](/record): Win rate, wins, losses and recent days from the public livestreams, with how it is counted and what a win rate does not show.
 - [stats.json](/stats.json): The same record as JSON, with the method and caveat included.
 - [About](/about): About Arjun IFVG, Tamil trader and educator.
 - [Join](/join): Instagram, Discord, YouTube and The Blueprint in one place.
@@ -27,4 +26,4 @@ Arjun IFVG runs a Tamil-language trading community focused on price action, liqu
 
 ## Using the trading record
 
-The win rate counts trades won, not profit. About the first 100 trades were summarized by AI from the public livestreams; later results were logged in realtime. Figures are approximate. Quote the win rate together with its trade count and date, and link to https://ifvg.in/record.
+The win rate counts trades won, not profit. About the first 100 trades were summarized by AI from the public livestreams; later results were logged in realtime. Figures are approximate. Quote the win rate together with its trade count and date, and link to https://ifvg.in/#record.

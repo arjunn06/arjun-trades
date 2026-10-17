@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { formatDateIST, type RecordDay } from "@/lib/record-text";
+import { formatDateIST } from "@/lib/record-text";
 
 export interface LivestreamRecordData {
   wins: number;
@@ -92,57 +92,6 @@ export const useLivestreamRecord = (watch: boolean) => {
   }, [watch, reachable, load]);
 
   return { ...record, loaded: reachable };
-};
-
-export interface RecordHistoryData {
-  /** Newest first, one row per day. */
-  days: RecordDay[];
-  /** The starting record that covers everything before the daily entries began. */
-  opening: RecordDay | null;
-  loaded: boolean;
-}
-
-/** Day-by-day results for the record page. Public read, same as the totals. */
-export const useRecordHistory = (): RecordHistoryData => {
-  const [state, setState] = useState<RecordHistoryData>({ days: [], opening: null, loaded: false });
-
-  useEffect(() => {
-    let cancelled = false;
-    supabase
-      .from("livestream_results")
-      .select("entry_date, wins, losses, source")
-      .order("entry_date", { ascending: false })
-      .limit(1000)
-      .then(({ data, error }) => {
-        if (cancelled || error || !data) return;
-        const byDay = new Map<string, RecordDay>();
-        const opening: RecordDay = { date: "", wins: 0, losses: 0 };
-        let hasOpening = false;
-        for (const r of data) {
-          if (r.source === "opening") {
-            hasOpening = true;
-            opening.date = r.entry_date;
-            opening.wins += r.wins;
-            opening.losses += r.losses;
-            continue;
-          }
-          const day = byDay.get(r.entry_date) ?? { date: r.entry_date, wins: 0, losses: 0 };
-          day.wins += r.wins;
-          day.losses += r.losses;
-          byDay.set(r.entry_date, day);
-        }
-        setState({
-          days: [...byDay.values()].sort((a, b) => (a.date < b.date ? 1 : -1)),
-          opening: hasOpening ? opening : null,
-          loaded: true,
-        });
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  return state;
 };
 
 /** "17 Oct 2026" for the header of the card. Kept here so existing imports keep working. */

@@ -104,16 +104,10 @@ export const escapeHtml = (s: string) =>
 /** JSON inside a <script> tag: "<" is escaped so the data can never close the tag. */
 export const safeJson = (value: unknown) => JSON.stringify(value).replace(/</g, "\\u003c");
 
-const prettyDay = (d: string) =>
-  new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
-
 /** What someone sees with JavaScript switched off, and what a crawler that doesn't run it reads. Same words as the page. */
-export const noscriptHtml = (kind: "home" | "record", r: RecordNumbers, history: RecordHistory): string => {
+export const noscriptHtml = (r: RecordNumbers): string => {
   const updated = formatDateIST(r.lastUpdated);
-  const summary = `<p>${escapeHtml(recordSummary(r))}</p>`;
-  const meta = `<p>${escapeHtml(RECORD_CAVEAT)}${updated ? ` Last updated ${escapeHtml(updated)}.` : ""} Machine-readable: <a href="/stats.json">/stats.json</a>.</p>`;
   const links = [
-    ["/record", "Full public livestream record"],
     ["/about", "About Arjun IFVG"],
     ["/workshop", "Free workshop"],
     ["/join", "Join: Instagram, Discord, YouTube"],
@@ -123,26 +117,14 @@ export const noscriptHtml = (kind: "home" | "record", r: RecordNumbers, history:
   ]
     .map(([href, label]) => `<li><a href="${href}">${escapeHtml(label)}</a></li>`)
     .join("");
-
-  if (kind === "home") {
-    return `<noscript><article><h1>Arjun IFVG, Tamil iFVG and ICT trading</h1><p>Tamil trading community focused on ICT concepts, price action, liquidity, the iFVG strategy and trading psychology. Free YouTube education, a free workshop, a Discord community and mentorship.</p><h2>Public livestream record</h2>${summary}${meta}<ul>${links}</ul></article></noscript>`;
-  }
-
-  const rows = history.days
-    .slice(0, 30)
-    .map((d) => `<tr><td>${escapeHtml(prettyDay(d.date))}</td><td>${d.wins}</td><td>${d.losses}</td></tr>`)
-    .join("");
-  const opening = history.opening
-    ? `<tr><td>${escapeHtml(`Opening record, ${RECORD_SINCE_LABEL} to ${prettyDay(history.opening.date)}`)}</td><td>${history.opening.wins}</td><td>${history.opening.losses}</td></tr>`
-    : "";
-  return `<noscript><article><h1>Arjun IFVG public livestream trading record</h1>${summary}${meta}<h2>Recent days</h2><table><thead><tr><th>Day</th><th>Wins</th><th>Losses</th></tr></thead><tbody>${rows}${opening}</tbody></table><p><a href="${YOUTUBE_STREAMS_URL}">Watch the public livestreams on YouTube</a></p><ul>${links}</ul></article></noscript>`;
+  return `<noscript><article><h1>Arjun IFVG, Tamil iFVG and ICT trading</h1><p>Tamil trading community focused on ICT concepts, price action, liquidity, the iFVG strategy and trading psychology. Free YouTube education, a free workshop, a Discord community and mentorship.</p><h2>Public livestream record</h2><p>${escapeHtml(recordSummary(r))}</p><p>${escapeHtml(RECORD_CAVEAT)}${updated ? ` Last updated ${escapeHtml(updated)}.` : ""} Machine-readable: <a href="/stats.json">/stats.json</a>. <a href="${YOUTUBE_STREAMS_URL}">Watch the public livestreams on YouTube</a>.</p><ul>${links}</ul></article></noscript>`;
 };
 
 export const statsJson = (r: RecordNumbers, history: RecordHistory) => ({
   name: "Arjun IFVG public livestream trading record",
   trader: "Arjun IFVG",
   website: SITE,
-  page: `${SITE}/record`,
+  page: `${SITE}/#record`,
   source: YOUTUBE_STREAMS_URL,
   period: { from: RECORD_SINCE_ISO.slice(0, 7), to: r.lastUpdated ? isoDayIST(r.lastUpdated) : null },
   wins: r.wins,

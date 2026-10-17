@@ -17,7 +17,7 @@ export const onRequest = async (ctx: PagesContext) => {
       recordSummary(record),
       RECORD_CAVEAT,
       "",
-      `- [Record page](${SITE}/record): the figures, how they are counted, and recent days.`,
+      `- [Home page](${SITE}/#record): the record card, with the method.`,
       `- [stats.json](${SITE}/stats.json): the same figures as JSON${updated ? `, last updated ${updated}` : ""}.`,
       `- [Source livestreams](${YOUTUBE_STREAMS_URL}): the public YouTube streams the record is taken from.`,
       "",

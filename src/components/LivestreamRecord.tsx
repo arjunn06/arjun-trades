@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import Reveal from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
 import { formatRecordDate, useLivestreamRecord } from "@/hooks/use-livestream-record";
@@ -72,28 +71,19 @@ const LivestreamRecord = () => {
                 <p className="text-sm leading-relaxed text-panel-muted">{RECORD_FOOTNOTE}</p>
                 {updated && <p className="type-label mt-2 text-panel-muted">Last updated {updated}</p>}
               </div>
-              <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2">
-                <Link to="/record" className="group/link inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-panel-foreground underline decoration-panel-border decoration-2 underline-offset-[6px] transition-colors hover:decoration-signal">
-                  Full record
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover/link:translate-x-1"
-                    weight="bold"
-                  />
-                </Link>
-                <a
-                  href={YOUTUBE_STREAMS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Here's proof: watch the public livestreams on YouTube"
-                  className="group/link inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-panel-foreground underline decoration-panel-border decoration-2 underline-offset-[6px] transition-colors hover:decoration-signal"
-                >
-                  Here's proof
-                  <ArrowUpRight
-                    className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
-                    weight="bold"
-                  />
-                </a>
-              </div>
+              <a
+                href={YOUTUBE_STREAMS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Here's proof: watch the public livestreams on YouTube"
+                className="group/link inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-panel-foreground underline decoration-panel-border decoration-2 underline-offset-[6px] transition-colors hover:decoration-signal"
+              >
+                Here's proof
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                  weight="bold"
+                />
+              </a>
             </div>
           </div>
         </Reveal>
