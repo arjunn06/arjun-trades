@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Star } from "@phosphor-icons/react";
 import Reveal from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
@@ -6,8 +6,13 @@ import { cn } from "@/lib/utils";
 
 export interface TestimonialItem {
   name: string;
-  rating: number;
+  /** Omit for quotes that were not star-rated. */
+  rating?: number;
   text: string;
+  /** Shown under the name, e.g. "Red Pill Student". */
+  role?: string;
+  /** Proof image shown under the quote, such as a payout certificate. */
+  proof?: { src: string; alt: string };
 }
 
 interface TestimonialsProps {
@@ -16,6 +21,8 @@ interface TestimonialsProps {
   items: TestimonialItem[];
   /** How many quotes to show before "Show more". */
   initial?: number;
+  /** Rendered under the wall, e.g. a link to the full testimonials page. */
+  footer?: ReactNode;
 }
 
 const Quote = ({ item }: { item: TestimonialItem }) => {
@@ -40,23 +47,25 @@ const Quote = ({ item }: { item: TestimonialItem }) => {
 
   return (
     <figure className="border-t border-foreground pt-5">
-      <div className="flex items-center gap-3" aria-label={`Rated ${item.rating} out of 5`}>
-        <div className="flex gap-0.5" aria-hidden>
-          {[1, 2, 3, 4, 5].map((s) => (
-            <Star
-              key={s}
-              className={cn("h-4 w-4", s <= item.rating ? "text-primary" : "text-border")}
-              weight="fill"
-            />
-          ))}
+      {item.rating != null && (
+        <div className="flex items-center gap-3 pb-4" aria-label={`Rated ${item.rating} out of 5`}>
+          <div className="flex gap-0.5" aria-hidden>
+            {[1, 2, 3, 4, 5].map((s) => (
+              <Star
+                key={s}
+                className={cn("h-4 w-4", s <= item.rating! ? "text-primary" : "text-border")}
+                weight="fill"
+              />
+            ))}
+          </div>
+          <span className="type-label text-muted-foreground" aria-hidden>
+            {item.rating}/5
+          </span>
         </div>
-        <span className="type-label text-muted-foreground" aria-hidden>
-          {item.rating}/5
-        </span>
-      </div>
+      )}
       <blockquote
         ref={ref}
-        className={cn("mt-4 text-[1.0625rem] leading-[1.55] text-foreground", !expanded && "line-clamp-4")}
+        className={cn("text-[1.0625rem] leading-[1.55] text-foreground", !expanded && "line-clamp-4")}
       >
         “{item.text}”
       </blockquote>
@@ -70,12 +79,23 @@ const Quote = ({ item }: { item: TestimonialItem }) => {
           {expanded ? "Read less" : "Read more"}
         </button>
       )}
-      <figcaption className="mt-4 font-semibold">{item.name}</figcaption>
+      {item.proof && (
+        <img
+          src={item.proof.src}
+          alt={item.proof.alt}
+          loading="lazy"
+          className="mt-4 w-full border border-border"
+        />
+      )}
+      <figcaption className="mt-4">
+        <span className="font-semibold">{item.name}</span>
+        {item.role && <span className="block text-sm text-muted-foreground">{item.role}</span>}
+      </figcaption>
     </figure>
   );
 };
 
-const Testimonials = ({ title, subtitle, items, initial = 9 }: TestimonialsProps) => {
+const Testimonials = ({ title, subtitle, items, initial = 9, footer }: TestimonialsProps) => {
   const [showAll, setShowAll] = useState(false);
   if (items.length === 0) return null;
 
@@ -97,13 +117,16 @@ const Testimonials = ({ title, subtitle, items, initial = 9 }: TestimonialsProps
           ))}
         </div>
 
-        {items.length > initial && !showAll && (
-          <div className="mt-4">
-            <Button variant="outline" onClick={() => setShowAll(true)}>
-              Show all {items.length} reviews
-            </Button>
+        {(items.length > initial && !showAll) || footer ? (
+          <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-4">
+            {items.length > initial && !showAll && (
+              <Button variant="outline" onClick={() => setShowAll(true)}>
+                Show all {items.length} reviews
+              </Button>
+            )}
+            {footer}
           </div>
-        )}
+        ) : null}
       </div>
     </section>
   );

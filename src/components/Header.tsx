@@ -15,6 +15,7 @@ const navItems: NavItem[] = [
   { label: "Arena", to: "/arena" },
   { label: "Discord", href: "https://discord.gg/SCHeKKCa6c" },
   { label: "Blogs", to: "/blogs" },
+  { label: "Testimonials", to: "/testimonials" },
   { label: "Contact", to: "/contact" },
 ];
 

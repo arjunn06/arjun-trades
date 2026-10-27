@@ -20,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import Blueprint from "./pages/Blueprint";
 import RedPillReview from "./pages/RedPillReview";
 import Join from "./pages/Join";
+import Testimonials from "./pages/Testimonials";
 
 
 // The Arena page carries its own QR and form code, so it ships as its own chunk.
@@ -63,6 +64,7 @@ const App = () => (
           <Route path="/blueprint" element={<Blueprint />} />
           <Route path="/red-pill" element={<RedPill />} />
           <Route path="/red-pill/reviews" element={<RedPillReview />} />
+          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:id" element={<BlogPost />} />

@@ -5,6 +5,7 @@ import { ArrowRight, CalendarBlank, Check, ClipboardText, CheckCircle } from "@p
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import ReviewsNote from "@/components/ReviewsNote";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
@@ -355,6 +356,8 @@ const RedPill = () => {
             </Reveal>
           </div>
         </section>
+
+        <ReviewsNote id="tobi" quote="I'm happy that I joined the red pill 3 class. I would say it was worth it." />
 
         {/* Final CTA */}
         <section className="py-16 sm:py-24">

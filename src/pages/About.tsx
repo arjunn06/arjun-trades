@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight, YoutubeLogo, Users } from "@phosphor-icons/re
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import ReviewsNote from "@/components/ReviewsNote";
 import { Button } from "@/components/ui/button";
 import portrait from "@/assets/arjun-portrait.webp";
 
@@ -164,6 +165,8 @@ const About = () => {
             </div>
           </div>
         </section>
+
+        <ReviewsNote id="singara-velan" />
 
         <section aria-labelledby="socials-heading" className="py-16 sm:py-20">
           <div className="shell">

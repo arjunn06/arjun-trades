@@ -8,6 +8,7 @@ const explore: { label: string; to?: string; href?: string }[] = [
   { label: "Workshop", to: "/workshop" },
   { label: "Arena", to: "/arena" },
   { label: "Blogs", to: "/blogs" },
+  { label: "Testimonials", to: "/testimonials" },
   { label: "The Blueprint", href: BLUEPRINT_URL },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
