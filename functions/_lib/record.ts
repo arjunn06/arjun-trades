@@ -35,7 +35,7 @@ const DEFAULT_URL = "https://nfruhexbfxtxqvcvjbmm.supabase.co";
 // security allows, which for this table is reading.
 const DEFAULT_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mcnVoZXhiZnh0eHF2Y3ZqYm1tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTk4MjYsImV4cCI6MjA4ODYzNTgyNn0.tCwkC6T1wAR9rWkGEZ2w4d7l4Abfs9YgTpuigjntqRY";
 
-const get = async (env: Env, path: string): Promise<unknown> => {
+export const get = async (env: Env, path: string): Promise<unknown> => {
   const key = env.SUPABASE_ANON_KEY || DEFAULT_KEY;
   const res = await fetch(`${env.SUPABASE_URL || DEFAULT_URL}${path}`, {
     headers: { apikey: key, Authorization: `Bearer ${key}` },

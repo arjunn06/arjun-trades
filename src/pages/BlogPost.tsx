@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
+import { blogDescription, blogShareImage, blogTitle, blogUrl } from "@/lib/blog-seo";
 
 interface Blog {
   id: string;
@@ -126,51 +127,36 @@ const BlogPost = () => {
     );
   }
 
+  // The same words the server puts in the HTML for link previews (functions/_lib/blog.ts).
+  const description = blogDescription(blog.content);
+  const shareImage = blogShareImage(blog.cover_image_url);
+
   return (
     <>
  <Helmet>
-  <title>{blog.title} | Arjun IFVG</title>
+  <title>{blogTitle(blog.title)}</title>
 
-  <meta
-    name="description"
-    content={blog.content.replace(/<[^>]*>/g, "").slice(0, 160)}
-  />
+  <meta name="description" content={description} />
 
-  <link
-    rel="canonical"
-    href={`https://ifvg.in/blog/${blog.id}`}
-  />
+  <link rel="canonical" href={blogUrl(blog.id)} />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content={blog.title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={blogUrl(blog.id)} />
+  <meta property="og:image" content={shareImage} />
 
-  <meta
-    property="og:description"
-    content={blog.content.replace(/<[^>]*>/g, "").slice(0, 160)}
-  />
-
-  <meta
-    property="og:url"
-    content={`https://ifvg.in/blog/${blog.id}`}
-  />
-
-  {blog.cover_image_url && (
-    <meta property="og:image" content={blog.cover_image_url} />
-  )}
-
-  <meta
-    name="twitter:card"
-    content="summary_large_image"
-  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={blog.title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={shareImage} />
 
   <script type="application/ld+json">
     {JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Article",
       headline: blog.title,
-      description: blog.content
-        .replace(/<[^>]*>/g, "")
-        .slice(0, 160),
+      description,
       image: blog.cover_image_url,
       author: {
         "@type": "Person",
