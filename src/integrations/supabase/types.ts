@@ -171,6 +171,36 @@ export type Database = {
         }
         Relationships: []
       }
+      inner_circle_signups: {
+        Row: {
+          created_at: string
+          disclaimer_accepted: boolean
+          discord: string
+          email: string
+          id: string
+          name: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          disclaimer_accepted: boolean
+          discord: string
+          email: string
+          id?: string
+          name: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          disclaimer_accepted?: boolean
+          discord?: string
+          email?: string
+          id?: string
+          name?: string
+          status?: string
+        }
+        Relationships: []
+      }
       livestream_recap_days: {
         Row: {
           day: string

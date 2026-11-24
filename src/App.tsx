@@ -25,6 +25,7 @@ import Testimonials from "./pages/Testimonials";
 
 // The Arena page carries its own QR and form code, so it ships as its own chunk.
 const Arena = lazy(() => import("./pages/Arena"));
+const InnerCircle = lazy(() => import("./pages/InnerCircle"));
 
 // Admin, brand and password-reset screens are rarely visited; keep them out of the main bundle.
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -37,6 +38,7 @@ const AdminBookings = lazy(() => import("./pages/AdminBookings"));
 const AdminWorkshopInterest = lazy(() => import("./pages/AdminWorkshopInterest"));
 const AdminRedPillInfo = lazy(() => import("./pages/AdminRedPillInfo"));
 const AdminArena = lazy(() => import("./pages/AdminArena"));
+const AdminInnerCircle = lazy(() => import("./pages/AdminInnerCircle"));
 const AdminLivestream = lazy(() => import("./pages/AdminLivestream"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const BrandGuidelines = lazy(() => import("./pages/BrandGuidelines"));
@@ -61,6 +63,7 @@ const App = () => (
           <Route path="/workshop" element={<Workshop />} />
           <Route path="/free-workshop" element={<Workshop />} />
           <Route path="/arena" element={<Arena />} />
+          <Route path="/inner-circle" element={<InnerCircle />} />
           <Route path="/blueprint" element={<Blueprint />} />
           <Route path="/red-pill" element={<RedPill />} />
           <Route path="/red-pill/reviews" element={<RedPillReview />} />
@@ -80,6 +83,7 @@ const App = () => (
           <Route path="/red-pill/info" element={<RedPillInfo />} />
           <Route path="/admin/red-pill-info" element={<AdminRedPillInfo />} />
           <Route path="/admin/arena" element={<AdminArena />} />
+          <Route path="/admin/inner-circle" element={<AdminInnerCircle />} />
           <Route path="/admin/livestream" element={<AdminLivestream />} />
           <Route path="/brand" element={<BrandGuidelines />} />
           <Route path="/reset-password" element={<ResetPassword />} />

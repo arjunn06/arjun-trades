@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Mail, BarChart3, ChartBar, Star, Phone, ClipboardList, Sparkles, Trophy, TrendingUp } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Mail, BarChart3, ChartBar, Star, Phone, ClipboardList, Sparkles, Trophy, TrendingUp, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -118,6 +118,13 @@ const AdminBlogs = () => {
               title="Arena Registrations"
             >
               <Trophy className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => navigate("/admin/inner-circle")}
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              title="Inner Circle Sign-ups"
+            >
+              <Users className="w-5 h-5" />
             </button>
             <button
               onClick={() => navigate("/admin/red-pill-info")}
